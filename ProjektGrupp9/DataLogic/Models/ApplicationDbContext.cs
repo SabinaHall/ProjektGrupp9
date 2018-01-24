@@ -19,7 +19,7 @@ namespace DataLogic.Models
         {
             return new ApplicationDbContext();
         }
-
-        public DbSet<Entries> Entries { get; set; }
+        public System.Data.Entity.DbSet<DataLogic.Models.Entries> Entries { get; set; }
+        
     }
 }
