@@ -20,6 +20,11 @@
         <br />
         <br />
         <p>@entry.text</p>
+        <br />
+        @if (entry.File != null)
+        {
+            <img height="300" width="250" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+        }
     </div>
 }
 
