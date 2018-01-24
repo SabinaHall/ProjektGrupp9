@@ -5,7 +5,7 @@
     {
     @Html.AntiForgeryToken()
 
-        <ul>
+        <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
             <li>@Html.ActionLink("Bloggen", "IndexInformal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
         </ul>
