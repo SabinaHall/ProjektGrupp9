@@ -5,7 +5,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using Domain.Models;
+using DataLogic.Models;
+using DataLogic;
 
 namespace Domain
 {

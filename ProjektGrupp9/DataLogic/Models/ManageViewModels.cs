@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace Domain.Models
+namespace DataLogic.Models
 {
     public class IndexViewModel
     {
@@ -78,9 +78,9 @@ namespace Domain.Models
         public string PhoneNumber { get; set; }
     }
 
-    public class ConfigureTwoFactorViewModel
-    {
-        public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
-    }
+    //public class ConfigureTwoFactorViewModel
+    //{
+    //    public string SelectedProvider { get; set; }
+    //    public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+    //}
 }

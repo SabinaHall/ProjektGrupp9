@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Domain.Models;
+using Logic.Models;
 
-namespace Domain
+namespace Logic
 {
     public class EmailService : IIdentityMessageService
     {
