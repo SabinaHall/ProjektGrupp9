@@ -25,8 +25,10 @@ namespace DataLogic.Models
         [StringLength(1000, MinimumLength = 3, ErrorMessage = "För kort eller lång text!")]
         public string text { get; set; }
 
+        [Display(Name = "Inläggstyp")]
         public EnumEntryType EntryType { get; set; }
 
+        [Display(Name = "Datum")]
         public DateTime Date { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
