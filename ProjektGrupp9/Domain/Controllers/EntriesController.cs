@@ -10,8 +10,9 @@ using DataLogic.Models;
 
 namespace Domain.Controllers
 {
-    public class EntriesController : BaseController
+    public class EntriesController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Entries
         public ActionResult IndexFormal()
@@ -48,15 +49,23 @@ namespace Domain.Controllers
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType,Date")] Entries entries)
+        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id)
         {
-            if (ModelState.IsValid)
+            if (Request.IsAuthenticated)
             {
-                db.Entries.Add(entries);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                Entries aEntry = new Entries();
+                aEntry.Heading = entries.Heading;
+                aEntry.text = entries.text;
+                aEntry.Date = DateTime.Now;
+                aEntry.Author = user;
+                aEntry.EntryType = entries.EntryType;
 
+                user.Entries.Add(aEntry);
+                db.Entries.Add(aEntry);
+                db.SaveChanges();
+                return RedirectToAction("IndexFormal", new { Id = user.Id });
+            }
             return View(entries);
         }
 
@@ -76,6 +85,8 @@ namespace Domain.Controllers
         }
 
         // POST: Entries/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Heading,text,EntryType,Date")] Entries entries)
