@@ -260,7 +260,6 @@
     <Content Include="Views\Entries\Details.cshtml" />
     <Content Include="Views\Entries\Edit.cshtml" />
     <Content Include="Views\Entries\Index.cshtml" />
-	<Content Include="Views\Manage\RegisterUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
