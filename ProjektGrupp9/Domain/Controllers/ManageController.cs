@@ -107,6 +107,12 @@ namespace Domain.Controllers
             return View();
         }
 
+        public ActionResult RegisterUser()
+        {
+            return View();
+        }
+
+
         //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
