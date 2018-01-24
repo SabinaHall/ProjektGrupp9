@@ -259,7 +259,8 @@
     <Content Include="Views\Entries\Delete.cshtml" />
     <Content Include="Views\Entries\Details.cshtml" />
     <Content Include="Views\Entries\Edit.cshtml" />
-    <Content Include="Views\Entries\Index.cshtml" />
+    <Content Include="Views\Entries\IndexFormal.cshtml" />
+    <Content Include="Views\Entries\IndexInformal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
