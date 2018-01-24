@@ -50,7 +50,7 @@ namespace Domain.Controllers
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType,Category")] Entries entries, string id, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated)
             {
@@ -64,6 +64,7 @@ namespace Domain.Controllers
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
                     aEntry.EntryType = entries.EntryType;
+                    aEntry.Category = entries.Category;
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -84,6 +85,7 @@ namespace Domain.Controllers
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
                     aEntry.EntryType = entries.EntryType;
+                    aEntry.Category = entries.Category;
 
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
