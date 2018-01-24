@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Domain.Models
+namespace Logic.Models
 {
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

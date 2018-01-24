@@ -6,7 +6,8 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Domain.Models;
+using DataLogic.Models;
+using DataLogic;
 
 namespace Domain.Controllers
 {
