@@ -109,7 +109,7 @@ namespace Domain.Controllers
 
         public ActionResult RegisterUser()
         {
-            return View();
+            return RedirectToAction("Register", "Account");
         }
 
 
