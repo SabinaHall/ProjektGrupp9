@@ -18,5 +18,7 @@ namespace DataLogic.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<DataLogic.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
