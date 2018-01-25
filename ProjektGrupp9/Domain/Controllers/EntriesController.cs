@@ -14,9 +14,10 @@ using Microsoft.AspNet.Identity;
 
 namespace Domain.Controllers
 {
+    [Authorize]
     public class EntriesController : BaseController
     {
-        // GET: Entries
+        // GET: Entries 
         public ActionResult IndexFormal()
         {
             return View(db.Entries.ToList());
@@ -117,7 +118,18 @@ namespace Domain.Controllers
             var be = db.Entries.Single(x => x.Id == id);
             if (be.File != null)
             {
-                return File(be.File, "Image/png");
+                return File(be.File, be.ContentType);
+                //be.File, "Image/png"
+            }
+            return View();
+        }
+
+        public ActionResult EntryDoc(int id)
+        {
+            var be = db.Entries.Single(x => x.Id == id);
+            if (be.File != null)
+            {
+                return File(be.File, be.ContentType, be.Filename);
             }
             return View();
         }

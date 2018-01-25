@@ -11,6 +11,7 @@ using System.IO;
 
 namespace Domain.Controllers
 {
+    [Authorize]
     public class EntryInformalsController : BaseController
     {
 
