@@ -14,6 +14,7 @@ namespace DataLogic.Models
         public string name { get; set; }
         public virtual Roles Role { get; set; }
         public virtual ICollection<Entries> Entries { get; set; }
+        public virtual ICollection<EntryInformal> InformalEntrys { get; set; } 
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

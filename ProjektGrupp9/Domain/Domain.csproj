@@ -191,6 +191,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\EntriesController.cs" />
+    <Compile Include="Controllers\EntryInformalsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -261,13 +262,16 @@
     <Content Include="Views\Entries\Details.cshtml" />
     <Content Include="Views\Entries\Edit.cshtml" />
     <Content Include="Views\Entries\IndexFormal.cshtml" />
-    <Content Include="Views\Entries\IndexInformal.cshtml" />
     <Content Include="Views\Categories\Create.cshtml" />
     <Content Include="Views\Categories\Delete.cshtml" />
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Entries\CreateInformal.cshtml" />
+    <Content Include="Views\EntryInformals\Create.cshtml" />
+    <Content Include="Views\EntryInformals\Delete.cshtml" />
+    <Content Include="Views\EntryInformals\Details.cshtml" />
+    <Content Include="Views\EntryInformals\Edit.cshtml" />
+    <Content Include="Views\EntryInformals\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

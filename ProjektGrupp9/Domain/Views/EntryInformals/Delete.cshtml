@@ -1,0 +1,39 @@
+﻿@model DataLogic.Models.EntryInformal
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Radera</h2>
+
+<h3>Är du säker på att du vill ta bort detta inlägg?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Heading)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Heading)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Ta bort" class="btn btn-default" />
+        </div>
+    }
+</div>

@@ -13,10 +13,8 @@ using static DataLogic.Models.Entries;
 
 namespace Domain.Controllers
 {
-    public class EntriesController : Controller
+    public class EntriesController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: Entries
         public ActionResult IndexFormal()
         {
@@ -96,51 +94,57 @@ namespace Domain.Controllers
             return View(entries);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateInformalEntry([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
-        {
-            if (Request.IsAuthenticated)
-            {
-                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
-                Entries aEntry = new Entries();
+        //// GET: Entries/Create 
+        //public ActionResult CreateInformalEntry()
+        //{
+        //    return View();
+        //}
 
-                if (picUpload != null && picUpload.ContentLength > 0)
-                {
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                    aEntry.EntryType = (EnumEntryType)1;
-                    aEntry.Filename = picUpload.FileName;
-                    aEntry.ContentType = picUpload.ContentType;
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult CreateInformalEntry([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
+        //{
+        //    if (Request.IsAuthenticated)
+        //    {
+        //        var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+        //        Entries aEntry = new Entries();
 
-                    using (var reader = new BinaryReader(picUpload.InputStream))
-                    {
-                        aEntry.File = reader.ReadBytes(picUpload.ContentLength);
-                    }
+        //        if (picUpload != null && picUpload.ContentLength > 0)
+        //        {
+        //            aEntry.Heading = entries.Heading;
+        //            aEntry.text = entries.text;
+        //            aEntry.Date = DateTime.Now;
+        //            aEntry.Author = user;
+        //            aEntry.EntryType = (EnumEntryType)1;
+        //            aEntry.Filename = picUpload.FileName;
+        //            aEntry.ContentType = picUpload.ContentType;
 
-                    user.Entries.Add(aEntry);
-                    db.Entries.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("IndexFormal", new { Id = user.Id });
-                }
-                else
-                {
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                    aEntry.EntryType = (EnumEntryType)1;
+        //            using (var reader = new BinaryReader(picUpload.InputStream))
+        //            {
+        //                aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+        //            }
 
-                    user.Entries.Add(aEntry);
-                    db.Entries.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("IndexFormal", new { Id = user.Id });
-                }
-            }
-            return View(entries);
-        }
+        //            user.Entries.Add(aEntry);
+        //            db.Entries.Add(aEntry);
+        //            db.SaveChanges();
+        //            return RedirectToAction("IndexInformal", new { Id = user.Id });
+        //        }
+        //        else
+        //        {
+        //            aEntry.Heading = entries.Heading;
+        //            aEntry.text = entries.text;
+        //            aEntry.Date = DateTime.Now;
+        //            aEntry.Author = user;
+        //            aEntry.EntryType = (EnumEntryType)1;
+
+        //            user.Entries.Add(aEntry);
+        //            db.Entries.Add(aEntry);
+        //            db.SaveChanges();
+        //            return RedirectToAction("IndexInformal", new { Id = user.Id });
+        //        }
+        //    }
+        //    return View(entries);
+        //}
 
         public ActionResult EntryFile(int id)
         {
