@@ -275,9 +275,8 @@
     <Content Include="Views\EntryInformals\Edit.cshtml" />
     <Content Include="Views\EntryInformals\Index.cshtml" />
     <Content Include="Views\EntryInformative\Research.cshtml" />
-    <Content Include="Views\EntryInformative\Create.cshtml" />
+    <Content Include="Views\EntryInformative\CreateResearch.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
-    <Content Include="Views\Events\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
