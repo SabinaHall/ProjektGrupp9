@@ -2,18 +2,20 @@
 @model IEnumerable<DataLogic.Models.Entries>
 
 @{
-    ViewBag.Title = "Forskningsök";
+    ViewBag.Title = "Utbildning";
 }
 
-<h2>Forskningsinlägg (sökresultat)</h2>
-
+<h2>Utbildningsinlägg</h2>
 
 <p>
-    @using (Html.BeginForm("ResearchSearch", "EntryInformative"))
+    @Html.ActionLink("Skriv nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+</p>
+<p>
+    @using (Html.BeginForm("EducationSearch", "EntryInformative"))
     {
-        @Html.TextBox("ResearchSearch", null, new { @class = "form-control" })
+        @Html.TextBox("EducationSearch", null, new { @class = "form-control" })
 
-        <input type="submit" name="researchSearch" value="Sök forskningsinlägg" />
+        <input type="submit" name="educationSearch" value="Sök utbildnigsinlägg" />
     }
 </p>
 @foreach (var entry in Model)

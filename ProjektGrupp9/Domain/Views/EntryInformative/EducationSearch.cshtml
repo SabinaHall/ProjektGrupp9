@@ -2,18 +2,18 @@
 @model IEnumerable<DataLogic.Models.Entries>
 
 @{
-    ViewBag.Title = "Forskningsök";
+    ViewBag.Title = "Utbildningsök";
 }
 
-<h2>Forskningsinlägg (sökresultat)</h2>
+<h2>Utbildningsinlägg (sökresultat)</h2>
 
 
 <p>
-    @using (Html.BeginForm("ResearchSearch", "EntryInformative"))
+    @using (Html.BeginForm("EducationSearch", "EntryInformative"))
     {
-        @Html.TextBox("ResearchSearch", null, new { @class = "form-control" })
+        @Html.TextBox("EducationSearch", null, new { @class = "form-control" })
 
-        <input type="submit" name="researchSearch" value="Sök forskningsinlägg" />
+        <input type="submit" name="educationSearch" value="Sök utbildninginlägg" />
     }
 </p>
 @foreach (var entry in Model)

@@ -278,6 +278,8 @@
     <Content Include="Views\EntryInformative\Create.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\EntryInformative\ResearchSearch.cshtml" />
+    <Content Include="Views\EntryInformative\EducationSearch.cshtml" />
+    <Content Include="Views\EntryInformative\Education.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,6 +26,12 @@ namespace Domain.Controllers
             return View(entryList);
         }
 
+        public ActionResult Education(string id)
+        {
+            Entries entry = new Entries();
+            List<Entries> entryList = db.Entries.Where(x => x.Author.Id == id).ToList();
+            return View(entryList);
+        }
         
 
 
@@ -47,6 +53,23 @@ namespace Domain.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult EducationSearch ( string educationSearch)
+        {
+            List<Entries> model = new List<Entries>();
+            if (!String.IsNullOrEmpty(educationSearch))
+            {
+                model = db.Entries.Where(s => s.Author.UserName.ToLower().Contains(educationSearch.ToLower()) ||
+                s.Heading.ToLower().Contains(educationSearch.ToLower()) || s.text.ToLower().Contains(educationSearch.ToLower())
+                || s.Author.Email.ToLower().Contains(educationSearch.ToLower())).ToList();
+            }
+            else
+            {
+                model = db.Entries.ToList();
+            }
+
+            return View(model);
+        } 
         
         // GET: Entries/Details/5
         public ActionResult Details(int? id)
