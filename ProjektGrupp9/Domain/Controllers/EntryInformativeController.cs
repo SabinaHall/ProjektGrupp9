@@ -87,7 +87,12 @@ namespace Domain.Controllers
         }
 
         // GET: Entries/Create
-        public ActionResult Create()
+        public ActionResult CreateResearch()
+        {
+            return View();
+        }
+
+        public ActionResult CreateEducation()
         {
             return View();
         }
@@ -95,7 +100,7 @@ namespace Domain.Controllers
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult CreateResearch([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated)
             {
@@ -120,7 +125,7 @@ namespace Domain.Controllers
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Home", new { Id = user.Id });
+                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
                 }
                 else
                 {  
@@ -133,12 +138,57 @@ namespace Domain.Controllers
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Home", new { Id = user.Id });
+                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
                 }
             }
             return View(entries);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEducation([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                Entries aEntry = new Entries();
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    aEntry.Heading = entries.Heading;
+                    aEntry.text = entries.text;
+                    aEntry.Date = DateTime.Now;
+                    aEntry.Author = user;
+                    aEntry.EntryType = 0;
+                    aEntry.Filename = picUpload.FileName;
+                    aEntry.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+
+                    user.Entries.Add(aEntry);
+                    db.Entries.Add(aEntry);
+                    db.SaveChanges();
+                    return View("Education", "EntryInformative", new { id = user.Id });
+                }
+                else
+                {
+                    aEntry.Heading = entries.Heading;
+                    aEntry.text = entries.text;
+                    aEntry.Date = DateTime.Now;
+                    aEntry.Author = user;
+                    aEntry.EntryType = 0;
+
+                    user.Entries.Add(aEntry);
+                    db.Entries.Add(aEntry);
+                    db.SaveChanges();
+                    return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
+                }
+            }
+            return View(entries);
+        }
         //// GET: Entries/Create 
         //public ActionResult CreateInformalEntry()
         //{

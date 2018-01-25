@@ -8,7 +8,7 @@
 <h2>Forskningsinlägg</h2>
 
 <p>
-    @Html.ActionLink("Skriv nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Skriv nytt inlägg", "CreateResearch", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 <p>
     @using (Html.BeginForm("ResearchSearch", "EntryInformative"))
