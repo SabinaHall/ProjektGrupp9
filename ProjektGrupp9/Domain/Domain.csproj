@@ -193,6 +193,7 @@
     <Compile Include="Controllers\EntryInformativeController.cs" />
     <Compile Include="Controllers\EntriesController.cs" />
     <Compile Include="Controllers\EntryInformalsController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -275,6 +276,8 @@
     <Content Include="Views\EntryInformals\Index.cshtml" />
     <Content Include="Views\EntryInformative\Research.cshtml" />
     <Content Include="Views\EntryInformative\Create.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\EntryInformative\ResearchSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
