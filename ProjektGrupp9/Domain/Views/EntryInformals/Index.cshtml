@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<DataLogic.Models.EntryInformal>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Allmänna bloggen</h2>
+
+<p>
+    @Html.ActionLink("Skriv ett nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+</p>
+
+<br />
+
+@foreach (var entry in Model)
+{
+    <div class="well">
+        <h3>@entry.Heading</h3>
+        <p>Skriven av: @entry.Author.Email</p>
+        <p>Datum: @entry.Date.ToString()</p>
+        <br />
+        <br />
+        <p>@entry.Text</p>
+        <br />
+        @if (entry.File != null)
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+        }
+
+        <br />
+        <br />
+        @Html.ActionLink("Radera inlägget", "Delete", new { id = entry.Id })
+    </div>
+}
+

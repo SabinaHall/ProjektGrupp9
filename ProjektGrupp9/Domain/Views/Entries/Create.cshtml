@@ -2,7 +2,7 @@
 @using Microsoft.AspNet.Identity
 @model DataLogic.Models.Entries
 
-<h2>Skapa ett nytt inlägg</h2>
+<h2>Skapa ett nytt formellt inlägg</h2>
 
 @using (Html.BeginForm("Create", "Entries", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -45,7 +45,6 @@
             <p>Vill du lägga till en egen kategori?</p>
             @Html.ActionLink("Klicka här", "Create", "Categories", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
         </div>
-
 
         <br />
         <br />

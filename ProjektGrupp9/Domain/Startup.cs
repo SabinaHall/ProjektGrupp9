@@ -36,22 +36,22 @@ namespace Domain
 
 
 
-            PasswordHasher pwdHash = new PasswordHasher();
-            string pwd = pwdHash.HashPassword("123");
-            var user = new ApplicationUser();
+            //PasswordHasher pwdHash = new PasswordHasher();
+            //string pwd = pwdHash.HashPassword("123");
+            //var user = new ApplicationUser();
 
 
 
 
-            user.PasswordHash = pwd;
-            user.UserName = "andreas@live.se";
-            user.Email = "andreas@live.se";
-            user.SecurityStamp = Guid.NewGuid().ToString(); //THIS IS WHAT I NEEDED
-            context.Users.Add(user);
-            context.SaveChanges();
+            //user.PasswordHash = pwd;
+            //user.UserName = "andreas@live.se";
+            //user.Email = "andreas@live.se";
+            //user.SecurityStamp = Guid.NewGuid().ToString(); //THIS IS WHAT I NEEDED
+            //context.Users.Add(user);
+            //context.SaveChanges();
 
 
-            UserManager.AddToRole(user.Id, "SuperAdmin");
+            //UserManager.AddToRole(user.Id, "SuperAdmin");
 
 
 
