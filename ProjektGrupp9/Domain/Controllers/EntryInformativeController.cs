@@ -26,15 +26,25 @@ namespace Domain.Controllers
             return View(entryList);
         }
 
+        
+
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Research (string userId, int entryID)
+        public ActionResult ResearchSearch (string researchSearch)
         {
-            Entries entry = new Entries();
-            List<Entries> allEntriesList = db.Entries.Where(x => x.Author.Id == userId).ToList();
-            List<Entries> entryList = new List<Entries>();
-            entryList.Add(allEntriesList.FirstOrDefault(x => x.Id == entryID));
-            return View(entryList);
+            List<Entries> model = new List<Entries>();
+            if (!String.IsNullOrEmpty(researchSearch))
+            {
+                model = db.Entries.Where(s => s.Author.UserName.ToLower().Contains(researchSearch.ToLower())  ||
+                s.Heading.ToLower().Contains(researchSearch.ToLower())  || s.text.ToLower().Contains(researchSearch.ToLower())
+                  || s.Author.Email.ToLower().Contains(researchSearch.ToLower()) ).ToList();
+
+            }
+            else
+            {
+                model = db.Entries.ToList();
+            }
+            return View(model);
         }
 
         

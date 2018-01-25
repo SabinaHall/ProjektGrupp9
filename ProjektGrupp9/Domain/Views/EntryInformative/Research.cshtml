@@ -10,7 +10,14 @@
 <p>
     @Html.ActionLink("Skriv nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
+<p>
+    @using (Html.BeginForm("ResearchSearch", "EntryInformative"))
+    {
+        @Html.TextBox("ResearchSearch", null, new { @class = "form-control" })
 
+        <input type="submit" name="researchSearch" value="Sök forskningsinlägg" />
+    }
+</p>
 @foreach (var entry in Model)
 {
     //här behövs en if-sats för att filtrera ut alla icke-informativa
