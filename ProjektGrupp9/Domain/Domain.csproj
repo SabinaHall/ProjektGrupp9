@@ -261,6 +261,7 @@
     <Content Include="Views\Entries\Edit.cshtml" />
     <Content Include="Views\Entries\IndexFormal.cshtml" />
     <Content Include="Views\Entries\IndexInformal.cshtml" />
+    <Content Include="Views\Entries\Research.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

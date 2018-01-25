@@ -6,7 +6,21 @@
     @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Informativa Inlägg
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            @Html.ActionLink("Utbildning", "Education", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)<br />
+            @Html.ActionLink("Forskning", "Research", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
+           
+
+            </div>
+            </li>
             <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
+            
+          
             <li>@Html.ActionLink("Bloggen", "IndexInformal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
         </ul>
 
