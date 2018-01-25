@@ -30,7 +30,13 @@
             <br />
             <br />
             <br />
-            @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
+
+            @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
+            }
+
+
         </div>
     }
 }

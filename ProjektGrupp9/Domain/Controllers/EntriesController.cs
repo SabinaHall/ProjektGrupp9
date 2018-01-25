@@ -30,7 +30,7 @@ namespace Domain.Controllers
             return View(entryList);
         }
 
-        public ActionResult Research (string userId, int entryID)
+        public ActionResult Research(string userId, int entryID)
         {
             Entries entry = new Entries();
             List<Entries> allEntriesList = db.Entries.Where(x => x.Author.Id == userId).ToList();
@@ -112,58 +112,6 @@ namespace Domain.Controllers
             return View(entries);
         }
 
-        //// GET: Entries/Create 
-        //public ActionResult CreateInformalEntry()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CreateInformalEntry([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
-        //{
-        //    if (Request.IsAuthenticated)
-        //    {
-        //        var user = db.Users.First(x => x.Id == id) as ApplicationUser;
-        //        Entries aEntry = new Entries();
-
-        //        if (picUpload != null && picUpload.ContentLength > 0)
-        //        {
-        //            aEntry.Heading = entries.Heading;
-        //            aEntry.text = entries.text;
-        //            aEntry.Date = DateTime.Now;
-        //            aEntry.Author = user;
-        //            aEntry.EntryType = (EnumEntryType)1;
-        //            aEntry.Filename = picUpload.FileName;
-        //            aEntry.ContentType = picUpload.ContentType;
-
-        //            using (var reader = new BinaryReader(picUpload.InputStream))
-        //            {
-        //                aEntry.File = reader.ReadBytes(picUpload.ContentLength);
-        //            }
-
-        //            user.Entries.Add(aEntry);
-        //            db.Entries.Add(aEntry);
-        //            db.SaveChanges();
-        //            return RedirectToAction("IndexInformal", new { Id = user.Id });
-        //        }
-        //        else
-        //        {
-        //            aEntry.Heading = entries.Heading;
-        //            aEntry.text = entries.text;
-        //            aEntry.Date = DateTime.Now;
-        //            aEntry.Author = user;
-        //            aEntry.EntryType = (EnumEntryType)1;
-
-        //            user.Entries.Add(aEntry);
-        //            db.Entries.Add(aEntry);
-        //            db.SaveChanges();
-        //            return RedirectToAction("IndexInformal", new { Id = user.Id });
-        //        }
-        //    }
-        //    return View(entries);
-        //}
-
         public ActionResult EntryFile(int id)
         {
             var be = db.Entries.Single(x => x.Id == id);
@@ -190,8 +138,6 @@ namespace Domain.Controllers
         }
 
         // POST: Entries/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Heading,text,EntryType,Date")] Entries entries)
