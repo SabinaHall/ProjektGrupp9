@@ -50,11 +50,8 @@ namespace Domain
                 context.Users.Add(user);
                 context.SaveChanges();
 
-
                 UserManager.AddToRole(user.Id, "SuperAdmin");
             }
-
-
 
             // creating Creating Manager role    
             if (!roleManager.RoleExists("Admin"))
@@ -62,7 +59,6 @@ namespace Domain
                 var role = new IdentityRole();
                 role.Name = "Admin";
                 roleManager.Create(role);
-
             }
 
             // creating Creating Employee role    
@@ -71,11 +67,7 @@ namespace Domain
                 var role = new IdentityRole();
                 role.Name = "User";
                 roleManager.Create(role);
-
             }
-
-
         }
     }
-
 }
