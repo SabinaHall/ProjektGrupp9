@@ -10,9 +10,7 @@ namespace DataLogic.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [Display(Name = "Namn")]
-        public string name { get; set; }
-        public virtual Roles Role { get; set; }
+      
         public virtual ICollection<Entries> Entries { get; set; }
 
 

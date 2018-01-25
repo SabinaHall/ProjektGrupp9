@@ -14,13 +14,13 @@ namespace DataLogic.Models
             utbildning = 3
         }
 
-        public enum CategoryEnum
-        {
-            Möte = 0,
-            Information = 1,
-            Projekt = 2,
-            Övrigt = 3
-        }
+        //public enum CategoryEnum
+        //{
+        //    Möte = 0,
+        //    Information = 1,
+        //    Projekt = 2,
+        //    Övrigt = 3
+        //}
 
         public int Id { get; set; }
 
@@ -36,7 +36,7 @@ namespace DataLogic.Models
 
         public EnumEntryType EntryType { get; set; }
 
-        public CategoryEnum Category { get; set; }
+        //public CategoryEnum Category { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -48,6 +48,6 @@ namespace DataLogic.Models
 
         public virtual ApplicationUser Author { get; set; }
 
-        public virtual ICollection<Category> CategoryTest { get; set; }
+        public virtual Category CategoryTest { get; set; }
     }
 }

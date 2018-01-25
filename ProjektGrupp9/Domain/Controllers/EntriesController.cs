@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using DataLogic.Models;
 using System.IO;
+using System.Data.Entity.Core.Metadata.Edm;
+using static DataLogic.Models.Entries;
 
 namespace Domain.Controllers
 {
@@ -50,7 +52,7 @@ namespace Domain.Controllers
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType,Category")] Entries entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated)
             {
@@ -63,8 +65,7 @@ namespace Domain.Controllers
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
-                    aEntry.EntryType = entries.EntryType;
-                    aEntry.Category = entries.Category;
+                    aEntry.EntryType = 0;
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -84,8 +85,53 @@ namespace Domain.Controllers
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
-                    aEntry.EntryType = entries.EntryType;
-                    aEntry.Category = entries.Category;
+                    aEntry.EntryType = 0;
+
+                    user.Entries.Add(aEntry);
+                    db.Entries.Add(aEntry);
+                    db.SaveChanges();
+                    return RedirectToAction("IndexFormal", new { Id = user.Id });
+                }
+            }
+            return View(entries);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateInformalEntry([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                Entries aEntry = new Entries();
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    aEntry.Heading = entries.Heading;
+                    aEntry.text = entries.text;
+                    aEntry.Date = DateTime.Now;
+                    aEntry.Author = user;
+                    aEntry.EntryType = (EnumEntryType)1;
+                    aEntry.Filename = picUpload.FileName;
+                    aEntry.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+
+                    user.Entries.Add(aEntry);
+                    db.Entries.Add(aEntry);
+                    db.SaveChanges();
+                    return RedirectToAction("IndexFormal", new { Id = user.Id });
+                }
+                else
+                {
+                    aEntry.Heading = entries.Heading;
+                    aEntry.text = entries.text;
+                    aEntry.Date = DateTime.Now;
+                    aEntry.Author = user;
+                    aEntry.EntryType = (EnumEntryType)1;
 
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);

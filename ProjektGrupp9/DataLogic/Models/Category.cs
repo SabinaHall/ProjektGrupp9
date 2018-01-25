@@ -12,6 +12,6 @@ namespace DataLogic.Models
 
         public string Namn { get; set; }
 
-        public virtual Entries entry { get; set; } 
-    }
+        public virtual ICollection<Entries> Entries { get; set; } 
+    } 
 }

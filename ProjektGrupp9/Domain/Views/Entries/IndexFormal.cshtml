@@ -13,20 +13,22 @@
 
 @foreach (var entry in Model)
 {
-    <div class="well">
-        <h3>@entry.Heading</h3>
-        <p>Skriven av: @entry.Author.Email</p>
-        <p>Datum: @entry.Date.ToString()  Kategori: @entry.Category.ToString()</p>
-        <br />
-        <br />
-        <p>@entry.text</p>
-        <br />
-        @if (entry.File != null)
-        {
-            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
-        }
-    </div>
-
+    if (entry.EntryType == 0)
+    {
+        <div class="well">
+            <h3>@entry.Heading</h3>
+            <p>Skriven av: @entry.Author.Email</p>
+            <p>Datum: @entry.Date.ToString()</p>
+            <br />
+            <br />
+            <p>@entry.text</p>
+            <br />
+            @if (entry.File != null)
+            {
+                <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+            }
+        </div>
+    }
 }
 
 
