@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(Domain.Startup))]
 namespace Domain
@@ -35,23 +36,23 @@ namespace Domain
             }
 
 
-
-            //PasswordHasher pwdHash = new PasswordHasher();
-            //string pwd = pwdHash.HashPassword("123");
-            //var user = new ApplicationUser();
-
-
-
-
-            //user.PasswordHash = pwd;
-            //user.UserName = "andreas@live.se";
-            //user.Email = "andreas@live.se";
-            //user.SecurityStamp = Guid.NewGuid().ToString(); //THIS IS WHAT I NEEDED
-            //context.Users.Add(user);
-            //context.SaveChanges();
+            if (!context.Users.Any(x => x.UserName == "andreas@live.se"))
+            {
+                PasswordHasher pwdHash = new PasswordHasher();
+                string pwd = pwdHash.HashPassword("123");
+                var user = new ApplicationUser();
 
 
-            //UserManager.AddToRole(user.Id, "SuperAdmin");
+                user.PasswordHash = pwd;
+                user.UserName = "andreas@live.se";
+                user.Email = "andreas@live.se";
+                user.SecurityStamp = Guid.NewGuid().ToString(); //THIS IS WHAT I NEEDED
+                context.Users.Add(user);
+                context.SaveChanges();
+
+
+                UserManager.AddToRole(user.Id, "SuperAdmin");
+            }
 
 
 
