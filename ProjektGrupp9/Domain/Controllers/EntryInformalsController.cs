@@ -11,9 +11,8 @@ using System.IO;
 
 namespace Domain.Controllers
 {
-    public class EntryInformalsController : Controller
+    public class EntryInformalsController : BaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: EntryInformals
         public ActionResult Index()
@@ -47,11 +46,11 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal, string id, HttpPostedFileBase picUpload)
         {
-            var user = db.Users.First(x => x.Id == id) as ApplicationUser;
-            EntryInformal aEntry = new EntryInformal();
-
             if (Request.IsAuthenticated)
             {
+                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                EntryInformal aEntry = new EntryInformal();
+
                 if (picUpload != null && picUpload.ContentLength > 0)
                 {
                     aEntry.Heading = entryInformal.Heading;
@@ -66,7 +65,8 @@ namespace Domain.Controllers
                         aEntry.File = reader.ReadBytes(picUpload.ContentLength);
                     }
 
-                    db.InformalEntries.Add(entryInformal);
+                    user.InformalEntrys.Add(aEntry);
+                    db.InformalEntries.Add(aEntry);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { Id = user.Id });
                 }
@@ -83,7 +83,17 @@ namespace Domain.Controllers
                     return RedirectToAction("Index", new { Id = user.Id });
                 }
             }
-            return View(entryInformal);
+            return View();
+        }
+
+        public ActionResult EntryFile(int id)
+        {
+            var be = db.InformalEntries.Single(x => x.Id == id);
+            if (be.File != null)
+            {
+                return File(be.File, "Image/png");
+            }
+            return View();
         }
 
         // GET: EntryInformals/Edit/5
@@ -102,9 +112,11 @@ namespace Domain.Controllers
         }
 
         // POST: EntryInformals/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal)
+        public ActionResult Edit([Bind(Include = "Id,Heading,Text,Date,Filename,ContentType,File")] EntryInformal entryInformal)
         {
             if (ModelState.IsValid)
             {

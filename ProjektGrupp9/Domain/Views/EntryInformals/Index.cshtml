@@ -1,17 +1,12 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<DataLogic.Models.EntryInformal>
 
-@{
-    ViewBag.Title = "Index";
-}
 
 <h2>Allmänna bloggen</h2>
 
 <p>
-    @Html.ActionLink("Skriv ett nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Skriv nytt inlägg", "Create", "EntryInformals", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
-
-<br />
 
 @foreach (var entry in Model)
 {
@@ -30,7 +25,9 @@
 
         <br />
         <br />
-        @Html.ActionLink("Radera inlägget", "Delete", new { id = entry.Id })
+        <br />
+        @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
     </div>
 }
+
 
