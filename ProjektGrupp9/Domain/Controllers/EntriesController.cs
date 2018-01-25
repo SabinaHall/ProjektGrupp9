@@ -10,6 +10,7 @@ using DataLogic.Models;
 using System.IO;
 using System.Data.Entity.Core.Metadata.Edm;
 using static DataLogic.Models.Entries;
+using Microsoft.AspNet.Identity;
 
 namespace Domain.Controllers
 {
@@ -75,7 +76,7 @@ namespace Domain.Controllers
                 Entries aEntry = new Entries();
 
                 if (picUpload != null && picUpload.ContentLength > 0)
-                { 
+                {
                     aEntry.Heading = entries.Heading;
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
@@ -95,7 +96,7 @@ namespace Domain.Controllers
                     return RedirectToAction("IndexFormal", new { Id = user.Id });
                 }
                 else
-                {  
+                {
                     aEntry.Heading = entries.Heading;
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
@@ -227,7 +228,7 @@ namespace Domain.Controllers
             Entries entries = db.Entries.Find(id);
             db.Entries.Remove(entries);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexFormal");
         }
 
         protected override void Dispose(bool disposing)

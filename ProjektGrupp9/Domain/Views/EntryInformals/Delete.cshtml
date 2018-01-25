@@ -4,9 +4,9 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Radera</h2>
+<h2>Delete</h2>
 
-<h3>Är du säker på att du vill ta bort detta inlägg?</h3>
+<h3>Är du säker på att du vill radera detta inlägg?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -26,6 +26,13 @@
             @Html.DisplayFor(model => model.Text)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
     </dl>
 
     @using (Html.BeginForm())
@@ -33,7 +40,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Ta bort" class="btn btn-default" />
+            <input type="submit" value="radera" class="btn btn-default" />
         </div>
     }
 </div>
