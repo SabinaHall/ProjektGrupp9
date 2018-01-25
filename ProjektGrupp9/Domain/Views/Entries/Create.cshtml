@@ -1,10 +1,11 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using System.Collections.Generic
+@using Microsoft.AspNet.Identity
 @model DataLogic.Models.Entries
 
 <h2>Skapa ett nytt inlägg</h2>
 
 @using (Html.BeginForm("Create", "Entries", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
- {
+{
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -26,19 +27,29 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EntryType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.EntryType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EntryType, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <br />
+
+        @using (DataLogic.Models.ApplicationDbContext db = new DataLogic.Models.ApplicationDbContext())
+        {
+            foreach (var aCategory in db.Categories)
+            {
+                <h2>VILL HA DETTA SOM DROPDOWNLIST</h2>
+                @*@Html.DropDownList("Kategori", aCategory.Namn)*@
+                <p>@aCategory.Namn</p>
+            }
+        }
+
+        <br />
 
         <div class="form-group">
             @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.Category, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-10">
+                <p>Vill du lägga till en egen kategori?</p>
+                @Html.ActionLink("Klicka här", "Create", "Categories", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
             </div>
         </div>
 

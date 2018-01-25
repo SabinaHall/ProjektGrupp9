@@ -63,7 +63,7 @@ namespace Domain.Controllers
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
-                    aEntry.EntryType = entries.EntryType;
+                    aEntry.EntryType = 0;
                     aEntry.Category = entries.Category;
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
