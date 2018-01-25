@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<DataLogic.Models.Entries>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Forskningsinlägg</h2>
+
+<p>
+    @Html.ActionLink("Skriv nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+</p>
+
+@foreach (var entry in Model)
+{
+    //här behövs en if-sats för att filtrera ut alla icke-informativa
+        <div class="well">
+            <h3>@entry.Heading</h3>
+            <p>Skriven av: @entry.Author.Email</p>
+            <p>Datum: @entry.Date.ToString()</p>
+            <br />
+            <br />
+            <p>@entry.text</p>
+            <br />
+            @if (entry.File != null)
+            {
+                <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+            }
+        </div>
+    
+}
+
+
+<div class="clearfix"></div>

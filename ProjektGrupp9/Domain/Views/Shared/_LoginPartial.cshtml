@@ -12,8 +12,8 @@
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @Html.ActionLink("Utbildning", "Education", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)<br />
-                    @Html.ActionLink("Forskning", "Research", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
+                    @Html.ActionLink("Utbildning", "Education", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)<br />
+                    @Html.ActionLink("Forskning", "Research", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
 
                 </div>
             </li>

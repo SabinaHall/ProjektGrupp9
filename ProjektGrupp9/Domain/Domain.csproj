@@ -190,6 +190,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\EntryInformativeController.cs" />
     <Compile Include="Controllers\EntriesController.cs" />
     <Compile Include="Controllers\EntryInformalsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -272,6 +273,8 @@
     <Content Include="Views\EntryInformals\Details.cshtml" />
     <Content Include="Views\EntryInformals\Edit.cshtml" />
     <Content Include="Views\EntryInformals\Index.cshtml" />
+    <Content Include="Views\EntryInformative\Research.cshtml" />
+    <Content Include="Views\EntryInformative\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

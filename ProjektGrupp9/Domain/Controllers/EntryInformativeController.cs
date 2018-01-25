@@ -10,18 +10,14 @@ using DataLogic.Models;
 using System.IO;
 using System.Data.Entity.Core.Metadata.Edm;
 using static DataLogic.Models.Entries;
-using Microsoft.AspNet.Identity;
 
 namespace Domain.Controllers
 {
-    public class EntriesController : BaseController
+    public class EntryInformativeController : BaseController
     {
         // GET: Entries
-        public ActionResult IndexFormal()
-        {
-            return View(db.Entries.ToList());
-        }
 
+        
         public ActionResult Research(string id)
         {
 
@@ -30,6 +26,8 @@ namespace Domain.Controllers
             return View(entryList);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Research (string userId, int entryID)
         {
             Entries entry = new Entries();
@@ -39,11 +37,7 @@ namespace Domain.Controllers
             return View(entryList);
         }
 
-        public ActionResult IndexInformal()
-        {
-            return View(db.Entries.ToList());
-        }
-
+        
         // GET: Entries/Details/5
         public ActionResult Details(int? id)
         {
@@ -76,7 +70,7 @@ namespace Domain.Controllers
                 Entries aEntry = new Entries();
 
                 if (picUpload != null && picUpload.ContentLength > 0)
-                {
+                { 
                     aEntry.Heading = entries.Heading;
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
@@ -93,10 +87,10 @@ namespace Domain.Controllers
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
                     db.SaveChanges();
-                    return RedirectToAction("IndexFormal", new { Id = user.Id });
+                    return RedirectToAction("Index", "Home", new { Id = user.Id });
                 }
                 else
-                {
+                {  
                     aEntry.Heading = entries.Heading;
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
@@ -106,7 +100,7 @@ namespace Domain.Controllers
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
                     db.SaveChanges();
-                    return RedirectToAction("IndexFormal", new { Id = user.Id });
+                    return RedirectToAction("Index", "Home", new { Id = user.Id });
                 }
             }
             return View(entries);
@@ -228,7 +222,7 @@ namespace Domain.Controllers
             Entries entries = db.Entries.Find(id);
             db.Entries.Remove(entries);
             db.SaveChanges();
-            return RedirectToAction("IndexFormal");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
