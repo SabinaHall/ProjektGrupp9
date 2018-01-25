@@ -52,7 +52,7 @@ namespace Domain.Controllers
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType,Category")] Entries entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated)
             {
@@ -98,7 +98,7 @@ namespace Domain.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateInformalEntry([Bind(Include = "Id,Heading,text,EntryType,Category")] Entries entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult CreateInformalEntry([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated)
             {
