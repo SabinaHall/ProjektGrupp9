@@ -205,6 +205,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\oru2.png" />
+    <Content Include="Content\images\uni.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -284,6 +286,9 @@
     <Content Include="Views\EntryInformative\ResearchSearch.cshtml" />
     <Content Include="Views\Events\Update.cshtml" />
     <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\EntryInformative\DeleteEducation.cshtml" />
     <Content Include="Views\EntryInformative\DeleteResearch.cshtml" />
   </ItemGroup>

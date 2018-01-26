@@ -17,14 +17,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Blackboard 2.0", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+              
             </div>
             <div class="navbar-collapse collapse">
+                
+                <a href='@Url.Action("IndexFormal", "Entries")'>
+                    <img src=~/Content/images/oru2.png style="width:130px;height:75px;" />
+                </a>
+
+
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Hem", "Index", "Home")</li>
-                  
-                    @if ((User.IsInRole("SuperAdmin") || User.IsInRole("Admin")) && Request.IsAuthenticated) 
-                 {<li>@Html.ActionLink("Admin", "Admin", "Home")</li>}
+
+
 
                 </ul>
                 @Html.Partial("_LoginPartial")
