@@ -10,7 +10,7 @@ namespace DataLogic.Models
 {
     public class ApplicationUser : IdentityUser
     {
-      
+
         public virtual ICollection<Entries> Entries { get; set; }
         public virtual ICollection<EntryInformal> InformalEntrys { get; set; } 
 

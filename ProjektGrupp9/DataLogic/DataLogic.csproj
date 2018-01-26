@@ -102,6 +102,7 @@
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\DataInitializer.cs" />
+    <Compile Include="Models\Email.cs" />
     <Compile Include="Models\Entries.cs" />
     <Compile Include="Models\EntryInformal.cs" />
     <Compile Include="Models\Events.cs" />

@@ -25,5 +25,7 @@ namespace DataLogic.Models
         public DbSet<Category> Categories { get; set; }
 
         public System.Data.Entity.DbSet<DataLogic.Models.Events> Events { get; set; }
+
+        public System.Data.Entity.DbSet<DataLogic.Models.Email> Emails { get; set; }
     }
 }

@@ -190,6 +190,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\EmailsController.cs" />
     <Compile Include="Controllers\EntryInformativeController.cs" />
     <Compile Include="Controllers\EntriesController.cs" />
     <Compile Include="Controllers\EntryInformalsController.cs" />
@@ -278,6 +279,12 @@
     <Content Include="Views\EntryInformative\CreateResearch.cshtml" />
     <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Emails\Create.cshtml" />
+    <Content Include="Views\Emails\Delete.cshtml" />
+    <Content Include="Views\Emails\Details.cshtml" />
+    <Content Include="Views\Emails\Edit.cshtml" />
+    <Content Include="Views\Emails\Index.cshtml" />
+    <Content Include="Views\Emails\Sent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
