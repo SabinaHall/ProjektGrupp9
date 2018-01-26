@@ -20,6 +20,9 @@
 
     <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li>@Html.ActionLink("Bloggen", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
+    <li>@Html.ActionLink("Möten", "Index", "Events")</li>
+
+
 </ul>
 
         <ul class="nav navbar-nav navbar-right">
