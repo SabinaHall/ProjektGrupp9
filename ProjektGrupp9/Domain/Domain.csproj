@@ -291,10 +291,12 @@
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\EntryInformative\DeleteEducation.cshtml" />
     <Content Include="Views\EntryInformative\DeleteResearch.cshtml" />
+    <Content Include="Views\EntryInformative\EditEducation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\EditEducation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

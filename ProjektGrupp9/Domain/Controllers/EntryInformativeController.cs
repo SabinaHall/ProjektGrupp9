@@ -55,6 +55,20 @@ namespace Domain.Controllers
             }
             return View(model);
         }
+       
+        public ActionResult EditEducation(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EntryEducation entryEducation = db.EntryEducation.Find(id);
+            if (entryEducation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(entryEducation);
+        }
 
         [HttpPost]
         public ActionResult EducationSearch ( string educationSearch)
