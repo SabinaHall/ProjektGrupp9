@@ -13,6 +13,8 @@ using static DataLogic.Models.Entries;
 
 namespace Domain.Controllers
 {
+
+    [Authorize]
     public class EntryInformativeController : BaseController
     {
         // GET: Entries
