@@ -280,6 +280,9 @@
     <Content Include="Views\Events\Create.cshtml" />
     <Content Include="Views\Events\Update.cshtml" />
     <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
