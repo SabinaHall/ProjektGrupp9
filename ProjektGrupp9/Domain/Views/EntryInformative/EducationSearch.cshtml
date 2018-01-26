@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model IEnumerable<DataLogic.Models.Entries>
+@model IEnumerable<DataLogic.Models.EntryEducation>
 
 @{
     ViewBag.Title = "Utbildningsök";
@@ -16,7 +16,7 @@
         <input type="submit" name="educationSearch" value="Sök utbildninginlägg" />
     }
 </p>
-@foreach (var entry in Model)
+@foreach (var entry in Model.Reverse())
 {
     //här behövs en if-sats för att filtrera ut alla icke-informativa
     <div class="well">

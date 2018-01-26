@@ -17,14 +17,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Blackboard 2.0", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+              
             </div>
             <div class="navbar-collapse collapse">
+                
+                <a href='@Url.Action("IndexFormal", "Entries")'>
+                    <img src=~/Content/images/oru2.png style="width:130px;height:75px;" />
+                </a>
+
+
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Hem", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Om", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Möten", "Index", "Events")</li>
+
+
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

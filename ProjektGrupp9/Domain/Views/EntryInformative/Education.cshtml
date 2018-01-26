@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model IEnumerable<DataLogic.Models.Entries>
+@model IEnumerable<DataLogic.Models.EntryEducation>
 
 @{
     ViewBag.Title = "Utbildning";
@@ -18,7 +18,7 @@
         <input type="submit" name="educationSearch" value="Sök utbildnigsinlägg" />
     }
 </p>
-@foreach (var entry in Model)
+@foreach (var entry in Model.Reverse())
 {
     //här behövs en if-sats för att filtrera ut alla icke-informativa
     <div class="well">
@@ -33,6 +33,14 @@
         {
             <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
         }
+        <br />
+        <br />
+        <br />
+        @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Radera inlägg", "DeleteEducation", new { id = entry.Id }, new { @class = "btn btn-default" })
+        }
+
     </div>
 
 }

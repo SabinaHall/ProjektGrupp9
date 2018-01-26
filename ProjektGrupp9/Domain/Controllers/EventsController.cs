@@ -50,5 +50,61 @@ namespace Domain.Controllers
             }
 
         }
+
+        public ActionResult Update(int id)
+        {
+            var model = new Events();
+            using (var context = new ApplicationDbContext())
+            {
+                model = context.Events.Find(id);
+                
+
+                return View(model);
+                
+            }
+
+
+        }
+
+        [HttpPost]
+        public ActionResult Update(Events model)
+        {
+            var oldModel = new Events();
+            using (var context = new ApplicationDbContext())
+            {
+                oldModel = context.Events.Find(model.Id);
+                oldModel.Date = model.Date;
+                oldModel.Time = model.Time;
+                oldModel.Place = model.Place;
+                oldModel.Description = model.Description;
+
+                context.SaveChanges();
+                    
+            }
+            return RedirectToAction("index");
+        }
+
+        public ActionResult Delete(int id)
+        {
+
+            var model = new Events();
+            using (var context = new ApplicationDbContext())
+            {
+                
+                model = context.Events.Find(id);
+                if (model == null)
+                {
+                    return RedirectToAction("index");
+                }
+                context.Events.Remove(model);
+                context.SaveChanges();
+                return View(model);
+
+             
+
+            }
+
+
+        }
     }
 }
