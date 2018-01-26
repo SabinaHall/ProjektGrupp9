@@ -19,15 +19,16 @@
         <p>@entry.text</p>
         <br />
 
-        @if (entry.ContentType.Contains("image"))
+        @if (entry.File != null && entry.ContentType.Contains("image"))
         {
             <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
         }
-        else
+        else if (entry.File != null && !entry.ContentType.Contains("image"))
         {
             <p>Klicka på länken för att se bifogad fil</p>
-                @Html.ActionLink("Bifogad fil", "EntryFile", "Entries", routeValues: new { Id = entry.Id }, htmlAttributes: null);
+            @Html.ActionLink("Bifogad fil: " + entry.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = entry.Id }, htmlAttributes: null);
         }
+        
         <br />
         <br />
         <br />

@@ -54,10 +54,6 @@ namespace Domain.Controllers
 
                 if (picUpload != null && picUpload.ContentLength > 0)
                 {
-                    aEntry.Heading = entryInformal.Heading;
-                    aEntry.Text = entryInformal.Text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -65,24 +61,17 @@ namespace Domain.Controllers
                     {
                         aEntry.File = reader.ReadBytes(picUpload.ContentLength);
                     }
-
-                    user.InformalEntrys.Add(aEntry);
-                    db.InformalEntries.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", new { Id = user.Id });
                 }
-                else
-                {
-                    aEntry.Heading = entryInformal.Heading;
-                    aEntry.Text = entryInformal.Text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
 
-                    user.InformalEntrys.Add(aEntry);
-                    db.InformalEntries.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Index", new { Id = user.Id });
-                }
+                aEntry.Heading = entryInformal.Heading;
+                aEntry.Text = entryInformal.Text;
+                aEntry.Date = DateTime.Now;
+                aEntry.Author = user;
+
+                user.InformalEntrys.Add(aEntry);
+                db.InformalEntries.Add(aEntry);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { Id = user.Id });
             }
             return View();
         }
