@@ -23,22 +23,7 @@ namespace Domain.Controllers
             return View(db.Entries.ToList());
         }
 
-        public ActionResult Research(string id)
-        {
-
-            Entries entry = new Entries();
-            List<Entries> entryList = db.Entries.Where(x => x.Author.Id == id).ToList();
-            return View(entryList);
-        }
-
-        public ActionResult Research(string userId, int entryID)
-        {
-            Entries entry = new Entries();
-            List<Entries> allEntriesList = db.Entries.Where(x => x.Author.Id == userId).ToList();
-            List<Entries> entryList = new List<Entries>();
-            entryList.Add(allEntriesList.FirstOrDefault(x => x.Id == entryID));
-            return View(entryList);
-        }
+       
 
         public ActionResult IndexInformal()
         {

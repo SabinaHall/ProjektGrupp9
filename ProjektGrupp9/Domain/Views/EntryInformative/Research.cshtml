@@ -18,7 +18,7 @@
         <input type="submit" name="researchSearch" value="Sök forskningsinlägg" />
     }
 </p>
-@foreach (var entry in Model)
+@foreach (var entry in Model.Reverse())
 {
     //här behövs en if-sats för att filtrera ut alla icke-informativa
         <div class="well">
@@ -32,6 +32,14 @@
             @if (entry.File != null)
             {
                 <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+            }
+
+            <br />
+            <br />
+            <br />
+            @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Radera inlägg", "DeleteResearch", new { id = entry.Id }, new { @class = "btn btn-default" })
             }
         </div>
     

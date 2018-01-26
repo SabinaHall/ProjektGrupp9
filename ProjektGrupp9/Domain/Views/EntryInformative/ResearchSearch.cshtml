@@ -16,7 +16,7 @@
         <input type="submit" name="researchSearch" value="Sök forskningsinlägg" />
     }
 </p>
-@foreach (var entry in Model)
+@foreach (var entry in Model.Reverse())
 {
     //här behövs en if-sats för att filtrera ut alla icke-informativa
     <div class="well">
