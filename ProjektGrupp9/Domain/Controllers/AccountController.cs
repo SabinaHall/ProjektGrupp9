@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DataLogic.Models;
 using DataLogic;
+using System.Collections.Generic;
 
 namespace Domain.Controllers
 {
@@ -141,7 +142,15 @@ namespace Domain.Controllers
         [Authorize(Roles = "SuperAdmin")]
         public ActionResult Register()
         {
-            return View();
+            var model = new RegisterViewModel();
+            var roller = new List<SelectListItem>();
+
+            using (var context = new ApplicationDbContext())
+            {
+                roller = context.Roles.Where(x => x.Name != "SuperAdmin").Select(x => new SelectListItem {Value =  x.Name, Text = x.Name }).ToList();
+            }
+            model.Roles = roller.AsEnumerable();
+            return View(model);
         }
 
         //
@@ -157,7 +166,7 @@ namespace Domain.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
+                    UserManager.AddToRole(user.Id, model.SelectedRole);
                     return RedirectToAction("Index", "Home");
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

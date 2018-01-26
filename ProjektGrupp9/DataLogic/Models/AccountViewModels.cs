@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace DataLogic.Models
 {
@@ -65,6 +66,11 @@ namespace DataLogic.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Roll")]
+        public string SelectedRole { get; set; }
+        public IEnumerable<SelectListItem> Roles { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "E-Post")]
         public string Email { get; set; }
@@ -77,7 +83,7 @@ namespace DataLogic.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Bekräfta lösenord")]
-        [Compare("Password", ErrorMessage = "Lösenorden matchar inte.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Lösenorden matchar inte.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -96,7 +102,7 @@ namespace DataLogic.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Bekräfta lösenord")]
-        [Compare("Password", ErrorMessage = "Lösenorden matchar inte.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Lösenorden matchar inte.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
