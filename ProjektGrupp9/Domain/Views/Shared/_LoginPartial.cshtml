@@ -5,22 +5,22 @@
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Informativa Inlägg
-                </a>
+<ul class="nav navbar-nav">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Informativa Inlägg
+        </a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @Html.ActionLink("Utbildning", "Education", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)<br />
-                    @Html.ActionLink("Forskning", "Research", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            @Html.ActionLink("Utbildning", "Education", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)<br />
+            @Html.ActionLink("Forskning", "Research", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
 
-                </div>
-            </li>
+        </div>
+    </li>
 
-            <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
-            <li>@Html.ActionLink("Bloggen", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
-        </ul>
+    <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
+    <li>@Html.ActionLink("Bloggen", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
+</ul>
 
         <ul class="nav navbar-nav navbar-right">
             <li>
@@ -33,7 +33,6 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Registrera", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

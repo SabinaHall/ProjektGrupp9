@@ -282,6 +282,8 @@
     <Content Include="Views\EntryInformative\Education.cshtml" />
     <Content Include="Views\EntryInformative\EducationSearch.cshtml" />
     <Content Include="Views\EntryInformative\ResearchSearch.cshtml" />
+    <Content Include="Views\Events\Update.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

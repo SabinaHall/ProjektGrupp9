@@ -14,16 +14,8 @@ namespace Domain.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Admin()
         {
-            ViewBag.Message = "Vår 'about'-sida.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Vår kontaktsida.";
 
             return View();
         }
