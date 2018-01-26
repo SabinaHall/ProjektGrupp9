@@ -286,6 +286,11 @@
     <Content Include="Views\EntryInformative\ResearchSearch.cshtml" />
     <Content Include="Views\Events\Update.cshtml" />
     <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\EntryInformative\DeleteEducation.cshtml" />
+    <Content Include="Views\EntryInformative\DeleteResearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

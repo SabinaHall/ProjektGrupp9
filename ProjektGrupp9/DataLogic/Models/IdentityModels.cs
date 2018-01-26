@@ -13,6 +13,8 @@ namespace DataLogic.Models
       
         public virtual ICollection<Entries> Entries { get; set; }
         public virtual ICollection<EntryInformal> InformalEntrys { get; set; } 
+        public virtual ICollection<EntryEducation> EducationEntries { get; set; }
+        public virtual ICollection<EntryResearch> ResearchEntries { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
