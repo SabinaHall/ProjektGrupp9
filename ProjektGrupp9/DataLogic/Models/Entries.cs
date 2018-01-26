@@ -14,14 +14,6 @@ namespace DataLogic.Models
             utbildning = 3
         }
 
-        //public enum CategoryEnum
-        //{
-        //    Möte = 0,
-        //    Information = 1,
-        //    Projekt = 2,
-        //    Övrigt = 3
-        //}
-
         public int Id { get; set; }
 
         [Required]
@@ -35,8 +27,6 @@ namespace DataLogic.Models
         public string text { get; set; }
 
         public EnumEntryType EntryType { get; set; }
-
-        //public CategoryEnum Category { get; set; }
 
         public DateTime Date { get; set; }
 
