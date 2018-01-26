@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLogic.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Domain.Controllers
 {
 
     [Authorize]
-    public class EventsController : Controller
+    public class EventsController : BaseController
     {
         // GET: Events
         public ActionResult Index()
@@ -27,21 +28,24 @@ namespace Domain.Controllers
 
         public ActionResult Create()
         {
-            return View();
+
+            var model = new EventViewModel();
+            model.users = db.Users.Where(x => x.Id != User.Identity.GetUserId()).ToList();
+            return View(model);
 
         }
 
         [HttpPost]
-        public ActionResult Create(Events model)
+        public ActionResult Create(EventViewModel model)
         {
             using (var context = new ApplicationDbContext())
             {
                 var newEvent = new Events();
               
-                newEvent.Date = model.Date;
-                newEvent.Time = model.Time;
-                newEvent.Place = model.Place;
-                newEvent.Description = model.Description;
+                newEvent.Date = model.events.Date;
+                newEvent.Time = model.events.Time;
+                newEvent.Place = model.events.Place;
+                newEvent.Description = model.events.Description;
                   
                 context.Events.Add(newEvent);
                 context.SaveChanges();
@@ -106,5 +110,35 @@ namespace Domain.Controllers
 
 
         }
+
+        [Authorize]
+        public ActionResult MeetingInvites(List<ApplicationUser> user)
+        {
+            var SenderID = User.Identity.GetUserId();
+
+            var ReceiverIDList = new List<string>();
+            foreach (var item in user)
+            {
+                ReceiverIDList.Add(item.Id);
+            }
+
+            foreach (var item in ReceiverIDList)
+            {
+                var toAdd = new MeetingInvites
+                {
+                    Sender = SenderID,
+                    Receiver = item
+                };
+                db.MeetingInvites.Add(toAdd);
+            }
+            db.SaveChanges();
+
+
+
+
+            return RedirectToAction("Index");
+        }
+
+
     }
 }
