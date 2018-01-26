@@ -2,9 +2,11 @@
 @model IEnumerable<DataLogic.Models.EntryInformal>
 
 
-@Html.ActionLink("EmailTest", "Create", "Emails", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
+
 
 <h2>Allmänna bloggen</h2>
+
+@Html.ActionLink("EmailTest", "Create", "Emails", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
 
 <p>
     @Html.ActionLink("Skriv nytt inlägg", "Create", "EntryInformals", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })

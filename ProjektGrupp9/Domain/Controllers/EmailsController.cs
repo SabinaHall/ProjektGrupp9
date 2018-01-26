@@ -52,7 +52,7 @@ namespace Domain.Controllers
                 var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress("sabinalarssonhall@gmail.com"));
-                message.From = new MailAddress("filipparingqvist@gmail.com");
+                //message.From = new MailAddress("filipparingqvist@gmail.com");
                 message.Subject = "Dagens uppdateringar från blackboard 2.0";
                 message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
                 message.IsBodyHtml = true;
