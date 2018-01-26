@@ -16,6 +16,7 @@ namespace DataLogic.Models
         public DateTime Date { get; set; }
         public string Time { get; set; }
         public string Place { get; set; }
+        [StringLength(20, ErrorMessage = "Beskrivningen får inte vara mer än 20 tecken.",  MinimumLength = 3)]
         public string Description { get; set; }
       
     }
