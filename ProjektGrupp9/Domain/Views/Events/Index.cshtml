@@ -1,0 +1,57 @@
+﻿@model List<DataLogic.Models.Events>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Events</h2>
+
+
+@Html.ActionLink("Skapa möte", "Create")
+   
+
+
+    @foreach (var item in Model)
+    {
+      
+            <table class="table table-condensed table-bordered">
+               
+
+                    <tr class="events">
+                        <th>Datum </th>
+                        <th>Tid</th>
+                        <th>Beskrivning</th>
+                        <th>Plats</th>
+
+                    </tr>
+               
+              
+
+                    <tr>
+
+                        <td class="col-md-2">@item.Date</td>
+
+
+
+
+                        <td class="col-md-2">@item.Time</td>
+
+
+
+                        <td class="col-md-2">@item.Description</td>
+
+
+
+
+                        <td class="col-md-2">@item.Place</td>
+
+
+                    </tr>
+
+
+                </table>
+
+
+
+                }
+
+

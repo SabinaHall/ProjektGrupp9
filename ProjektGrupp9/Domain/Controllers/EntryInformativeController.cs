@@ -26,17 +26,50 @@ namespace Domain.Controllers
             return View(entryList);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Research (string userId, int entryID)
+        public ActionResult Education(string id)
         {
             Entries entry = new Entries();
-            List<Entries> allEntriesList = db.Entries.Where(x => x.Author.Id == userId).ToList();
-            List<Entries> entryList = new List<Entries>();
-            entryList.Add(allEntriesList.FirstOrDefault(x => x.Id == entryID));
+            List<Entries> entryList = db.Entries.Where(x => x.Author.Id == id).ToList();
             return View(entryList);
         }
+        
 
+
+        [HttpPost]
+        public ActionResult ResearchSearch (string researchSearch)
+        {
+            List<Entries> model = new List<Entries>();
+            if (!String.IsNullOrEmpty(researchSearch))
+            {
+                model = db.Entries.Where(s => s.Author.UserName.ToLower().Contains(researchSearch.ToLower())  ||
+                s.Heading.ToLower().Contains(researchSearch.ToLower())  || s.text.ToLower().Contains(researchSearch.ToLower())
+                  || s.Author.Email.ToLower().Contains(researchSearch.ToLower()) ).ToList();
+
+            }
+            else
+            {
+                model = db.Entries.ToList();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EducationSearch ( string educationSearch)
+        {
+            List<Entries> model = new List<Entries>();
+            if (!String.IsNullOrEmpty(educationSearch))
+            {
+                model = db.Entries.Where(s => s.Author.UserName.ToLower().Contains(educationSearch.ToLower()) ||
+                s.Heading.ToLower().Contains(educationSearch.ToLower()) || s.text.ToLower().Contains(educationSearch.ToLower())
+                || s.Author.Email.ToLower().Contains(educationSearch.ToLower())).ToList();
+            }
+            else
+            {
+                model = db.Entries.ToList();
+            }
+
+            return View(model);
+        } 
         
         // GET: Entries/Details/5
         public ActionResult Details(int? id)
@@ -54,7 +87,12 @@ namespace Domain.Controllers
         }
 
         // GET: Entries/Create
-        public ActionResult Create()
+        public ActionResult CreateResearch()
+        {
+            return View();
+        }
+
+        public ActionResult CreateEducation()
         {
             return View();
         }
@@ -62,7 +100,7 @@ namespace Domain.Controllers
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult CreateResearch([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated)
             {
@@ -87,7 +125,7 @@ namespace Domain.Controllers
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Home", new { Id = user.Id });
+                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
                 }
                 else
                 {  
@@ -100,12 +138,57 @@ namespace Domain.Controllers
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
                     db.SaveChanges();
-                    return RedirectToAction("Index", "Home", new { Id = user.Id });
+                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
                 }
             }
             return View(entries);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEducation([Bind(Include = "Id,Heading,text,EntryType")] Entries entries, string id, HttpPostedFileBase picUpload)
+        {
+            if (Request.IsAuthenticated)
+            {
+                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                Entries aEntry = new Entries();
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    aEntry.Heading = entries.Heading;
+                    aEntry.text = entries.text;
+                    aEntry.Date = DateTime.Now;
+                    aEntry.Author = user;
+                    aEntry.EntryType = 0;
+                    aEntry.Filename = picUpload.FileName;
+                    aEntry.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+
+                    user.Entries.Add(aEntry);
+                    db.Entries.Add(aEntry);
+                    db.SaveChanges();
+                    return View("Education", "EntryInformative", new { id = user.Id });
+                }
+                else
+                {
+                    aEntry.Heading = entries.Heading;
+                    aEntry.text = entries.text;
+                    aEntry.Date = DateTime.Now;
+                    aEntry.Author = user;
+                    aEntry.EntryType = 0;
+
+                    user.Entries.Add(aEntry);
+                    db.Entries.Add(aEntry);
+                    db.SaveChanges();
+                    return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
+                }
+            }
+            return View(entries);
+        }
         //// GET: Entries/Create 
         //public ActionResult CreateInformalEntry()
         //{

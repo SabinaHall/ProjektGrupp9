@@ -23,14 +23,26 @@
             <br />
             <p>@entry.text</p>
             <br />
+
             @if (entry.File != null)
             {
                 <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+
+                @*if (entry.ContentType != "image/jpeg")
+                {
+                    <p>Här ska det hamna en länk till den bifogade filen.</p>
+                }*@
             }
+
             <br />
             <br />
             <br />
-            @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
+
+            @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
+            }
+
         </div>
     }
 }

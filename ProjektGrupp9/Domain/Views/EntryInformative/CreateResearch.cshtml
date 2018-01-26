@@ -2,9 +2,9 @@
 @using Microsoft.AspNet.Identity
 @model DataLogic.Models.Entries
 
-<h2>Skapa ett nytt formellt inlägg</h2>
+<h2>Skapa ett nytt forskningsinlägg</h2>
 
-@using (Html.BeginForm("Create", "Entries", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateResearch", "EntryInformative", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -43,7 +43,7 @@
         <h3>HÄR SKA MAN VÄLJA KATEGORI</h3>
         <div class="col-md-10">
             <p>Vill du lägga till en egen kategori?</p>
-            @Html.ActionLink("Klicka här", "Create", "Categories", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+            @Html.ActionLink("Klicka här", "CreateResearch", "Categories", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
         </div>
 
         <br />
@@ -55,7 +55,7 @@
             <p>Ladda upp en bild med inlägget.</p>
             <div class="col-md-10">
                 @*Tillåter bara en specifik ändelse så att man vet att det är en bild som laddas in*@
-                <input type="file" name="picUpload" />
+                <input type="file" name="picUpload" accept=".png, .jpg, .jpeg, .gif, .tif" />
             </div>
         </div>
 

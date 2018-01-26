@@ -22,6 +22,8 @@ namespace DataLogic.Models
 
         public DbSet<Entries> Entries { get; set; }
         public DbSet <EntryInformal> InformalEntries { get; set; } 
-        public DbSet<Category> Categories { get; set; } 
+        public DbSet<Category> Categories { get; set; }
+
+        public System.Data.Entity.DbSet<DataLogic.Models.Events> Events { get; set; }
     }
 }
