@@ -115,7 +115,7 @@ namespace Domain.Controllers
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
-                    aEntry.EntryType = 0;
+                   // aEntry.EntryType = 0;
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -135,7 +135,7 @@ namespace Domain.Controllers
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
-                    aEntry.EntryType = 0;
+                  //  aEntry.EntryType = 0;
 
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
@@ -161,7 +161,7 @@ namespace Domain.Controllers
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
-                    aEntry.EntryType = 0;
+                   // aEntry.EntryType = 0;
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -181,7 +181,7 @@ namespace Domain.Controllers
                     aEntry.text = entries.text;
                     aEntry.Date = DateTime.Now;
                     aEntry.Author = user;
-                    aEntry.EntryType = 0;
+                   // aEntry.EntryType = 0;
 
                     user.Entries.Add(aEntry);
                     db.Entries.Add(aEntry);
