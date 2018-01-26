@@ -10,6 +10,8 @@
    
 
 
+
+
     @foreach (var item in Model)
     {
       
@@ -21,6 +23,8 @@
                         <th>Tid</th>
                         <th>Beskrivning</th>
                         <th>Plats</th>
+                        <th>Uppdatera</th>
+                        <th>Ta bort</th>
 
                     </tr>
                
@@ -44,6 +48,8 @@
 
                         <td class="col-md-2">@item.Place</td>
 
+                        <td class="col-md-2">@Html.ActionLink("Uppdatera", "Update", new { ID = item.Id })</td>
+                        <td class="col-md-2">@Html.ActionLink("Ta bort", "Delete", new { ID = item.Id })</td>
 
                     </tr>
 
