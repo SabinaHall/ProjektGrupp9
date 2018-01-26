@@ -8,7 +8,7 @@
     @Html.ActionLink("Skriv nytt inlägg", "Create", "EntryInformals", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 
-@foreach (var entry in Model)
+@foreach (var entry in Model.Reverse())
 {
     <div class="well">
         <h3>@entry.Heading</h3>

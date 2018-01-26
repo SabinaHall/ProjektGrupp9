@@ -1,9 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<DataLogic.Models.Entries>
 
-@{
-    ViewBag.Title = "Index";
-}
 
 <h2>Formella inlägg</h2>
 
@@ -11,40 +8,35 @@
     @Html.ActionLink("Skriv nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 
-@foreach (var entry in Model)
+@foreach (var entry in Model.Reverse())
 {
-    if (entry.EntryType == 0)
-    {
-        <div class="well">
-            <h3>@entry.Heading</h3>
-            <p>Skriven av: @entry.Author.Email</p>
-            <p>Datum: @entry.Date.ToString()</p>
-            <br />
-            <br />
-            <p>@entry.text</p>
-            <br />
+    <div class="well">
+        <h3>@entry.Heading</h3>
+        <p>Skriven av: @entry.Author.Email</p>
+        <p>Datum: @entry.Date.ToString()</p>
+        <br />
+        <br />
+        <p>@entry.text</p>
+        <br />
 
-            @if (entry.File != null)
-            {
-                <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+        @if (entry.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+        }
+        else
+        {
+            <p>Klicka på länken för att se bifogad fil</p>
+                @Html.ActionLink("Bifogad fil", "EntryFile", "Entries", routeValues: new { Id = entry.Id }, htmlAttributes: null);
+        }
+        <br />
+        <br />
+        <br />
+        @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
+        }
 
-                @*if (entry.ContentType != "image/jpeg")
-                {
-                    <p>Här ska det hamna en länk till den bifogade filen.</p>
-                }*@
-            }
-
-            <br />
-            <br />
-            <br />
-
-            @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
-            }
-
-        </div>
-    }
+    </div>
 }
 
 
