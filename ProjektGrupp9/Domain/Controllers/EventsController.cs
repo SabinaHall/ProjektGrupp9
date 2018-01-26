@@ -7,6 +7,8 @@ using DataLogic.Models;
 
 namespace Domain.Controllers
 {
+
+    [Authorize]
     public class EventsController : Controller
     {
         // GET: Events
