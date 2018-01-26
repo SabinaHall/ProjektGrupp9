@@ -1,4 +1,5 @@
-﻿@model DataLogic.Models.EntryEducation
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.EntryEducation
 
 
 <h2>Radera inlägg</h2>
@@ -33,7 +34,7 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm("DeleteEducationConfirmed", "EntryInformative", new { Model.Id })) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
