@@ -1,4 +1,5 @@
-﻿@model DataLogic.Models.EntryResearch
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.EntryResearch
 
 
 <h2>Radera inlägg</h2>
@@ -33,11 +34,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm("DeleteResearchConfirmed", "EntryInformative", new { Id = Model.Id }))
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Radera" class="btn btn-default" /> 
+            <input type="submit" value="Radera" class="btn btn-default" />
         </div>
     }
 </div>

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataLogic.Models;
 using System.IO;
+using Microsoft.AspNet.Identity;
 using System.Data.Entity.Core.Metadata.Edm;
 using static DataLogic.Models.Entries;
 
@@ -233,31 +234,55 @@ namespace Domain.Controllers
         //    return View(entries);
         //}
 
-        // GET: Entries/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Entries entries = db.Entries.Find(id);
-        //    if (entries == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(entries);
-        //}
+        
+        public ActionResult DeleteResearch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EntryResearch entries = db.EntryResearch.Find(id);
+            if (entries == null)
+            {
+                return HttpNotFound();
+            }
+            return View(entries);
+        }
 
-        //// POST: Entries/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    Entries entries = db.Entries.Find(id);
-        //    db.Entries.Remove(entries);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        public ActionResult DeleteEducation(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EntryEducation entries = db.EntryEducation.Find(id);
+            if (entries == null)
+            {
+                return HttpNotFound();
+            }
+            return View(entries);
+        }
+
+        // POST: Entries/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteResearchConfirmed(int id)
+        {
+            EntryResearch entries = db.EntryResearch.Find(id);
+            db.EntryResearch.Remove(entries);
+            db.SaveChanges();
+            return RedirectToAction("Research", new { Id = User.Identity.GetUserId() });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteEducationConfirmed(int id)
+        {
+            EntryEducation entries = db.EntryEducation.Find(id);
+            db.EntryEducation.Remove(entries);
+            db.SaveChanges();
+            return RedirectToAction("Education", new { Id = User.Identity.GetUserId() });
+        }
 
         //protected override void Dispose(bool disposing)
         //{
