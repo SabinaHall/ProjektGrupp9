@@ -12,13 +12,6 @@
 
     <dl class="dl-horizontal">
 
-        <dt>Ny användare:</dt>
-        <dd>
-            [
-            @*Här behöver det finnas en if-sats för att kolla om man är admin eller ej.*@
-            @Html.ActionLink("Registrera användare", "RegisterUser")
-            ]
-        </dd>
         
         <dt>Lösenord:</dt>
         <dd>
@@ -62,7 +55,7 @@
                 }
                 else
                 {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Lägg till", "AddPhoneNumber")</text>
+                    <text>[ @Html.ActionLink("Lägg till", "AddPhoneNumber") ]</text>
                 }
             </dd>
         

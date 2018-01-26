@@ -2,6 +2,8 @@
 @model IEnumerable<DataLogic.Models.EntryInformal>
 
 
+@Html.ActionLink("EmailTest", "Create", "Emails", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
+
 <h2>Allmänna bloggen</h2>
 
 <p>

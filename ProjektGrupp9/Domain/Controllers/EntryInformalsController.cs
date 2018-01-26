@@ -47,7 +47,7 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal, string id, HttpPostedFileBase picUpload)
         {
-            if (Request.IsAuthenticated)
+            if (Request.IsAuthenticated && ModelState.IsValid)
             {
                 var user = db.Users.First(x => x.Id == id) as ApplicationUser;
                 EntryInformal aEntry = new EntryInformal();
