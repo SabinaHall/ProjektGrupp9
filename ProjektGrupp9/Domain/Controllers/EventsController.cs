@@ -30,7 +30,7 @@ namespace Domain.Controllers
         {
 
             var model = new EventViewModel();
-            model.users = db.Users.Where(x => x.Id != User.Identity.GetUserId()).ToList();
+            //model.users = db.Users.Where(x => x.Id != User.Identity.GetUserId()).ToList();
             return View(model);
 
         }
