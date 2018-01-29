@@ -23,7 +23,7 @@ namespace Domain.Controllers
             return View(db.Entries.ToList());
         }
 
-       
+
 
         public ActionResult IndexInformal()
         {
