@@ -15,13 +15,12 @@ namespace Domain.Controllers
         // GET: Events
         public ActionResult Index()
         {
-            var model = new List<Events>();
+            var model = new EventViewModel(); 
+
             using (var context = new ApplicationDbContext())
             {
-                foreach (var e in context.Events.ToList())
-                {
-                    model.Add(e);
-                }
+
+                model.allEvents = context.Events.ToList();
             }
             return View(model);
         }
@@ -50,12 +49,27 @@ namespace Domain.Controllers
                 newEvent.Time = model.events.Time;
                 newEvent.Place = model.events.Place;
                 newEvent.Description = model.events.Description;
+                context.Events.Add(newEvent);
+                context.SaveChanges();
+
+                foreach (var item in model.ListId)
+                {
+                    var p = new EventParticipants();
+
+                    p.EventID = context.Events.Max(x => x.Id);
+                    p.UserID = item;
+                    context.EventParticipants.Add(p);
+                    
+                }
+                
                   
                 context.Events.Add(newEvent);
                 context.SaveChanges();
               return RedirectToAction("Index");
 
             }
+
+
 
         }
 
@@ -113,6 +127,29 @@ namespace Domain.Controllers
             }
 
 
+        }
+
+        public ActionResult EventDetails(int id)
+        {
+            var model = new EventViewModel();
+            model.events = db.Events.Find(id);
+            var l = new List<string>();
+            foreach (var item in db.EventParticipants)
+            {
+                if (item.EventID == id)
+                {
+                    l.Add(item.UserID);
+                }
+            }
+            var lu = new List<ApplicationUser>();
+            foreach (var item in l)
+            {
+                var user = new ApplicationUser();
+                user = db.Users.Find(item);
+                lu.Add(user);
+            }
+            model.users = lu;
+            return View(model);
         }
 
         [Authorize]

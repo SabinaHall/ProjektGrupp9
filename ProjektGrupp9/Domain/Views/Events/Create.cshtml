@@ -48,7 +48,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Meetingparticipants, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => Model.Meetingparticipants, Model.Participants, new { @class = "form-control" })
+            @Html.ListBoxFor(m => m.ListId, Model.Participants, new { @class = "form-control" })
         </div>
     </div>
 

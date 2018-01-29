@@ -16,10 +16,13 @@ namespace DataLogic.Models
 
         public Events events { get; set; }
         public List<ApplicationUser> users { get; set; }
+        public List<Events> allEvents { get; set; }
         [Required]
         [Display(Name = "Mötesdeltagare")]
-        public string Meetingparticipants { get; set; }
+        public List<ApplicationUser> Meetingparticipants { get; set; }
+
         public IEnumerable<SelectListItem> Participants { get; set; }
+        public List<string> ListId { get; set; }
 
     }
 }

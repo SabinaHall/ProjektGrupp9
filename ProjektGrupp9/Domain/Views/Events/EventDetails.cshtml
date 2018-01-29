@@ -1,0 +1,26 @@
+﻿@model DataLogic.Models.EventViewModel
+
+@{
+    ViewBag.Title = "Mötesdeltagare";
+}
+
+<h2>Mötesdeltagare</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th> Namn </th>
+    </tr>
+
+    @foreach (var item in Model.users)
+    {
+       <tr>
+        <td>@item.UserName</td>
+       </tr>
+    }
+
+
+
+</table>

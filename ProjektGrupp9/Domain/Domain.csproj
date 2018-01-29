@@ -299,12 +299,13 @@
     <Content Include="Views\EntryInformative\DeleteEducation.cshtml" />
     <Content Include="Views\EntryInformative\DeleteResearch.cshtml" />
     <Content Include="Views\EntryInformative\EditEducation.cshtml" />
+    <Content Include="Views\Events\EventDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\MeetingInvites\" />
     <Folder Include="Views\EditEducation\" />
+    <Folder Include="Views\MeetingInvites\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

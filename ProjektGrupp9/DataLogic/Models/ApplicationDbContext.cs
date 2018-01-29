@@ -26,9 +26,12 @@ namespace DataLogic.Models
         public DbSet<EntryResearch> EntryResearch { get; set; }
         public DbSet<EntryEducation> EntryEducation { get; set; }
         public DbSet<MeetingInvites> MeetingInvites { get; set; }
+        public DbSet<EventParticipants> EventParticipants { get; set; }
 
         public System.Data.Entity.DbSet<DataLogic.Models.Events> Events { get; set; }
 
         public System.Data.Entity.DbSet<DataLogic.Models.Email> Emails { get; set; }
+
+        public System.Data.Entity.DbSet<DataLogic.Models.EventViewModel> EventViewModels { get; set; }
     }
 }
