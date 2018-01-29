@@ -46,6 +46,8 @@
         @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
         {
             @Html.ActionLink("Radera inlägg", "DeleteResearch", new { id = entry.Id }, new { @class = "btn btn-default" })
+
+            @Html.ActionLink("Redigera inlägg", "EditResearch", new { id = entry.Id }, new { @class = "btn btn-default" })
         }
     </div>
 

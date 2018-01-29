@@ -63,6 +63,20 @@ namespace Domain.Controllers
             return View(entryEducation);
         }
 
+        public ActionResult EditResearch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EntryResearch entryResearch = db.EntryResearch.Find(id);
+            if (entryResearch == null)
+            {
+                return HttpNotFound();
+            }
+            return View(entryResearch);
+        }
+
         [HttpPost]
         public ActionResult EducationSearch(string educationSearch)
         {
