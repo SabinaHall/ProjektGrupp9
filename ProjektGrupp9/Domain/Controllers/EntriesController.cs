@@ -54,11 +54,12 @@ namespace Domain.Controllers
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,text")] Entries entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult Create([Bind(Include = "Heading,text")] Entries entries, HttpPostedFileBase picUpload)
         {
-            if (Request.IsAuthenticated)
+
+            if (Request.IsAuthenticated && ModelState.IsValid)
             {
-                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                var user = db.Users.Find(User.Identity.GetUserId()) as ApplicationUser;
                 Entries aEntry = new Entries();
 
                 if (picUpload != null && picUpload.ContentLength > 0)

@@ -17,6 +17,21 @@ namespace DataLogic.Models
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
+            for (int i = 1; i < 4; i++)
+            {
+                PasswordHasher pwdHash = new PasswordHasher();
+                string pwd = pwdHash.HashPassword("123");
+                var user = new ApplicationUser();
+
+
+                user.PasswordHash = pwd;
+                user.UserName = $"User{i}@live.se";
+                user.Email = $"User{i}@live.se";
+                user.SecurityStamp = Guid.NewGuid().ToString();
+                context.Users.Add(user);
+                context.SaveChanges();
+            }
+
 
             // In Startup iam creating first Admin Role and creating a default Admin User    
             if (!roleManager.RoleExists("SuperAdmin"))
@@ -39,7 +54,7 @@ namespace DataLogic.Models
                 user.PasswordHash = pwd;
                 user.UserName = "andreas@live.se";
                 user.Email = "andreas@live.se";
-                user.SecurityStamp = Guid.NewGuid().ToString(); //THIS IS WHAT I NEEDED
+                user.SecurityStamp = Guid.NewGuid().ToString(); 
                 context.Users.Add(user);
                 context.SaveChanges();
 

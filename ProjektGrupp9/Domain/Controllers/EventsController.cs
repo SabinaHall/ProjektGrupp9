@@ -30,6 +30,10 @@ namespace Domain.Controllers
         {
 
             var model = new EventViewModel();
+            var users = new List<SelectListItem>();
+
+            users = db.Users.Select(x => new SelectListItem { Value = x.Id, Text = x.UserName }).ToList();
+            model.Participants = users;
             //model.users = db.Users.Where(x => x.Id != User.Identity.GetUserId()).ToList();
             return View(model);
 
@@ -52,6 +56,8 @@ namespace Domain.Controllers
               return RedirectToAction("Index");
 
             }
+
+
 
         }
 
