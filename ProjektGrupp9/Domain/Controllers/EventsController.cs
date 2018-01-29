@@ -63,7 +63,6 @@ namespace Domain.Controllers
                 }
                 
                   
-                context.Events.Add(newEvent);
                 context.SaveChanges();
               return RedirectToAction("Index");
 
