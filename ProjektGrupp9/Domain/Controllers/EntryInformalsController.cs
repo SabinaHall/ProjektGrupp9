@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataLogic.Models;
 using System.IO;
+using Microsoft.AspNet.Identity;
 
 namespace Domain.Controllers
 {
@@ -22,19 +23,19 @@ namespace Domain.Controllers
         }
 
         // GET: EntryInformals/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EntryInformal entryInformal = db.InformalEntries.Find(id);
-            if (entryInformal == null)
-            {
-                return HttpNotFound();
-            }
-            return View(entryInformal);
-        }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    EntryInformal entryInformal = db.InformalEntries.Find(id);
+        //    if (entryInformal == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(entryInformal);
+        //}
 
         // GET: EntryInformals/Create
         public ActionResult Create()
@@ -45,11 +46,11 @@ namespace Domain.Controllers
         // POST: EntryInformals/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal, string id, HttpPostedFileBase picUpload)
+        public ActionResult Create([Bind(Include = "Heading,Text")] EntryInformal entryInformal, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated && ModelState.IsValid)
             {
-                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                var user = db.Users.Find(User.Identity.GetUserId()) as ApplicationUser;
                 EntryInformal aEntry = new EntryInformal();
 
                 if (picUpload != null && picUpload.ContentLength > 0)
@@ -93,6 +94,7 @@ namespace Domain.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             EntryInformal entryInformal = db.InformalEntries.Find(id);
             if (entryInformal == null)
             {
