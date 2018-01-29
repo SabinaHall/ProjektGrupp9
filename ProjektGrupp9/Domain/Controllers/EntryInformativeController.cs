@@ -20,7 +20,6 @@ namespace Domain.Controllers
     {
         // GET: Entries
 
-        
         public ActionResult Research(string id)
         {
 
@@ -35,18 +34,18 @@ namespace Domain.Controllers
             List<EntryEducation> entryList = db.EntryEducation.Where(x => x.Author.Id == id).ToList();
             return View(entryList);
         }
-        
+
 
 
         [HttpPost]
-        public ActionResult ResearchSearch (string researchSearch)
+        public ActionResult ResearchSearch(string researchSearch)
         {
             List<EntryResearch> model = new List<EntryResearch>();
             if (!String.IsNullOrEmpty(researchSearch))
             {
-                model = db.EntryResearch.Where(s => s.Author.UserName.ToLower().Contains(researchSearch.ToLower())  ||
-                s.Heading.ToLower().Contains(researchSearch.ToLower())  || s.text.ToLower().Contains(researchSearch.ToLower())
-                  || s.Author.Email.ToLower().Contains(researchSearch.ToLower()) ).ToList();
+                model = db.EntryResearch.Where(s => s.Author.UserName.ToLower().Contains(researchSearch.ToLower()) ||
+                s.Heading.ToLower().Contains(researchSearch.ToLower()) || s.text.ToLower().Contains(researchSearch.ToLower())
+                  || s.Author.Email.ToLower().Contains(researchSearch.ToLower())).ToList();
 
             }
             else
@@ -55,7 +54,7 @@ namespace Domain.Controllers
             }
             return View(model);
         }
-       
+
         public ActionResult EditEducation(int? id)
         {
             if (id == null)
@@ -71,7 +70,7 @@ namespace Domain.Controllers
         }
 
         [HttpPost]
-        public ActionResult EducationSearch ( string educationSearch)
+        public ActionResult EducationSearch(string educationSearch)
         {
             List<EntryEducation> model = new List<EntryEducation>();
             if (!String.IsNullOrEmpty(educationSearch))
@@ -86,8 +85,8 @@ namespace Domain.Controllers
             }
 
             return View(model);
-        } 
-        
+        }
+
         //// GET: Entries/Details/5
         //public ActionResult Details(int? id)
         //{
@@ -125,12 +124,7 @@ namespace Domain.Controllers
                 EntryResearch aEntry = new EntryResearch();
 
                 if (picUpload != null && picUpload.ContentLength > 0)
-                { 
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                    
+                {
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -138,25 +132,18 @@ namespace Domain.Controllers
                     {
                         aEntry.File = reader.ReadBytes(picUpload.ContentLength);
                     }
-
-                    user.ResearchEntries.Add(aEntry);
-                    db.EntryResearch.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
                 }
-                else
-                {  
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                   
 
-                    user.ResearchEntries.Add(aEntry);
-                    db.EntryResearch.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
-                }
+                aEntry.Heading = entries.Heading;
+                aEntry.text = entries.text;
+                aEntry.Date = DateTime.Now;
+                aEntry.Author = user;
+
+                user.ResearchEntries.Add(aEntry);
+                db.EntryResearch.Add(aEntry);
+                db.SaveChanges();
+
+                return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
             }
             return View(entries);
         }
@@ -172,11 +159,6 @@ namespace Domain.Controllers
 
                 if (picUpload != null && picUpload.ContentLength > 0)
                 {
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                   
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -184,35 +166,37 @@ namespace Domain.Controllers
                     {
                         aEntry.File = reader.ReadBytes(picUpload.ContentLength);
                     }
-
-                    user.EducationEntries.Add(aEntry);
-                    db.EntryEducation.Add(aEntry);
-                    db.SaveChanges();
-                    return View("Education", "EntryInformative", new { id = user.Id });
                 }
-                else
-                {
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                   
 
-                    user.EducationEntries.Add(aEntry);
-                    db.EntryEducation.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
-                }
+                aEntry.Heading = entries.Heading;
+                aEntry.text = entries.text;
+                aEntry.Date = DateTime.Now;
+                aEntry.Author = user;
+
+                user.EducationEntries.Add(aEntry);
+                db.EntryEducation.Add(aEntry);
+                db.SaveChanges();
+                return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
             }
             return View(entries);
         }
-        
-        public ActionResult EntryFile(int id)
+
+        public ActionResult EntryFileResearch(int id)
         {
-            var be = db.Entries.Single(x => x.Id == id);
+            var be = db.EntryResearch.Single(x => x.Id == id);
             if (be.File != null)
             {
-                return File(be.File, "Image/png");
+                return File(be.File, be.ContentType);
+            }
+            return View();
+        }
+
+        public ActionResult EntryFileEducation(int id)
+        {
+            var be = db.EntryEducation.Single(x => x.Id == id);
+            if (be.File != null)
+            {
+                return File(be.File, be.ContentType);
             }
             return View();
         }
@@ -248,7 +232,7 @@ namespace Domain.Controllers
         //    return View(entries);
         //}
 
-        
+
         public ActionResult DeleteResearch(int? id)
         {
             if (id == null)

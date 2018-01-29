@@ -21,28 +21,34 @@
 @foreach (var entry in Model.Reverse())
 {
     //här behövs en if-sats för att filtrera ut alla icke-informativa
-        <div class="well">
-            <h3>@entry.Heading</h3>
-            <p>Skriven av: @entry.Author.Email</p>
-            <p>Datum: @entry.Date.ToString()</p>
-            <br />
-            <br />
-            <p>@entry.text</p>
-            <br />
-            @if (entry.File != null)
-            {
-                <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
-            }
+    <div class="well">
+        <h3>@entry.Heading</h3>
+        <p>Skriven av: @entry.Author.Email</p>
+        <p>Datum: @entry.Date.ToString()</p>
+        <br />
+        <br />
+        <p>@entry.text</p>
+        <br />
 
-            <br />
-            <br />
-            <br />
-            @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Radera inlägg", "DeleteResearch", new { id = entry.Id }, new { @class = "btn btn-default" })
-            }
-        </div>
-    
+        @if (entry.File != null && entry.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFileResearch", new { Id = entry.Id })" />
+        }
+        else if (entry.File != null && !entry.ContentType.Contains("image"))
+        {
+            <p>Klicka på länken för att se bifogad fil</p>
+                @Html.ActionLink("Bifogad fil: " + entry.Filename.ToString(), "EntryFileResearch", "EntryInformative", routeValues: new { Id = entry.Id }, htmlAttributes: null);
+        }
+
+        <br />
+        <br />
+        <br />
+        @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Radera inlägg", "DeleteResearch", new { id = entry.Id }, new { @class = "btn btn-default" })
+        }
+    </div>
+
 }
 
 
