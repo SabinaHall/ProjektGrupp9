@@ -6,20 +6,20 @@
         @Html.AntiForgeryToken()
 
 <ul class="nav navbar-nav">
+  
+    <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
+    <li>@Html.ActionLink("Informella inlägg", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Informativa Inlägg
         </a>
 
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="dropdown-menu">
             @Html.ActionLink("Utbildning", "Education", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)<br />
             @Html.ActionLink("Forskning", "Research", "EntryInformative", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
 
         </div>
     </li>
-
-    <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
-    <li>@Html.ActionLink("Informella inlägg", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li>@Html.ActionLink("Möten", "Index", "Events")</li>
 
     @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
