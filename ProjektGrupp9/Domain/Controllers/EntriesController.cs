@@ -23,7 +23,7 @@ namespace Domain.Controllers
             return View(db.Entries.ToList());
         }
 
-       
+
 
         public ActionResult IndexInformal()
         {
@@ -56,7 +56,7 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Heading,text")] Entries entries, string id, HttpPostedFileBase picUpload)
         {
-            if (Request.IsAuthenticated && ModelState.IsValid)
+            if (Request.IsAuthenticated)
             {
                 var user = db.Users.First(x => x.Id == id) as ApplicationUser;
                 Entries aEntry = new Entries();
