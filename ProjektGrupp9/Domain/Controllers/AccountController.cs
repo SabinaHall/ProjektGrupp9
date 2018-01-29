@@ -167,7 +167,7 @@ namespace Domain.Controllers
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, model.SelectedRole);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("IndexFormal", "Entries");
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     //// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

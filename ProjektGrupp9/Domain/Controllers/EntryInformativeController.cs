@@ -20,33 +20,26 @@ namespace Domain.Controllers
     {
         // GET: Entries
 
-        
-        public ActionResult Research(string id)
+        public ActionResult Research()
         {
-
-            EntryResearch entry = new EntryResearch();
-            List<EntryResearch> entryList = db.EntryResearch.Where(x => x.Author.Id == id).ToList();
-            return View(entryList);
+            return View(db.EntryResearch.ToList());
         }
 
-        public ActionResult Education(string id)
+        public ActionResult Education()
         {
-            EntryEducation entry = new EntryEducation();
-            List<EntryEducation> entryList = db.EntryEducation.Where(x => x.Author.Id == id).ToList();
-            return View(entryList);
+            return View(db.EntryEducation.ToList());
         }
-        
 
 
         [HttpPost]
-        public ActionResult ResearchSearch (string researchSearch)
+        public ActionResult ResearchSearch(string researchSearch)
         {
             List<EntryResearch> model = new List<EntryResearch>();
             if (!String.IsNullOrEmpty(researchSearch))
             {
-                model = db.EntryResearch.Where(s => s.Author.UserName.ToLower().Contains(researchSearch.ToLower())  ||
-                s.Heading.ToLower().Contains(researchSearch.ToLower())  || s.text.ToLower().Contains(researchSearch.ToLower())
-                  || s.Author.Email.ToLower().Contains(researchSearch.ToLower()) ).ToList();
+                model = db.EntryResearch.Where(s => s.Author.UserName.ToLower().Contains(researchSearch.ToLower()) ||
+                s.Heading.ToLower().Contains(researchSearch.ToLower()) || s.text.ToLower().Contains(researchSearch.ToLower())
+                  || s.Author.Email.ToLower().Contains(researchSearch.ToLower())).ToList();
 
             }
             else
@@ -55,23 +48,9 @@ namespace Domain.Controllers
             }
             return View(model);
         }
-       
-        public ActionResult EditEducation(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EntryEducation entryEducation = db.EntryEducation.Find(id);
-            if (entryEducation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(entryEducation);
-        }
 
         [HttpPost]
-        public ActionResult EducationSearch ( string educationSearch)
+        public ActionResult EducationSearch(string educationSearch)
         {
             List<EntryEducation> model = new List<EntryEducation>();
             if (!String.IsNullOrEmpty(educationSearch))
@@ -86,8 +65,66 @@ namespace Domain.Controllers
             }
 
             return View(model);
-        } 
-        
+        }
+
+        public ActionResult EditEducation(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            EntryEducation entryEducation = db.EntryEducation.Find(id);
+            if (entryEducation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(entryEducation);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEducation([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(entryInformal).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Education");
+            }
+            return View(entryInformal);
+        }
+
+
+        public ActionResult EditResearch(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            EntryResearch entryResearch = db.EntryResearch.Find(id);
+            if (entryResearch == null)
+            {
+                return HttpNotFound();
+            }
+            return View(entryResearch);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditResearch([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(entryInformal).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Education");
+            }
+            return View(entryInformal);
+        }
+
+
         //// GET: Entries/Details/5
         //public ActionResult Details(int? id)
         //{
@@ -109,74 +146,57 @@ namespace Domain.Controllers
             return View();
         }
 
+        // POST: Entries/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateResearch([Bind(Include = "Heading,text,EntryType")] EntryResearch entries, HttpPostedFileBase picUpload)
+        {
+            if (Request.IsAuthenticated && ModelState.IsValid)
+            {
+                var user = db.Users.Find(User.Identity.GetUserId()) as ApplicationUser;
+                EntryResearch aEntry = new EntryResearch();
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    aEntry.Filename = picUpload.FileName;
+                    aEntry.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+
+                aEntry.Heading = entries.Heading;
+                aEntry.text = entries.text;
+                aEntry.Date = DateTime.Now;
+                aEntry.Author = user;
+
+                user.ResearchEntries.Add(aEntry);
+                db.EntryResearch.Add(aEntry);
+                db.SaveChanges();
+
+                return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
+            }
+            return View(entries);
+        }
+
         public ActionResult CreateEducation()
         {
             return View();
         }
 
-        // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateResearch([Bind(Include = "Id,Heading,text,EntryType")] EntryResearch entries, string id, HttpPostedFileBase picUpload)
+        public ActionResult CreateEducation([Bind(Include = "Heading,text,EntryType")] EntryEducation entries, HttpPostedFileBase picUpload)
         {
-            if (Request.IsAuthenticated)
+            if (Request.IsAuthenticated && ModelState.IsValid)
             {
-                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
-                EntryResearch aEntry = new EntryResearch();
-
-                if (picUpload != null && picUpload.ContentLength > 0)
-                { 
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                    
-                    aEntry.Filename = picUpload.FileName;
-                    aEntry.ContentType = picUpload.ContentType;
-
-                    using (var reader = new BinaryReader(picUpload.InputStream))
-                    {
-                        aEntry.File = reader.ReadBytes(picUpload.ContentLength);
-                    }
-
-                    user.ResearchEntries.Add(aEntry);
-                    db.EntryResearch.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
-                }
-                else
-                {  
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                   
-
-                    user.ResearchEntries.Add(aEntry);
-                    db.EntryResearch.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
-                }
-            }
-            return View(entries);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateEducation([Bind(Include = "Id,Heading,text,EntryType")] EntryEducation entries, string id, HttpPostedFileBase picUpload)
-        {
-            if (Request.IsAuthenticated)
-            {
-                var user = db.Users.First(x => x.Id == id) as ApplicationUser;
+                var user = db.Users.Find(User.Identity.GetUserId()) as ApplicationUser;
                 EntryEducation aEntry = new EntryEducation();
 
                 if (picUpload != null && picUpload.ContentLength > 0)
                 {
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                   
                     aEntry.Filename = picUpload.FileName;
                     aEntry.ContentType = picUpload.ContentType;
 
@@ -184,71 +204,41 @@ namespace Domain.Controllers
                     {
                         aEntry.File = reader.ReadBytes(picUpload.ContentLength);
                     }
-
-                    user.EducationEntries.Add(aEntry);
-                    db.EntryEducation.Add(aEntry);
-                    db.SaveChanges();
-                    return View("Education", "EntryInformative", new { id = user.Id });
                 }
-                else
-                {
-                    aEntry.Heading = entries.Heading;
-                    aEntry.text = entries.text;
-                    aEntry.Date = DateTime.Now;
-                    aEntry.Author = user;
-                   
 
-                    user.EducationEntries.Add(aEntry);
-                    db.EntryEducation.Add(aEntry);
-                    db.SaveChanges();
-                    return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
-                }
+                aEntry.Heading = entries.Heading;
+                aEntry.text = entries.text;
+                aEntry.Date = DateTime.Now;
+                aEntry.Author = user;
+
+                user.EducationEntries.Add(aEntry);
+                db.EntryEducation.Add(aEntry);
+                db.SaveChanges();
+                return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
             }
             return View(entries);
         }
-        
-        public ActionResult EntryFile(int id)
+
+        public ActionResult EntryFileResearch(int id)
         {
-            var be = db.Entries.Single(x => x.Id == id);
+            var be = db.EntryResearch.Single(x => x.Id == id);
             if (be.File != null)
             {
-                return File(be.File, "Image/png");
+                return File(be.File, be.ContentType);
             }
             return View();
         }
 
-        // GET: Entries/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Entries entries = db.Entries.Find(id);
-        //    if (entries == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(entries);
-        //}
+        public ActionResult EntryFileEducation(int id)
+        {
+            var be = db.EntryEducation.Single(x => x.Id == id);
+            if (be.File != null)
+            {
+                return File(be.File, be.ContentType);
+            }
+            return View();
+        }
 
-        // POST: Entries/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Heading,text,EntryType,Date")] Entries entries)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(entries).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(entries);
-        //}
-
-        
         public ActionResult DeleteResearch(int? id)
         {
             if (id == null)
@@ -297,14 +287,5 @@ namespace Domain.Controllers
             db.SaveChanges();
             return RedirectToAction("Education", new { Id = User.Identity.GetUserId() });
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
     }
 }
