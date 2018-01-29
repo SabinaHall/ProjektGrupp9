@@ -20,21 +20,15 @@ namespace Domain.Controllers
     {
         // GET: Entries
 
-        public ActionResult Research(string id)
+        public ActionResult Research()
         {
-
-            EntryResearch entry = new EntryResearch();
-            List<EntryResearch> entryList = db.EntryResearch.Where(x => x.Author.Id == id).ToList();
-            return View(entryList);
+            return View(db.EntryResearch.ToList());
         }
 
-        public ActionResult Education(string id)
+        public ActionResult Education()
         {
-            EntryEducation entry = new EntryEducation();
-            List<EntryEducation> entryList = db.EntryEducation.Where(x => x.Author.Id == id).ToList();
-            return View(entryList);
+            return View(db.EntryEducation.ToList());
         }
-
 
 
         [HttpPost]
