@@ -304,7 +304,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\EditEducation\" />
     <Folder Include="Views\MeetingInvites\" />
   </ItemGroup>
   <ItemGroup>

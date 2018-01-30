@@ -4,8 +4,11 @@
 }
 
 <h2>Admin</h2>
-@Html.ActionLink("Registrera användare", "RegisterUser","Manage")
+@Html.ActionLink("Registrera användare", "RegisterUser","Manage", htmlAttributes: new { @class = "btn btn-default" })
 
-@Html.ActionLink("Redigera Användare","List")
+<br />
+<br />
+
+@Html.ActionLink("Redigera Användare","List", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
 
 
