@@ -3,66 +3,66 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Events</h2>
+<h2>Skapa möte</h2>
 
 
-@Html.ActionLink("Skapa möte", "Create")
-   
-
-
-
-
-    @foreach (var item in Model.allEvents)
-    {
-      
-            <table class="table table-condensed table-bordered">
-               
-
-                    <tr class="events">
-                        <th>Datum </th>
-                        <th>Tid</th>
-                        <th>Beskrivning</th>
-                        <th>Plats</th>
-                        <th>Mötesdeltagare</th>
-                        <th>Uppdatera</th>
-                        <th>Ta bort</th>
-
-                    </tr>
-               
-              
-
-                    <tr>
-
-                        <td class="col-md-2">@item.Date</td>
+@Html.ActionLink("Skapa möte", "Create", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
 
 
 
 
-                        <td class="col-md-2">@item.Time</td>
+
+@foreach (var item in Model.allEvents)
+{
+
+    <table class="table table-condensed table-bordered">
+
+
+        <tr class="events">
+            <th>Datum </th>
+            <th>Tid</th>
+            <th>Beskrivning</th>
+            <th>Plats</th>
+            <th>Mötesdeltagare</th>
+            <th>Uppdatera</th>
+            <th>Ta bort</th>
+
+        </tr>
 
 
 
-                        <td class="col-md-2">@item.Description</td>
+        <tr>
+
+            <td class="col-md-2">@item.Date</td>
 
 
 
 
-                        <td class="col-md-2">@item.Place</td>
-
-                        <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", new {Id = item.Id })</td>
+            <td class="col-md-2">@item.Time</td>
 
 
 
-                        <td class="col-md-2">@Html.ActionLink("Uppdatera", "Update", new { ID = item.Id })</td>
-                        <td class="col-md-2">@Html.ActionLink("Ta bort", "Delete", new { ID = item.Id })</td>
-
-                    </tr>
-
-
-                </table>
+            <td class="col-md-2">@item.Description</td>
 
 
 
-                }
+
+            <td class="col-md-2">@item.Place</td>
+
+            <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", new { Id = item.Id })</td>
+
+
+
+            <td class="col-md-2">@Html.ActionLink("Uppdatera", "Update", new { ID = item.Id })</td>
+            <td class="col-md-2">@Html.ActionLink("Ta bort", "Delete", new { ID = item.Id })</td>
+
+        </tr>
+
+
+    </table>
+
+
+
+}
 
 

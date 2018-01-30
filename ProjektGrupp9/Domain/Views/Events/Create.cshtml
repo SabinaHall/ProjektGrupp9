@@ -4,14 +4,13 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Skapa ett nytt möte</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Events</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -60,6 +59,5 @@
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="clearfix">
 </div>
