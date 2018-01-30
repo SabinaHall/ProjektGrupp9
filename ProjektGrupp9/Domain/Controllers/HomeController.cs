@@ -12,7 +12,7 @@ namespace Domain.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("IndexFormal", "Entries");
         }
 
         public ActionResult Admin()
