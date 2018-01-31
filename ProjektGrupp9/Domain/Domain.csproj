@@ -302,6 +302,7 @@
     <Content Include="Views\EntryInformative\EditEducation.cshtml" />
     <Content Include="Views\Events\EventDetails.cshtml" />
     <Content Include="Views\Home\ProfilePage.cshtml" />
+    <Content Include="Views\Home\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

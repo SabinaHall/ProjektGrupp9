@@ -18,6 +18,7 @@ namespace DataLogic.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Room { get; set; }
+        public string PhoneNmbr { get; set; }
       
 
 
