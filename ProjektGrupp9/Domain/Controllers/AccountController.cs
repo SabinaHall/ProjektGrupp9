@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using DataLogic.Models;
 using DataLogic;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Domain.Controllers
 {
@@ -139,7 +140,7 @@ namespace Domain.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin,Admin" )]
         public ActionResult Register()
         {
             var model = new RegisterViewModel();
@@ -158,16 +159,32 @@ namespace Domain.Controllers
         [HttpPost]
         [Authorize(Roles = "SuperAdmin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase picUpload)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Room = model.Room };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Room = model.Room, PhoneNmbr = model.PhoneNmbr };
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                   
+                    user.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        user.ProfilePicture = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
                 var result = await UserManager.CreateAsync(user, model.Password);
+                
+
+
+
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, model.SelectedRole);
                     return RedirectToAction("IndexFormal", "Entries");
+
+
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     //// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -183,6 +200,19 @@ namespace Domain.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult ProfilePicture(string id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var user = context.Users.Find(id);
+                if (user.ProfilePicture != null)
+                {
+                    return File(user.ProfilePicture, user.ContentType);
+                }
+            }
+            return RedirectToAction("ProfilePage", "Home") ;
         }
 
         //

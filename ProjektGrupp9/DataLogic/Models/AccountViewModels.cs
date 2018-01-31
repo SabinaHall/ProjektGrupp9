@@ -88,6 +88,10 @@ namespace DataLogic.Models
         public string Room { get; set; }
 
         [Required]
+        [Display(Name = "Mobilnummer")]
+        public string PhoneNmbr { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "{0}et måste vara minst {2} tecken långt.", MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]

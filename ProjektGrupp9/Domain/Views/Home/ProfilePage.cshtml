@@ -9,7 +9,13 @@
 <div>
     <h4>ApplicationUser</h4>
     <hr />
+
+    <img height="300" width="300" src="@Url.Action("ProfilePicture", "Account", new { Id = Model.Id })" />
+
     <dl class="dl-horizontal">
+
+
+
         <dt>
             @Html.DisplayName("Förnamn")
         </dt>
@@ -49,8 +55,6 @@
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
-
-       
 
     </dl>
 </div>

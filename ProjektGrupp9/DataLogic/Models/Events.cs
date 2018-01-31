@@ -22,6 +22,7 @@ namespace DataLogic.Models
         [StringLength(20, ErrorMessage = "Beskrivningen får inte vara mer än 20 tecken.",  MinimumLength = 3)]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
+        public virtual ApplicationUser Host { get; set; }
       
     }
 }

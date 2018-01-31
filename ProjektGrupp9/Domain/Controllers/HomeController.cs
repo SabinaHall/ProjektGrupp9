@@ -82,7 +82,7 @@ namespace Domain.Controllers
 
         }
 
-        public ActionResult ProfilePage()
+        public ActionResult ProfilePage(string id)
         {
 
             
@@ -97,7 +97,30 @@ namespace Domain.Controllers
 
         }
 
-            
+        public ActionResult EditProfile(string id)
+        {
+            var user = db.Users.Find(id);
+
+            return View(user);
+
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(ApplicationUser model)
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.PhoneNumber;
+            user.Room = model.Room;
+            user.Email = model.Email;
+           
+            db.SaveChanges();
+
+            return RedirectToAction("ProfilePage");
+
+        }
 
 
     }
