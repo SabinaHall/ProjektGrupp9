@@ -76,6 +76,24 @@ namespace DataLogic.Models
                 role.Name = "User";
                 roleManager.Create(role);
             }
+
+
+            EntryTag et1 = new EntryTag();
+            et1.Id = 0;
+            et1.TagName = "Möte";
+
+            EntryTag et2 = new EntryTag();
+            et2.Id = 0;
+            et2.TagName = "Information";
+
+            EntryTag et3 = new EntryTag();
+            et3.Id = 0;
+            et3.TagName = "Övrigt";
+
+            context.Tags.Add(et1);
+            context.Tags.Add(et2);
+            context.Tags.Add(et3);
+
             base.Seed(context);
         }
     }

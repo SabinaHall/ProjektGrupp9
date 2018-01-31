@@ -6,8 +6,6 @@ namespace DataLogic.Models
 {
     public class Entries
     {
-        
-
         public int Id { get; set; }
 
         [Required]
@@ -20,8 +18,6 @@ namespace DataLogic.Models
         [StringLength(1000, MinimumLength = 3, ErrorMessage = "För kort eller lång text!")]
         public string text { get; set; }
 
-       
-
         public DateTime Date { get; set; }
 
         public string Filename { get; set; }
@@ -32,6 +28,6 @@ namespace DataLogic.Models
 
         public virtual ApplicationUser Author { get; set; }
 
-        public virtual Category CategoryTest { get; set; }
+        //public virtual ICollection<EntryTag> EntryTags { get; set; }
     }
 }

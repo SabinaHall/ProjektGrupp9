@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataLogic.Models
 {
-    public class Category
+    public class EntryTagEntries
     {
         public int Id { get; set; }
 
-        public string Namn { get; set; }
+        public int EntryId { get; set; }
 
-        public virtual ICollection<Entries> Entries { get; set; } 
-    } 
+        public string TagId { get; set; }
+
+    }
 }
