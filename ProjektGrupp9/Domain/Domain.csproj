@@ -304,6 +304,7 @@
     <Content Include="Views\Home\ProfilePage.cshtml" />
     <Content Include="Views\Home\Deactivate.cshtml" />
     <Content Include="Views\Home\EditProfile.cshtml" />
+    <Content Include="Views\Home\UserSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

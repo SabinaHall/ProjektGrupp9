@@ -28,6 +28,35 @@ namespace Domain.Controllers
             return RedirectToAction("ProfilePage", new { id = id });
         }
 
+        public ActionResult UserFile(string id)
+        {
+            var be = db.Users.Single(x => x.Id == id);
+            if (be.ProfilePicture != null)
+            {
+                return File(be.ProfilePicture, be.ContentType);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UserSearch (string UserSearch)
+        {
+            
+            List<ApplicationUser> model = new List<ApplicationUser>();
+            if (!String.IsNullOrEmpty(UserSearch))
+            {
+                model = db.Users.Where(s => s.UserName.ToLower().Contains(UserSearch.ToLower()) ||
+                s.FirstName.ToLower().Contains(UserSearch.ToLower()) || s.LastName.ToLower().Contains(UserSearch.ToLower())).ToList();
+
+            }
+            else
+            {
+                model = db.Users.ToList();
+            }
+            return View(model);
+        }
+    
+
         public ActionResult Deactivate (string id)
         {
             
@@ -83,11 +112,18 @@ namespace Domain.Controllers
         }
         
 
-        public ActionResult ProfilePage()
+        public ActionResult ProfilePage(string id)
         {
-
-
-            var userId = User.Identity.GetUserId();
+            string userId = "";
+            if (String.IsNullOrEmpty(id))
+            {
+                userId = User.Identity.GetUserId();
+            }
+            else
+            {
+                userId = id;
+            }
+            
             var user = db.Users.Find(userId);
 
 
@@ -97,6 +133,8 @@ namespace Domain.Controllers
 
 
         }
+
+        
 
 
         public ActionResult EditProfile(string id)

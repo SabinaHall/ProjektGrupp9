@@ -7,8 +7,19 @@
 <h2>Profilsida</h2>
 
 <div>
-    <h4>ApplicationUser</h4>
+    <h4>Användare</h4>
     <hr />
+    <p>
+    
+        @using (Html.BeginForm("UserSearch", "Home"))
+        {
+            @Html.TextBox("UserSearch", null, new { @class = "form-control" })
+
+            <input type="submit" name="userSearch" value="Sök användare" />
+        }
+    
+    </p>
+
 
     <img height="300" width="300" src="@Url.Action("ProfilePicture", "Account", new { Id = Model.Id })" />
 
@@ -59,6 +70,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Redigera", "Edit", new { id = Model.Id }) | @*@if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin")) { @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id }) }*@
+    @Html.ActionLink("Redigera", "Edit", new { id = Model.Id }) | @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin")) { @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id }) }
 
 </p>
