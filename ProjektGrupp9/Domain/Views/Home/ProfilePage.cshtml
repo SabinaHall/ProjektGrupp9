@@ -1,0 +1,64 @@
+﻿@model DataLogic.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Profilsida";
+}
+
+<h2>Profilsida</h2>
+
+<div>
+    <h4>ApplicationUser</h4>
+    <hr />
+
+    <img height="300" width="300" src="@Url.Action("ProfilePicture", "Account", new { Id = Model.Id })" />
+
+    <dl class="dl-horizontal">
+
+
+
+        <dt>
+            @Html.DisplayName("Förnamn")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Efternamn")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Rum")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("E-mail")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Telefonnummer")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Redigera", "Edit", new { id = Model.Id }) | @*@if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin")) { @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id }) }*@
+
+</p>

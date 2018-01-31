@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.ApplicationUser
+
+
+<h2>Inaktivera användare</h2>
+
+<h3>Är du säkert att du vill inaktivera denna användare?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+    </dl>
+
+    @using (Html.BeginForm("DeactivateConfirmed", "Home", new { Model.Id }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Inaktivera" class="btn btn-default" />
+        </div>
+    }
+</div>

@@ -9,9 +9,13 @@
 <p>
     @Html.ActionLink("Skapa nytt möte", "Create")
 </p>
+
+    <p><b>Mötesansvarig:</b> @Model.events.Host.UserName</p>
+     
+
 <table class="table">
     <tr>
-        <th> Namn </th>
+        <th> Deltagare: </th>
     </tr>
 
     @foreach (var item in Model.users)

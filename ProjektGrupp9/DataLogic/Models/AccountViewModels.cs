@@ -76,6 +76,22 @@ namespace DataLogic.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "Förnamn")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Efternamn")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Rum")]
+        public string Room { get; set; }
+
+        [Required]
+        [Display(Name = "Mobilnummer")]
+        public string PhoneNmbr { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "{0}et måste vara minst {2} tecken långt.", MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]

@@ -15,7 +15,16 @@ namespace DataLogic.Models
         public virtual ICollection<EntryInformal> InformalEntrys { get; set; } 
         public virtual ICollection<EntryEducation> EducationEntries { get; set; }
         public virtual ICollection<EntryResearch> ResearchEntries { get; set; }
-        public string test { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Room { get; set; }
+        public bool Active { get; set; } = true;
+        public string PhoneNmbr { get; set; }
+        public byte [] ProfilePicture { get; set; }
+        public string ContentType { get; set; }
+
+
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

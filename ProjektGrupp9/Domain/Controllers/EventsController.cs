@@ -20,7 +20,7 @@ namespace Domain.Controllers
             using (var context = new ApplicationDbContext())
             {
 
-                model.allEvents = context.Events.ToList();
+                model.allEvents = context.Events.OrderBy(x => x.Date).ToList();
             }
             return View(model);
         }
@@ -49,6 +49,7 @@ namespace Domain.Controllers
                 newEvent.Time = model.events.Time;
                 newEvent.Place = model.events.Place;
                 newEvent.Description = model.events.Description;
+                newEvent.Host = context.Users.Find(User.Identity.GetUserId());
                 context.Events.Add(newEvent);
                 context.SaveChanges();
 
