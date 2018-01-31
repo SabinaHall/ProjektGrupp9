@@ -81,21 +81,23 @@ namespace Domain.Controllers
             return RedirectToAction("List");
 
         }
+        
 
-        public ActionResult ProfilePage(string id)
+        public ActionResult ProfilePage()
         {
 
-            
+
             var userId = User.Identity.GetUserId();
             var user = db.Users.Find(userId);
 
 
-           
+
 
             return View(user);
 
 
         }
+
 
         public ActionResult EditProfile(string id)
         {
