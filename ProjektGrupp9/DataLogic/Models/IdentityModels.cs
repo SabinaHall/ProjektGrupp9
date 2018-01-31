@@ -18,6 +18,7 @@ namespace DataLogic.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Room { get; set; }
+        public bool Active { get; set; } = true;
         public string PhoneNmbr { get; set; }
         public byte [] ProfilePicture { get; set; }
         public string ContentType { get; set; }

@@ -58,8 +58,7 @@
 
     </dl>
 </div>
-
 <p>
-    @Html.ActionLink("Ändra profil", "EditProfile", new { id = Model.Id }) |
+    @Html.ActionLink("Redigera", "Edit", new { id = Model.Id }) | @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id })
 
 </p>
