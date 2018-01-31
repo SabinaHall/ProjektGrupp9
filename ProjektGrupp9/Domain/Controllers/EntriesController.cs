@@ -20,10 +20,11 @@ namespace Domain.Controllers
         // GET: Entries 
         public ActionResult IndexFormal()
         {
-            return View(db.Entries.ToList());
+            var model = new TagEntryViewModel();
+            model.Entries = db.Entries.ToList();
+            model.Tags = db.Tags.ToList();
+            return View(model);
         }
-
-
 
         public ActionResult IndexInformal()
         {
@@ -46,9 +47,15 @@ namespace Domain.Controllers
         }
 
         // GET: Entries/Create
-        public ActionResult Create()
+        public ActionResult CreateTest()
         {
-            return View();
+            var model = new CreateEntryViewModel();
+            var tags = new List<SelectListItem>();
+
+            tags = db.Tags.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            model.TagNameList = tags;
+
+            return View(model);
         }
 
         // POST: Entries/Create
@@ -56,7 +63,6 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Heading,text")] Entries entries, HttpPostedFileBase picUpload)
         {
-
             if (Request.IsAuthenticated && ModelState.IsValid)
             {
                 var user = db.Users.Find(User.Identity.GetUserId()) as ApplicationUser;
@@ -73,6 +79,22 @@ namespace Domain.Controllers
                     }
                 }
 
+                EntryTag et1 = new EntryTag();
+                et1.Id = 0;
+                et1.TagName = "Möte";
+
+                EntryTag et2 = new EntryTag();
+                et2.Id = 0;
+                et2.TagName = "Information";
+
+                EntryTag et3 = new EntryTag();
+                et3.Id = 0;
+                et3.TagName = "Övrigt";
+
+                db.Tags.Add(et1);
+                db.Tags.Add(et2);
+                db.Tags.Add(et3);
+
                 aEntry.Heading = entries.Heading;
                 aEntry.text = entries.text;
                 aEntry.Date = DateTime.Now;
@@ -85,6 +107,46 @@ namespace Domain.Controllers
             }
             return View(entries);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateTest(CreateEntryViewModel model, HttpPostedFileBase picUpload)
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            Entries aEntry = new Entries();
+
+            aEntry.Author = user;
+            aEntry.text = model.Entries.text;
+            aEntry.Heading = model.Entries.Heading;
+            aEntry.Date = DateTime.Now;
+
+            if (picUpload != null && picUpload.ContentLength > 0)
+            {
+                aEntry.Filename = picUpload.FileName;
+                aEntry.ContentType = picUpload.ContentType;
+
+                using (var reader = new BinaryReader(picUpload.InputStream))
+                {
+                    aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+                }
+            }
+
+            user.Entries.Add(aEntry);
+            db.Entries.Add(aEntry);
+            db.SaveChanges();
+
+            foreach (var item in model.SelectedTagIds)
+            {
+                var selectedTag = new EntryTagEntries();
+                selectedTag.EntryId = db.Entries.Max(x => x.Id);
+                selectedTag.TagId = item;
+                db.EntryTagEntries.Add(selectedTag);
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("IndexFormal", new { Id = user.Id });
+        }
+
 
         public ActionResult EntryFile(int id)
         {

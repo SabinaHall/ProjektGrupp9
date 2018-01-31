@@ -10,107 +10,106 @@ using DataLogic.Models;
 
 namespace Domain.Controllers
 {
-    [Authorize]
-    public class CategoriesController : BaseController
+    public class EntryTagsController : BaseController
     {
 
-        // GET: Categories
+        // GET: EntryTags
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            return View(db.Tags.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: EntryTags/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            EntryTag entryTag = db.Tags.Find(id);
+            if (entryTag == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(entryTag);
         }
 
-        // GET: Categories/Create
+        // GET: EntryTags/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: EntryTags/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Namn")] Category category, string id)
+        public ActionResult Create([Bind(Include = "Id,Name")] EntryTag entryTag)
         {
-           var user = db.Users.First(x => x.Id == id) as ApplicationUser;
-            if (Request.IsAuthenticated)
+            if (ModelState.IsValid)
             {
-                Category aCategory = new Category();
-                aCategory.Namn = category.Namn;
-
-                db.Categories.Add(category);
+                db.Tags.Add(entryTag);
                 db.SaveChanges();
-                return RedirectToAction("Create", "Entries", new { Id =  user.Id });
+                return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(entryTag);
         }
 
-        // GET: Categories/Edit/5
+        // GET: EntryTags/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            EntryTag entryTag = db.Tags.Find(id);
+            if (entryTag == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(entryTag);
         }
 
-        // POST: Categories/Edit/5
+        // POST: EntryTags/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Namn")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,Name")] EntryTag entryTag)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(entryTag).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(entryTag);
         }
 
-        // GET: Categories/Delete/5
+        // GET: EntryTags/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            EntryTag entryTag = db.Tags.Find(id);
+            if (entryTag == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(entryTag);
         }
 
-        // POST: Categories/Delete/5
+        // POST: EntryTags/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            EntryTag entryTag = db.Tags.Find(id);
+            db.Tags.Remove(entryTag);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

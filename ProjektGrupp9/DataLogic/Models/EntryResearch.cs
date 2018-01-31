@@ -32,6 +32,6 @@ namespace DataLogic.Models
 
         public virtual ApplicationUser Author { get; set; }
 
-        public virtual Category CategoryTest { get; set; }
+        //public virtual Category CategoryTest { get; set; }
     }
 }

@@ -1,14 +1,14 @@
 ﻿@using Microsoft.AspNet.Identity
-@model IEnumerable<DataLogic.Models.Entries>
+@model DataLogic.Models.TagEntryViewModel
 
 
 <h2>Formella inlägg</h2>
 
 <p>
-    @Html.ActionLink("Skriv nytt inlägg", "Create", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Skriv nytt inlägg", "CreateTest", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 
-@foreach (var entry in Model.Reverse())
+@foreach (var entry in Model.Entries.Reverse())
 {
     <div class="well">
         <h3>@entry.Heading</h3>
@@ -28,7 +28,25 @@
             <p>Klicka på länken för att se bifogad fil</p>
             @Html.ActionLink("Bifogad fil: " + entry.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = entry.Id }, htmlAttributes: null);
         }
-        
+
+        <br />
+        <br />
+
+        @using (var db = new DataLogic.Models.ApplicationDbContext())
+        {
+            foreach (var hej in db.EntryTagEntries)
+            {
+                foreach (var helo in Model.Tags)
+                {
+                    if (hej.EntryId == entry.Id)
+                    {
+                        <p>@helo.TagName</p>
+                    }
+                }
+            }
+        }
+
+
         <br />
         <br />
         <br />

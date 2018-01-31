@@ -17,6 +17,7 @@ namespace DataLogic.Models
         public Events events { get; set; }
         public List<ApplicationUser> users { get; set; }
         public List<Events> allEvents { get; set; }
+
         [Required]
         [Display(Name = "Mötesdeltagare")]
         public List<ApplicationUser> Meetingparticipants { get; set; }
