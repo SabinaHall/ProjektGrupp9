@@ -50,19 +50,20 @@ namespace Domain.Controllers
 
         }
 
-        public ActionResult ProfilePage()
+        public ActionResult ProfilePage(string id)
         {
 
             var model = new ApplicationUser();
-            var userId = User.Identity.GetUserId();
-            var user = db.Users.Find(userId);
+            //var userId = User.Identity.GetUserId();
+            //var user = db.Users.Find(userId);
 
 
-            model.FirstName = user.FirstName;
-            model.LastName = user.LastName;
-            model.Email = user.Email;
-            model.Room = user.Room;
-            model.PhoneNumber = user.PhoneNumber;
+            //model.FirstName = user.FirstName;
+            //model.LastName = user.LastName;
+            //model.Email = user.Email;
+            //model.Room = user.Room;
+            //model.PhoneNumber = user.PhoneNumber;
+            model = db.Users.Find(id);
 
             return View(model);
 
