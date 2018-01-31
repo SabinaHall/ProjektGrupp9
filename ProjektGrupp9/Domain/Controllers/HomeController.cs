@@ -1,4 +1,5 @@
 ﻿using DataLogic.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,30 @@ namespace Domain.Controllers
             db.SaveChanges();
 
             return RedirectToAction("List");
-        
+
         }
+
+        public ActionResult ProfilePage()
+        {
+
+            var model = new ApplicationUser();
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+
+
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.Email = user.Email;
+            model.Room = user.Room;
+            model.PhoneNumber = user.PhoneNumber;
+
+            return View(model);
+
+
+        }
+
+            
+
+
     }
 }
