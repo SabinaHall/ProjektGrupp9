@@ -139,7 +139,7 @@ namespace Domain.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin,Admin" )]
         public ActionResult Register()
         {
             var model = new RegisterViewModel();
@@ -162,7 +162,7 @@ namespace Domain.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Room = model.Room };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Room = model.Room, PhoneNmbr = model.PhoneNmbr };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
