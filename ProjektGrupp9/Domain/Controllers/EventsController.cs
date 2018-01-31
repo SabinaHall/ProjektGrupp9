@@ -20,7 +20,7 @@ namespace Domain.Controllers
             using (var context = new ApplicationDbContext())
             {
 
-                model.allEvents = context.Events.ToList();
+                model.allEvents = context.Events.OrderBy(x => x.Date).ToList();
             }
             return View(model);
         }

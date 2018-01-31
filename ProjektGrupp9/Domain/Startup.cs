@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(Domain.Startup))]
@@ -12,9 +13,31 @@ namespace Domain
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)
+
         {
             ConfigureAuth(app);
+            DeletePastDates();
             //createRolesandUsers();
+        }
+
+        private void DeletePastDates()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var lista = new List<Events>();
+                lista = context.Events.ToList();
+                foreach (var item in lista)
+                {
+                    if (item.Date < DateTime.Now)
+                    {
+                        context.Events.Remove(item);
+                        
+
+                    }
+                }
+
+                context.SaveChanges();
+            }
         }
 
         private void createRolesandUsers()
