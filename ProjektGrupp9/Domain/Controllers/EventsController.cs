@@ -33,6 +33,7 @@ namespace Domain.Controllers
 
             users = db.Users.Select(x => new SelectListItem { Value = x.Id, Text = x.UserName }).ToList();
             model.Participants = users;
+
             //model.users = db.Users.Where(x => x.Id != User.Identity.GetUserId()).ToList();
             return View(model);
 
@@ -61,6 +62,22 @@ namespace Domain.Controllers
                     p.UserID = item;
                     context.EventParticipants.Add(p);
                     
+                }
+                
+                foreach (var item in model.ListId)
+                {
+
+                    var invite = new MeetingInvites()
+                    {
+                        EventID = db.Events.Max(x => x.Id),
+                        Sender = User.Identity.GetUserId(),
+                        Receiver = item
+                        
+                    };
+
+                    context.MeetingInvites.Add(invite);
+
+                  
                 }
                 
                   
@@ -178,6 +195,14 @@ namespace Domain.Controllers
 
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Events(string id)
+        {
+            var inviteList = db.MeetingInvites.Select(x => x.Receiver == id).ToList();
+
+            return View(inviteList);
+
         }
 
 
