@@ -15,6 +15,7 @@ namespace DataLogic.Models
         public virtual ICollection<EntryInformal> InformalEntrys { get; set; } 
         public virtual ICollection<EntryEducation> EducationEntries { get; set; }
         public virtual ICollection<EntryResearch> ResearchEntries { get; set; }
+        public virtual ICollection<Comment> UserComments { get; set; }  
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Room { get; set; }

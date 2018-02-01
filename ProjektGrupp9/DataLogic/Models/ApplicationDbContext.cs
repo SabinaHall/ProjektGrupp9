@@ -28,7 +28,8 @@ namespace DataLogic.Models
         public DbSet<MeetingInvites> MeetingInvites { get; set; }
         public DbSet<EventParticipants> EventParticipants { get; set; }
         public DbSet<EntryTagEntries> EntryTagEntries { get; set; }
-         
+        public DbSet<Comment> Comments { get; set; } 
+
         public System.Data.Entity.DbSet<DataLogic.Models.Events> Events { get; set; }
 
         public System.Data.Entity.DbSet<DataLogic.Models.Email> Emails { get; set; }

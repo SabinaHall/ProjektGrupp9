@@ -30,5 +30,7 @@ namespace DataLogic.Models
         public byte[] File { get; set; }
 
         public virtual ApplicationUser Author { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; } 
     }
 }
