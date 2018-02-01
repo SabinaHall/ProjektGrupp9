@@ -27,6 +27,10 @@ namespace DataLogic.Models
                 user.PasswordHash = pwd;
                 user.UserName = $"User{i}@live.se";
                 user.Email = $"User{i}@live.se";
+                user.FirstName = $"User{i}";
+                user.LastName = $"User{i}";
+                user.Room = $"N204{i}";
+                user.PhoneNmbr = $"0738675869";
                 user.SecurityStamp = Guid.NewGuid().ToString();
                 context.Users.Add(user);
                 context.SaveChanges();
@@ -71,6 +75,10 @@ namespace DataLogic.Models
                 user.PasswordHash = pwd;
                 user.UserName = $"admin{i}@live.se";
                 user.Email = $"admin{i}@live.se";
+                user.FirstName = $"Admin{i}";
+                user.LastName = $"Admin{i}";
+                user.Room = $"N204{i}";
+                user.PhoneNmbr = $"0738675869";
                 user.SecurityStamp = Guid.NewGuid().ToString();
                 context.Users.Add(user);
                 context.SaveChanges();
@@ -78,22 +86,6 @@ namespace DataLogic.Models
                 UserManager.AddToRole(user.Id, "Admin");
             }
 
-            //if (!context.Users.Any(x => x.UserName == "admin@live.se"))
-            //{
-            //    PasswordHasher pwdHash = new PasswordHasher();
-            //    string pwd = pwdHash.HashPassword("123");
-            //    var user = new ApplicationUser();
-
-
-            //    user.PasswordHash = pwd;
-            //    user.UserName = "admin@live.se";
-            //    user.Email = "admin@live.se";
-            //    user.SecurityStamp = Guid.NewGuid().ToString();
-            //    context.Users.Add(user);
-            //    context.SaveChanges();
-
-            //    UserManager.AddToRole(user.Id, "Admin");
-            //}
 
 
             if (!context.Users.Any(x => x.UserName == "andreas@live.se"))
@@ -106,6 +98,10 @@ namespace DataLogic.Models
                 user.PasswordHash = pwd;
                 user.UserName = "andreas@live.se";
                 user.Email = "andreas@live.se";
+                user.FirstName = "Andreas";
+                user.LastName = "Johansson";
+                user.Room = "N2020";
+                user.PhoneNmbr = "hemligt";
                 user.SecurityStamp = Guid.NewGuid().ToString(); 
                 context.Users.Add(user);
                 context.SaveChanges();
