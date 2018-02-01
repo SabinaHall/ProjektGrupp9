@@ -342,13 +342,13 @@ textarea {
 }
 
 a {
-  color: #428bca;
+  color: #000;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #2a6496;
+  color: #fff;
   text-decoration: underline;
 }
 
@@ -3374,8 +3374,9 @@ input[type="button"].btn-block {
 
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
-    right: 0;
+    right: auto;
     left: auto;
+    background-color: #999999;
   }
 }
 
