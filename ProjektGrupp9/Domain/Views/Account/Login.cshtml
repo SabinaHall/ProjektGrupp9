@@ -14,6 +14,9 @@
                 <h4>Ange dina användaruppgifter:</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                if (TempData["inactive"] != null)
+                {
+                    var inactive = TempData["inactive"].ToString(); <p class="text-danger" >@inactive</p> } 
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">

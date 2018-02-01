@@ -8,12 +8,23 @@
 <h2>Profilsida</h2>
 
 <div>
-    <h4>Användare</h4>
     <hr />
-    
 
-    
-    <img height="300" width="300" src="@Url.Action("ProfilePicture", "Account", new { Id = Model.Id })" />
+  
+        <hr />
+       
+            <div class="card front-cards" style="width: 20rem;">
+                <img class="card-img-top image-size" src="@Url.Action("ProfilePicture", "Account", new { id = Model.Id} )" alt="Card image cap">
+                <div class="card-block">
+                 
+
+                </div>
+            </div>
+        
+ 
+
+
+ 
 
     <dl class="dl-horizontal">
 
@@ -64,7 +75,10 @@
 
 
 <p>
-    @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id }) | 
+    @if (Model.Id == User.Identity.GetUserId())
+    {
+        @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id })
+    }
     @if (User.IsInRole("SuperAdmin") && Model.Active)
     {
         if (!Model.Id.Equals(User.Identity.GetUserId()))
