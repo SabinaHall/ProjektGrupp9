@@ -141,12 +141,33 @@ namespace Domain.Controllers
                 userId = id;
             }
             
-            var user = db.Users.Find(userId);
+            ApplicationUser model = db.Users.Find(userId);
+
+            var superAdmin = (from r in db.Roles where r.Name.Contains("SuperAdmin") select r).FirstOrDefault();
+            var superAdminUsers = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(superAdmin.Id)).ToList();
+
+            var admin = (from r in db.Roles where r.Name.Contains("Admin") select r).FirstOrDefault();
+            var adminUsers = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(admin.Id)).ToList();
 
 
+            if (superAdminUsers.Find(x => x.Id == userId) != null)
+            {
+                TempData["role"] = "SuperAdmin";
+            }
+           
+
+            if (adminUsers.Find(x => x.Id == userId) != null)
+            {
+                TempData["role"] = "Admin";
+            }
+            
+            if (TempData["role"] == null)
+            {
+                TempData["role"] = "";
+            }
 
 
-            return View(user);
+            return View(model);
 
 
         }

@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Identity;
+﻿@using Microsoft.AspNet.Identity
 @model DataLogic.Models.ApplicationUser
 
 @{
@@ -64,7 +64,51 @@
 
 @if(Model.Id == User.Identity.GetUserId()) { 
 <p>
-    @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id })
+    @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id }) | 
+    @if (User.IsInRole("SuperAdmin") && Model.Active)
+    {
+        if (!Model.Id.Equals(User.Identity.GetUserId()))
+        {
+            @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id })
+        }
+
+    }
+
+    @if (User.IsInRole("Admin") && Model.Active)
+    {
+        if (!Model.Id.Equals(User.Identity.GetUserId()))
+        {
+            if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+            {
+                @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id })
+            }
+
+        }
+
+    }
+
+    @if (User.IsInRole("SuperAdmin") && !Model.Active)
+    {
+        if (!Model.Id.Equals(User.Identity.GetUserId()))
+        {
+            @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.Id })
+        }
+
+    }
+
+    @if (User.IsInRole("Admin") && !Model.Active)
+    {
+        if (!Model.Id.Equals(User.Identity.GetUserId()))
+        {
+            if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+            {
+                @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.Id })
+            }
+
+        }
+
+    }
+
 
 </p>
 }
