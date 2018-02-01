@@ -24,7 +24,7 @@
         <div class="card front-cards" style="width: 20rem;">
             <img class="card-img-top image-size" src="@Url.Action("ProfilePicture", "Account", new { id = user.Id} )" alt="Card image cap">
             <div class="card-block">
-                <h4 class="card-title">@Html.ActionLink(user.UserName, "Details", "Account", new { id = user.Id }, null)</h4>
+                <h4 class="card-title">@Html.ActionLink(user.UserName, "ProfilePage", "Home", new { id = user.Id }, null)</h4>
 
             </div>
         </div>
