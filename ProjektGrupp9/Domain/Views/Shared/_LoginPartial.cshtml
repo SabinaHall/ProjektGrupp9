@@ -9,6 +9,12 @@
             
 <ul class="nav navbar-nav">
     <li>@Html.ActionLink("Händelser: " + i,"Events","Events", routeValues: new {Id = User.Identity.GetUserId()},htmlAttributes: null)</li>
+  
+
+    
+
+
+    <li>@Html.ActionLink("Sök användare", "UserSearch", "Home", routeValues: null, htmlAttributes: null)</li>
     <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li>@Html.ActionLink("Informella inlägg", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li class="nav-item dropdown">
