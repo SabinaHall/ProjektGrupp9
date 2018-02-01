@@ -34,7 +34,5 @@ namespace DataLogic.Models
         public System.Data.Entity.DbSet<DataLogic.Models.Email> Emails { get; set; }
 
         public System.Data.Entity.DbSet<DataLogic.Models.EventViewModel> EventViewModels { get; set; }
-
-        public System.Data.Entity.DbSet<DataLogic.Models.CreateEntryViewModel> CreateEntryViewModels { get; set; }
     }
 }
