@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model DataLogic.Models.TagEntryViewModel
+@model Dictionary<DataLogic.Models.Entries, List<string>>
 
 
 <h2>Formella inlägg</h2>
@@ -8,53 +8,51 @@
     @Html.ActionLink("Skriv nytt inlägg", "CreateTest", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 
-@foreach (var entry in Model.Entries.Reverse())
+@foreach (var entry in Model.Reverse())
 {
     <div class="well">
-        <h3>@entry.Heading</h3>
-        <p>Skriven av: @entry.Author.Email</p>
-        <p>Datum: @entry.Date.ToString()</p>
+        <h3>@entry.Key.Heading</h3>
+        <p>Skriven av: @entry.Key.Author.Email</p>
+        <p>Datum: @entry.Key.Date.ToString()</p>
         <br />
         <br />
-        <p>@entry.text</p>
+        <p>@entry.Key.text</p>
         <br />
 
-        @if (entry.File != null && entry.ContentType.Contains("image"))
+        @if (entry.Key.File != null && entry.Key.ContentType.Contains("image"))
         {
-            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Key.Id })" />
         }
-        else if (entry.File != null && !entry.ContentType.Contains("image"))
+        else if (entry.Key.File != null && !entry.Key.ContentType.Contains("image"))
         {
             <p>Klicka på länken för att se bifogad fil</p>
-            @Html.ActionLink("Bifogad fil: " + entry.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = entry.Id }, htmlAttributes: null);
+            @Html.ActionLink("Bifogad fil: " + entry.Key.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = entry.Key.Id }, htmlAttributes: null);
         }
 
         <br />
         <br />
 
-        @using (var db = new DataLogic.Models.ApplicationDbContext())
+        @foreach (var tag in entry.Value)
         {
-            foreach (var hej in db.EntryTagEntries)
+            @*<button type="button" class="btn btn-primary btn-xs">@tag</button>*@
+
+            <br />
+            @Html.ActionLink(tag, "", "", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-xs" })
+            <br />
+        }
+
+
+
+        <br />
+        <br />
+        <br />
+        <div class="panel-footer row">
+            @if (entry.Key.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
-                foreach (var helo in Model.Tags)
-                {
-                    if (hej.EntryId == entry.Id)
-                    {
-                        <p>@helo.TagName</p>
-                    }
-                }
+                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
             }
-        }
 
-
-        <br />
-        <br />
-        <br />
-        @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
-        {
-            @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
-        }
-
+        </div>
     </div>
 }
 

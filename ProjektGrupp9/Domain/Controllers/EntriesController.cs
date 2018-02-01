@@ -20,9 +20,15 @@ namespace Domain.Controllers
         // GET: Entries 
         public ActionResult IndexFormal()
         {
-            var model = new TagEntryViewModel();
-            model.Entries = db.Entries.ToList();
-            model.Tags = db.Tags.ToList();
+            Dictionary<Entries, List<string>> model = new Dictionary<Entries, List<string>>();
+            var allEntries = db.Entries.ToList();
+            foreach (var entrie in allEntries)
+            {
+                var entrieTags = db.EntryTagEntries.Where(x => x.EntryId == entrie.Id).Select(x => x.TagId).ToList();
+                var tagNames = db.Tags.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
+                model.Add(entrie, tagNames);
+            }
+
             return View(model);
         }
 
@@ -79,22 +85,6 @@ namespace Domain.Controllers
                     }
                 }
 
-                EntryTag et1 = new EntryTag();
-                et1.Id = 0;
-                et1.TagName = "Möte";
-
-                EntryTag et2 = new EntryTag();
-                et2.Id = 0;
-                et2.TagName = "Information";
-
-                EntryTag et3 = new EntryTag();
-                et3.Id = 0;
-                et3.TagName = "Övrigt";
-
-                db.Tags.Add(et1);
-                db.Tags.Add(et2);
-                db.Tags.Add(et3);
-
                 aEntry.Heading = entries.Heading;
                 aEntry.text = entries.text;
                 aEntry.Date = DateTime.Now;
@@ -112,39 +102,42 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateTest(CreateEntryViewModel model, HttpPostedFileBase picUpload)
         {
-            var user = db.Users.Find(User.Identity.GetUserId());
-            Entries aEntry = new Entries();
-
-            aEntry.Author = user;
-            aEntry.text = model.Entries.text;
-            aEntry.Heading = model.Entries.Heading;
-            aEntry.Date = DateTime.Now;
-
-            if (picUpload != null && picUpload.ContentLength > 0)
+            if(Request.IsAuthenticated)
             {
-                aEntry.Filename = picUpload.FileName;
-                aEntry.ContentType = picUpload.ContentType;
+                var user = db.Users.Find(User.Identity.GetUserId()) as ApplicationUser;
+                Entries aEntry = new Entries();
 
-                using (var reader = new BinaryReader(picUpload.InputStream))
+                aEntry.Author = user;
+                aEntry.text = model.Entries.text;
+                aEntry.Heading = model.Entries.Heading;
+                aEntry.Date = DateTime.Now;
+
+                if (picUpload != null && picUpload.ContentLength > 0)
                 {
-                    aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+                    aEntry.Filename = picUpload.FileName;
+                    aEntry.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        aEntry.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
                 }
+
+                user.Entries.Add(aEntry);
+                db.Entries.Add(aEntry);
+                db.SaveChanges();
+
+                foreach (var item in model.SelectedTagIds)
+                {
+                    var selectedTag = new EntryTagEntries();
+                    selectedTag.EntryId = db.Entries.Max(x => x.Id);
+                    selectedTag.TagId = item;
+                    db.EntryTagEntries.Add(selectedTag);
+                }
+                db.SaveChanges();
+                return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
-
-            user.Entries.Add(aEntry);
-            db.Entries.Add(aEntry);
-            db.SaveChanges();
-
-            foreach (var item in model.SelectedTagIds)
-            {
-                var selectedTag = new EntryTagEntries();
-                selectedTag.EntryId = db.Entries.Max(x => x.Id);
-                selectedTag.TagId = item;
-                db.EntryTagEntries.Add(selectedTag);
-            }
-
-            db.SaveChanges();
-            return RedirectToAction("IndexFormal", new { Id = user.Id });
+            return View();
         }
 
 
@@ -207,7 +200,10 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Entries entries = db.Entries.Find(id);
+            Entries entries = db.Entries.Find(id);    
+            EntryTagEntries aEntry = db.EntryTagEntries.Find(entries.Id);
+
+            db.EntryTagEntries.Remove(aEntry);
             db.Entries.Remove(entries);
             db.SaveChanges();
             return RedirectToAction("IndexFormal");
