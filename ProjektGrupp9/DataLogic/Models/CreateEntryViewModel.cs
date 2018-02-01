@@ -12,19 +12,7 @@ namespace DataLogic.Models
     {
         [Key]
         public int Id { get; set; }
-
-        //public string Heading { get; set; }
-
-        //public string Text { get; set; }
-
-        //public DateTime Date { get; set; }
-
-        //public string Filename { get; set; }
-
-        //public string ContentType { get; set; }
-
-        //public byte[] File { get; set; }
-
+        
         public List<EntryTag> TagList { get; set; } 
 
         public IEnumerable<SelectListItem> TagNameList { get; set; }
