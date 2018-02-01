@@ -5,7 +5,7 @@
     {
         @Html.AntiForgeryToken()
 
-<ul class="nav navbar-nav">
+<ul class="nav navbar-nav"style="color: black;">
   
     <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li>@Html.ActionLink("Informella inlägg", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
@@ -29,7 +29,7 @@
 
 </ul>
 
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right"style="color: red;">
             <li>
                 @Html.ActionLink("" + User.Identity.GetUserName() + "!", "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId()}, htmlAttributes: new { title = "Manage" })
             </li>
@@ -39,7 +39,7 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right"style="color: black;">
         <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
