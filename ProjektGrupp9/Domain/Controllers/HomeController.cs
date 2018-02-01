@@ -28,6 +28,15 @@ namespace Domain.Controllers
             return RedirectToAction("ProfilePage", new { id = id });
         }
 
+        public ActionResult ActivateConfirmed(string id)
+        {
+
+            var user = db.Users.Find(id);
+            user.Active = true;
+            db.SaveChanges();
+            return RedirectToAction("ProfilePage", new { id = id });
+        }
+
         public ActionResult UserFile(string id)
         {
             var be = db.Users.Find(id);
@@ -91,6 +100,26 @@ namespace Domain.Controllers
 
 
            
+
+        }
+
+        public ActionResult Activate(string id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+
+
+
+
 
         }
 
