@@ -33,6 +33,7 @@ namespace Domain.Controllers
 
             users = db.Users.Select(x => new SelectListItem { Value = x.Id, Text = x.UserName }).ToList();
             model.Participants = users;
+
             //model.users = db.Users.Where(x => x.Id != User.Identity.GetUserId()).ToList();
             return View(model);
 
@@ -53,14 +54,22 @@ namespace Domain.Controllers
                 context.Events.Add(newEvent);
                 context.SaveChanges();
 
+                var sender = db.Users.Find(User.Identity.GetUserId());
+                
                 foreach (var item in model.ListId)
                 {
-                    var p = new EventParticipants();
 
-                    p.EventID = context.Events.Max(x => x.Id);
-                    p.UserID = item;
-                    context.EventParticipants.Add(p);
-                    
+                    var invite = new MeetingInvites()
+                    {
+                        EventID = db.Events.Max(x => x.Id),
+                        Sender = sender.UserName,
+                        Receiver = item
+                        
+                    };
+
+                    context.MeetingInvites.Add(invite);
+
+                  
                 }
                 
                   
@@ -178,6 +187,54 @@ namespace Domain.Controllers
 
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Events(string id)
+        {
+            Dictionary<MeetingInvites, Events> model = new Dictionary<MeetingInvites,Events>();
+            var allInvites = db.MeetingInvites.Where(x => x.Receiver == id).ToList();
+
+            if (allInvites.Count > 0)
+            {
+                foreach (var invite in allInvites)
+                {
+                    var e = db.Events.Where(x => x.Id == invite.EventID).SingleOrDefault();
+                    model.Add(invite, e);
+                }
+            }
+            return View(model);
+
+        }
+
+        public ActionResult Accept(int id)
+        {
+            var eventID = db.MeetingInvites.Where(x => x.id == id).Select(x => x.EventID).SingleOrDefault();
+
+            var eventParticipants = new EventParticipants()
+            {
+                EventID = eventID,
+                UserID = User.Identity.GetUserId()
+            };
+            db.EventParticipants.Add(eventParticipants);
+
+            var m = db.MeetingInvites.Find(id);
+            db.MeetingInvites.Remove(m);
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
+        }
+
+        public ActionResult Decline(int id)
+        {
+
+            var m = db.MeetingInvites.Find(id);
+            db.MeetingInvites.Remove(m);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
 
 

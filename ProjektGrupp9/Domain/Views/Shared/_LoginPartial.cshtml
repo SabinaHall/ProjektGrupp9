@@ -4,9 +4,17 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
+        int i = DataLogic.DbMethods.Methods.GetInvitesCount(User.Identity.GetUserId());
+            
+            
 <ul class="nav navbar-nav">
+    <li>@Html.ActionLink("Händelser: " + i,"Events","Events", routeValues: new {Id = User.Identity.GetUserId()},htmlAttributes: null)</li>
   
+
+    
+
+
+    <li>@Html.ActionLink("Sök användare", "UserSearch", "Home", routeValues: null, htmlAttributes: null)</li>
     <li>@Html.ActionLink("Formella inlägg", "IndexFormal", "Entries", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li>@Html.ActionLink("Informella inlägg", "Index", "EntryInformals", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)</li>
     <li class="nav-item dropdown">
@@ -29,7 +37,7 @@
 
 </ul>
 
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right"style="color: red;">
             <li>
                 @Html.ActionLink("" + User.Identity.GetUserName() + "!", "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId()}, htmlAttributes: new { title = "Manage" })
             </li>
@@ -39,7 +47,7 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right"style="color: black;">
         <li>@Html.ActionLink("Logga in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
