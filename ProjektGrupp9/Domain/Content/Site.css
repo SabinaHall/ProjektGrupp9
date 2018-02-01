@@ -2,7 +2,10 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
-
+.cardactions:hover {
+    color: #000;
+    text-decoration:underline solid #000;
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
