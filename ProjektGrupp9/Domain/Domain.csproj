@@ -310,6 +310,7 @@
     <Content Include="Views\Home\Deactivate.cshtml" />
     <Content Include="Views\Home\EditProfile.cshtml" />
     <Content Include="Views\Home\UserSearch.cshtml" />
+    <Content Include="Views\Events\Events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
