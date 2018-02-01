@@ -38,6 +38,16 @@ namespace Domain.Controllers
             return View();
         }
 
+        public ActionResult UserSearch()
+        {
+
+            List<ApplicationUser> model = new List<ApplicationUser>();
+
+            model = db.Users.ToList();
+
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult UserSearch (string UserSearch)
         {

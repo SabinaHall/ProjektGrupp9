@@ -1639,6 +1639,21 @@ table th[class*="col-"] {
     border-bottom: 0;
   }
 }
+ /*Css för sökruta*/
+.txtbox {
+    display: inline;
+    float: left;
+    height: 30px;
+    width: 100px;
+}
+
+.btncls {
+    display: inline;
+    float: right;
+    height: 32px;
+    margin: -1px -2px -2px;
+    width: 41px;
+}
 
 fieldset {
   padding: 0;
