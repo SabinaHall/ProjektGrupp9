@@ -37,11 +37,63 @@ namespace DataLogic.Models
             if (!roleManager.RoleExists("SuperAdmin"))
             {
 
-                // first we create Admin rool   
+                // first we create SuperAdmin rool   
                 var role = new IdentityRole();
                 role.Name = "SuperAdmin";
                 roleManager.Create(role);
             }
+
+            if (!roleManager.RoleExists("Admin"))
+            {
+
+                // create Admin rool   
+                var role = new IdentityRole();
+                role.Name = "Admin";
+                roleManager.Create(role);
+            }
+
+            if (!roleManager.RoleExists("User"))
+            {
+
+                // create User rool   
+                var role = new IdentityRole();
+                role.Name = "User";
+                roleManager.Create(role);
+            }
+
+            for (int i = 1; i < 3; i++)
+            {
+                PasswordHasher pwdHash = new PasswordHasher();
+                string pwd = pwdHash.HashPassword("123");
+                var user = new ApplicationUser();
+
+
+                user.PasswordHash = pwd;
+                user.UserName = $"admin{i}@live.se";
+                user.Email = $"admin{i}@live.se";
+                user.SecurityStamp = Guid.NewGuid().ToString();
+                context.Users.Add(user);
+                context.SaveChanges();
+
+                UserManager.AddToRole(user.Id, "Admin");
+            }
+
+            //if (!context.Users.Any(x => x.UserName == "admin@live.se"))
+            //{
+            //    PasswordHasher pwdHash = new PasswordHasher();
+            //    string pwd = pwdHash.HashPassword("123");
+            //    var user = new ApplicationUser();
+
+
+            //    user.PasswordHash = pwd;
+            //    user.UserName = "admin@live.se";
+            //    user.Email = "admin@live.se";
+            //    user.SecurityStamp = Guid.NewGuid().ToString();
+            //    context.Users.Add(user);
+            //    context.SaveChanges();
+
+            //    UserManager.AddToRole(user.Id, "Admin");
+            //}
 
 
             if (!context.Users.Any(x => x.UserName == "andreas@live.se"))
@@ -55,6 +107,23 @@ namespace DataLogic.Models
                 user.UserName = "andreas@live.se";
                 user.Email = "andreas@live.se";
                 user.SecurityStamp = Guid.NewGuid().ToString(); 
+                context.Users.Add(user);
+                context.SaveChanges();
+
+                UserManager.AddToRole(user.Id, "SuperAdmin");
+            }
+
+            if (!context.Users.Any(x => x.UserName == "superadmin@live.se"))
+            {
+                PasswordHasher pwdHash = new PasswordHasher();
+                string pwd = pwdHash.HashPassword("123");
+                var user = new ApplicationUser();
+
+
+                user.PasswordHash = pwd;
+                user.UserName = "superadmin@live.se";
+                user.Email = "superadmin@live.se";
+                user.SecurityStamp = Guid.NewGuid().ToString();
                 context.Users.Add(user);
                 context.SaveChanges();
 
