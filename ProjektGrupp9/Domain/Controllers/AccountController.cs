@@ -16,7 +16,7 @@ using System.IO;
 namespace Domain.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -71,10 +71,18 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid )
+            var user = db.Users.Where(x => x.UserName == model.Email).FirstOrDefault();
+            
+            if (!ModelState.IsValid || user == null || !user.Active)
             {
+                if (!user.Active)
+                {
+                    TempData["inactive"] = "Ditt konto är inaktiverat. Vänligen kontakta systemadministratören";
+                }
+               
                 return View(model);
             }
+            
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -216,7 +224,7 @@ namespace Domain.Controllers
                     return RedirectToAction("UserFile", "Home", new { ID = id });
                 }
             }
-            return RedirectToAction("ProfilePage", "Home") ;
+            
         }
 
         //
