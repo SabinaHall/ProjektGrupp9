@@ -211,6 +211,10 @@ namespace Domain.Controllers
                 {
                     return File(user.ProfilePicture, user.ContentType);
                 }
+                else
+                {
+                    return RedirectToAction("UserFile", "Home", new { ID = id });
+                }
             }
             return RedirectToAction("ProfilePage", "Home") ;
         }
