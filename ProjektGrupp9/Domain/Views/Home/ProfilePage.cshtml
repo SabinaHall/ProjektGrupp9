@@ -64,7 +64,10 @@
 
 
 <p>
-    @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id }) | 
+    @if (Model.Id == User.Identity.GetUserId())
+    {
+        @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id })
+    }
     @if (User.IsInRole("SuperAdmin") && Model.Active)
     {
         if (!Model.Id.Equals(User.Identity.GetUserId()))
