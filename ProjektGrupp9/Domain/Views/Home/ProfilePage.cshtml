@@ -12,7 +12,7 @@
     <hr />
     
 
-
+    
     <img height="300" width="300" src="@Url.Action("ProfilePicture", "Account", new { Id = Model.Id })" />
 
     <dl class="dl-horizontal">
@@ -61,6 +61,8 @@
 
     </dl>
 </div>
+
+@if(Model.Id == User.Identity.GetUserId()) { 
 <p>
     @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id }) | 
     @if (User.IsInRole("SuperAdmin") && Model.Active)
@@ -109,3 +111,7 @@
 
 
 </p>
+}
+
+<p>@if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+{@Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id })}</p>

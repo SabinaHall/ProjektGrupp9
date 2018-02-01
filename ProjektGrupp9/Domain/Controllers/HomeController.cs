@@ -1,13 +1,13 @@
-﻿using DataLogic;
+﻿
 using DataLogic.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+
 
 namespace Domain.Controllers
 {
@@ -30,12 +30,19 @@ namespace Domain.Controllers
 
         public ActionResult UserFile(string id)
         {
-            var be = db.Users.Single(x => x.Id == id);
+            var be = db.Users.Find(id);
             if (be.ProfilePicture != null)
             {
                 return File(be.ProfilePicture, be.ContentType);
             }
-            return View();
+            else
+            {
+                byte[] imageData = null;
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Content/images/994628-200.png");
+                imageData = System.IO.File.ReadAllBytes(path);
+                return File(imageData, "images/png");
+            }
+            
         }
 
         public ActionResult UserSearch()

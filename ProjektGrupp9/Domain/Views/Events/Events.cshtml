@@ -1,0 +1,40 @@
+﻿@model Dictionary<DataLogic.Models.MeetingInvites, DataLogic.Models.Events>
+
+@{
+    ViewBag.Title = "Events";
+}
+
+<h2>Inbjudningar</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            <label>Mötesledare</label>
+        </th>
+        <th>
+            <label>Mötesdetaljer</label>
+        </th>
+        <th>
+            <label>Svar:</label>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Key.Sender)
+        </td>
+        <td>
+            <p><b>Plats: </b>@item.Value.Place</p>
+            <p><b>Tid: </b>@item.Value.Time</p>
+            <p><b>Datum: </b>@item.Value.Date</p>
+        </td>
+        <td>
+            @Html.ActionLink("Acceptera", "Accept", new { id = item.Key.id }) |
+            @Html.ActionLink("Avböj", "Decline", new { id = item.Key.id })
+        </td>
+    </tr>
+}
+
+</table>

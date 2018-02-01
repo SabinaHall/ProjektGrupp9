@@ -206,7 +206,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\994628-200.png" />
     <Content Include="Content\images\Informatik.jpg" />
+    <Content Include="Content\images\LayLogo.png" />
     <Content Include="Content\images\oru2.png" />
     <Content Include="Content\images\uni.png" />
     <Content Include="favicon.ico" />
@@ -310,6 +312,7 @@
     <Content Include="Views\Home\Deactivate.cshtml" />
     <Content Include="Views\Home\EditProfile.cshtml" />
     <Content Include="Views\Home\UserSearch.cshtml" />
+    <Content Include="Views\Events\Events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
