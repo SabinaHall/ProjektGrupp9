@@ -16,7 +16,22 @@
         <input type="submit" name="userSearch" value="Sök användare" />
     }
 </p>
-@foreach (var user in Model.Reverse())
+
+<div style="max-height:750px; overflow-y:scroll;">
+    <hr />
+    @foreach (var user in Model)
+    {
+        <div class="card front-cards" style="width: 20rem;">
+            <img class="card-img-top image-size" src="@Url.Action("ProfilePicture", "Account", new { id = user.Id} )" alt="Card image cap">
+            <div class="card-block">
+                <h4 class="card-title">@Html.ActionLink(user.UserName, "ProfilePage", "Home", new { id = user.Id }, null)</h4>
+
+            </div>
+        </div>
+    }
+</div>
+
+@*@foreach (var user in Model.Reverse())
 {
     <div class="well">
         <h3>@user.FirstName  @user.LastName</h3>
@@ -36,7 +51,7 @@
      
     </div>
 
-}
+}*@
 
 
 <div class="clearfix"></div>

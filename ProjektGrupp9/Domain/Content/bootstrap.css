@@ -3374,7 +3374,7 @@ input[type="button"].btn-block {
 
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
-    right: 0;
+    right: auto;
     left: auto;
   }
 }

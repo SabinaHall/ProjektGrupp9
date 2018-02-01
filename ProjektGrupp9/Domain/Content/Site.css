@@ -2,7 +2,10 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
-
+.cardactions:hover {
+    color: #000;
+    text-decoration:underline solid #000;
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -41,9 +44,25 @@ textarea {
 .bildlogga{
 
     width: 25px;
-        height: 30px;
+    height: 30px;
 
 }
 div.head {
     background-color: #000;
+}
+.image-size {
+    width: 100%;
+    height: 19rem;
+}
+
+.front-cards {
+    float: left;
+    margin: 5px;
+    padding: 2px;
+    border: 2px solid #ccc;
+}
+
+.clear {
+    clear: left;
+    display: block;
 }

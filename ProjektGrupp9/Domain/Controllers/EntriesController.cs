@@ -102,7 +102,7 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateTest(CreateEntryViewModel model, HttpPostedFileBase picUpload)
         {
-            if(Request.IsAuthenticated)
+            if(Request.IsAuthenticated && ModelState.IsValid)
             {
                 var user = db.Users.Find(User.Identity.GetUserId()) as ApplicationUser;
                 Entries aEntry = new Entries();

@@ -28,6 +28,15 @@ namespace Domain.Controllers
             return RedirectToAction("ProfilePage", new { id = id });
         }
 
+        public ActionResult ActivateConfirmed(string id)
+        {
+
+            var user = db.Users.Find(id);
+            user.Active = true;
+            db.SaveChanges();
+            return RedirectToAction("ProfilePage", new { id = id });
+        }
+
         public ActionResult UserFile(string id)
         {
             var be = db.Users.Find(id);
@@ -94,6 +103,26 @@ namespace Domain.Controllers
 
         }
 
+        public ActionResult Activate(string id)
+        {
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = db.Users.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+
+
+
+
+
+        }
+
         public ActionResult Admin()
         {
 
@@ -141,12 +170,33 @@ namespace Domain.Controllers
                 userId = id;
             }
             
-            var user = db.Users.Find(userId);
+            ApplicationUser model = db.Users.Find(userId);
+
+            var superAdmin = (from r in db.Roles where r.Name.Contains("SuperAdmin") select r).FirstOrDefault();
+            var superAdminUsers = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(superAdmin.Id)).ToList();
+
+            var admin = (from r in db.Roles where r.Name.Contains("Admin") select r).FirstOrDefault();
+            var adminUsers = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(admin.Id)).ToList();
 
 
+            if (superAdminUsers.Find(x => x.Id == userId) != null)
+            {
+                TempData["role"] = "SuperAdmin";
+            }
+           
+
+            if (adminUsers.Find(x => x.Id == userId) != null)
+            {
+                TempData["role"] = "Admin";
+            }
+            
+            if (TempData["role"] == null)
+            {
+                TempData["role"] = "";
+            }
 
 
-            return View(user);
+            return View(model);
 
 
         }

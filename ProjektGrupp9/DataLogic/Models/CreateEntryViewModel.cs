@@ -10,9 +10,6 @@ namespace DataLogic.Models
 {
     public class CreateEntryViewModel
     {
-        [Key]
-        public int Id { get; set; }
-        
         public List<EntryTag> TagList { get; set; } 
 
         public IEnumerable<SelectListItem> TagNameList { get; set; }
