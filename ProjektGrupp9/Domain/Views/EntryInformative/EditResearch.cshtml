@@ -1,13 +1,14 @@
-﻿@model DataLogic.Models.EntryResearch
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.EntryResearch
 
 @{
-    ViewBag.Title = "Redigera Forsknig";
+    ViewBag.Title = "Redigera Forskning";
 }
 
-<h2>Redigera Forskning</h2>
+<h2>Redigera Utbildning</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditResearch", "EntryInformative", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
