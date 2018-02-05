@@ -167,7 +167,7 @@ namespace Domain.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditResearch(EntryResearch entryInformative)
+        public ActionResult EditResearch(EntryResearch entryInformative, HttpPostedFileBase picUpload)
         {
 
             EntryResearch entryToUpdate = new EntryResearch();
@@ -183,6 +183,17 @@ namespace Domain.Controllers
                 entryToUpdate.File = entryInformative.File;
 
 
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    entryToUpdate.Filename = picUpload.FileName;
+                    entryToUpdate.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+              
 
                 db.SaveChanges();
                 return RedirectToAction("Research");
