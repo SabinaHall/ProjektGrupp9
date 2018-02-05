@@ -125,15 +125,27 @@ namespace Domain.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditResearch([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal)
+        public ActionResult EditResearch(EntryResearch entryInformative)
         {
+
+            EntryResearch entryToUpdate = new EntryResearch();
+
             if (ModelState.IsValid)
             {
-                db.Entry(entryInformal).State = EntityState.Modified;
+                entryToUpdate = db.EntryResearch.Find(entryInformative.Id);
+                entryToUpdate.text = entryInformative.text;
+                entryToUpdate.Heading = entryInformative.Heading;
+                entryToUpdate.Date = entryInformative.Date;
+                entryToUpdate.Filename = entryInformative.Filename;
+                entryToUpdate.ContentType = entryInformative.ContentType;
+                entryToUpdate.File = entryInformative.File;
+
+
+
                 db.SaveChanges();
                 return RedirectToAction("Education");
             }
-            return View(entryInformal);
+            return View(entryInformative);
         }
 
 
