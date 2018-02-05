@@ -1,0 +1,106 @@
+﻿@model IEnumerable<DataLogic.Models.Comment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Kommentarer formella</h2>
+
+<p>
+    @Html.ActionLink("Skriv ny kommentar", "CreateFormal", "Comments", new { Id = Session["entryIdFormal"] }, htmlAttributes: new { @class = "btn btn-default" })
+</p>
+
+<br />
+@{var y = 1; }
+@if (Model.ToList().Count == 0)
+{
+    <h3>Kommentera inlägget</h3>
+
+    using (DataLogic.Models.ApplicationDbContext db = new DataLogic.Models.ApplicationDbContext())
+    {
+        var hej = db.Entries;
+
+        foreach (var item in hej)
+
+        {
+            var id = int.Parse(Session["entryIdFormal"].ToString());
+            if (item.Id == id)
+            {
+                <div class="well">
+                    <h3>@item.Heading</h3>
+                    @*<p>Skriven av: @Session["emailFormal"].ToString()</p>*@
+                    <p>Datum: @item.Date</p>
+                    <br />
+                    <br />
+                    <p>@item.text</p>
+                    <br />
+
+                    @if (item.File != null && item.ContentType.Contains("image"))
+                    {
+                        <img height="300" width="300" src="@Url.Action("EntryFile", "Entries", new { Id = item.Id })" />
+                    }
+                    else if (item.File != null && !item.ContentType.Contains("image"))
+                    {
+                        <p>Klicka på länken för att se bifogad fil</p>
+                        @Html.ActionLink("Bifogad fil: " + item.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = item.Id }, htmlAttributes: null);
+                    }
+                </div>
+                <br />
+
+                y++;
+
+                if (y == 1)
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+@{var i = 0; }
+@foreach (var item in Model)
+{
+    <div class="well">
+        <h3>@item.EntryFormal.Heading</h3>
+        <p>Skriven av: @item.EntryFormal.Author.Email</p>
+        <p>Datum: @item.EntryFormal.Date</p>
+        <br />
+        <br />
+        <p>@item.EntryFormal.text</p>
+        <br />
+
+        @if (item.EntryFormal.File != null && item.EntryFormal.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFile", "Entries", new { Id = item.Id })" />
+        }
+        else if (item.EntryFormal.File != null && !item.EntryFormal.ContentType.Contains("image"))
+        {
+            <p>Klicka på länken för att se bifogad fil</p>
+                @Html.ActionLink("Bifogad fil: " + item.EntryFormal.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = item.EntryFormal.Id }, htmlAttributes: null);
+        }
+    </div>
+        <br />
+
+    i++;
+
+    if (i == 1)
+    {
+        break;
+    }
+}
+
+
+<h3>Kommentarer</h3>
+@foreach (var item in Model.Reverse())
+{
+    <div class="well">
+        <p>Skriven av: @item.Writer.Email</p>
+        <p>Datum: @item.Date</p>
+        <br />
+        <div class="panel-footer row"></div>
+        <p>@item.Text</p>
+    </div>
+}
+
+<div class="clearfix"></div>

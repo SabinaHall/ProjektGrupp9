@@ -18,8 +18,36 @@ namespace Domain.Controllers
         // GET: Comments
         public ActionResult Index(int? id)
         {
-            var commentList = db.Comments.Where(x => x.Entry.Id == id).ToList();
-            return View(commentList);
+            //var userId = (from u in db.Comments
+            //              where u.Entry.Id == id 
+            //              select u.Entry.Author.Id).ToList();
+
+            //var user = db.Users.Find(userId);
+
+            //Session["emailInformal"] = user.Email;
+            Session["entryId"] = id;
+
+            var list = (from u in db.Comments
+                         where u.TypeOfEntry == 0 && u.Entry.Id == id 
+                         select u);
+
+            //var commentList = db.Comments
+            //    .Where(x => x.Entry.Id == id).ToList();
+
+            return View(list.ToList());
+        }
+
+        public ActionResult IndexFormal(int? id)
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            Session["emailFormal"] = user.Email;
+            Session["entryIdFormal"] = id;
+
+            var list = (from u in db.Comments
+                        where u.TypeOfEntry == 1 && u.EntryFormal.Id == id
+                        select u);
+
+            return View(list.ToList());
         }
 
         // GET: Comments/Details/5
@@ -53,15 +81,47 @@ namespace Domain.Controllers
                 var user = db.Users.Find(User.Identity.GetUserId());
                 var aEntry = db.InformalEntries.Find(id);
                 Comment aComment = new Comment();
+                aComment.TypeOfEntry = 0;
                 aComment.Entry = aEntry;
                 aComment.Text = comment.Text;
                 aComment.Date = DateTime.Now;
                 aComment.Writer = user;
-                
+
                 db.Comments.Add(aComment);
                 //user.CommentList.Add(aComment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { Id = id });
+            }
+
+            return View(comment);
+        }
+
+        // GET: Comments/Create
+        public ActionResult CreateFormal()
+        {
+            return View();
+        }
+
+        // POST: Comments/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFormal([Bind(Include = "Id,Text,Date")] Comment comment, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var aEntry = db.Entries.Find(id);
+                Comment aComment = new Comment();
+                aComment.TypeOfEntry = 1;
+                aComment.EntryFormal = aEntry;
+                aComment.Text = comment.Text;
+                aComment.Date = DateTime.Now;
+                aComment.Writer = user;
+
+                db.Comments.Add(aComment);
+                //user.CommentList.Add(aComment);
+                db.SaveChanges();
+                return RedirectToAction("IndexFormal", new { Id = id });
             }
 
             return View(comment);
