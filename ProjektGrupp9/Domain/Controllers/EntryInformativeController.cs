@@ -134,7 +134,6 @@ namespace Domain.Controllers
             }
             return View(entryResearch);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditResearch(EntryResearch entryInformative)
@@ -155,7 +154,7 @@ namespace Domain.Controllers
 
 
                 db.SaveChanges();
-                return RedirectToAction("Education");
+                return RedirectToAction("Research");
             }
             return View(entryInformative);
         }
