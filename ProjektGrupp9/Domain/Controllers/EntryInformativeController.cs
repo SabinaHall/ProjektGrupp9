@@ -139,7 +139,19 @@ namespace Domain.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EntryResearch entryResearch = db.EntryResearch.Find(id);
+            EntryResearch old = db.EntryResearch.Find(id);
+
+            EntryResearch entryResearch = new EntryResearch();
+            entryResearch.Id = old.Id;
+            entryResearch.Heading = old.Heading;
+            entryResearch.text = old.text;
+            entryResearch.Date = DateTime.Now;
+            entryResearch.Filename = old.Filename;
+            entryResearch.ContentType = old.ContentType;
+            entryResearch.File = old.File;
+            entryResearch.Author = old.Author;
+
+
             if (entryResearch == null)
             {
                 return HttpNotFound();
