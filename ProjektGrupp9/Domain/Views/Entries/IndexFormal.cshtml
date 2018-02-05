@@ -50,6 +50,7 @@
             @if (entry.Key.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Redigera inlägg", "Edit", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
             }
 
         </div>

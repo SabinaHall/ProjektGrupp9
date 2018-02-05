@@ -1,15 +1,17 @@
-﻿@model DataLogic.Models.Entries
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.Entries
 
 @{
-    ViewBag.Title = "Redigera";
+    ViewBag.Title = "Redigera Utbildning";
 }
 
-<h2>Redigera</h2>
+<h2>Redigera Utbildning</h2>
 
-@using (Html.BeginForm())
+
+@using (Html.BeginForm("Edit", "Entries", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Inlägg</h4>
         <hr />
@@ -32,21 +34,45 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EntryType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.EntryType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EntryType, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
+
+
+        @if (Model.File != null && Model.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = Model.Id })" />
+            <br />
+            @Html.ActionLink("Ta bort fil", "RemoveFile", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }
+        else if (Model.File != null && !Model.ContentType.Contains("image"))
+        {
+            <br />
+            <p>Klicka på länken för att se bifogad fil</p>
+            @Html.ActionLink("Bifogad fil: " + Model.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = Model.Id }, htmlAttributes: null);
+            <br />
+            @Html.ActionLink("Ta bort fil", "RemoveFile", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }
+
+
+        <div class="form-group">
+            <br />
+            <br />
+            <br />
+            <p>Ladda upp en fil med inlägget.</p>
+            <br />
+            <div class="col-md-10">
+                @*Tillåter bara en specifik ändelse så att man vet att det är en bild som laddas in*@
+                <input type="file" name="picUpload" />
+            </div>
+        </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -56,6 +82,4 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
