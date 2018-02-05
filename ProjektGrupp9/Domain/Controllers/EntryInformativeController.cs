@@ -84,7 +84,7 @@ namespace Domain.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEducation(EntryEducation entryInformative)
+        public ActionResult EditEducation(EntryEducation entryInformative, HttpPostedFileBase picUpload)
         {
 
             EntryEducation entryToUpdate = new EntryEducation();
@@ -97,10 +97,22 @@ namespace Domain.Controllers
                 entryToUpdate.Date = entryInformative.Date;
                 entryToUpdate.Filename = entryInformative.Filename;
                 entryToUpdate.ContentType = entryInformative.ContentType;
-                entryToUpdate.File = entryInformative.File;
 
-                
-                
+
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    entryToUpdate.Filename = picUpload.FileName;
+                    entryToUpdate.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+
+
+
                 db.SaveChanges();
                 return RedirectToAction("Education");
             }
