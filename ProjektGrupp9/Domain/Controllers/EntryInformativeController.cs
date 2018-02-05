@@ -313,6 +313,18 @@ namespace Domain.Controllers
             return RedirectToAction("EditEducation", new { id = id});
         }
 
+        public ActionResult RemoveFileResearch(int id)
+        {
+
+            EntryResearch entry = db.EntryResearch.First(x => x.Id == id);
+
+            entry.File = null;
+            entry.ContentType = null;
+            entry.Filename = null;
+            db.SaveChanges();
+            return RedirectToAction("EditResearch", new { id = id });
+        }
+
         public ActionResult EntryFileEducation(int id)
         {
             var be = db.EntryEducation.Single(x => x.Id == id);
