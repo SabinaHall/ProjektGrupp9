@@ -141,7 +141,19 @@ namespace Domain.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EntryResearch entryResearch = db.EntryResearch.Find(id);
+            EntryResearch old = db.EntryResearch.Find(id);
+
+            EntryResearch entryResearch = new EntryResearch();
+            entryResearch.Id = old.Id;
+            entryResearch.Heading = old.Heading;
+            entryResearch.text = old.text;
+            entryResearch.Date = DateTime.Now;
+            entryResearch.Filename = old.Filename;
+            entryResearch.ContentType = old.ContentType;
+            entryResearch.File = old.File;
+            entryResearch.Author = old.Author;
+
+
             if (entryResearch == null)
             {
                 return HttpNotFound();
@@ -150,7 +162,7 @@ namespace Domain.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditResearch(EntryResearch entryInformative)
+        public ActionResult EditResearch(EntryResearch entryInformative, HttpPostedFileBase picUpload)
         {
 
             EntryResearch entryToUpdate = new EntryResearch();
@@ -166,6 +178,17 @@ namespace Domain.Controllers
                 entryToUpdate.File = entryInformative.File;
 
 
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    entryToUpdate.Filename = picUpload.FileName;
+                    entryToUpdate.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+              
 
                 db.SaveChanges();
                 return RedirectToAction("Research");
