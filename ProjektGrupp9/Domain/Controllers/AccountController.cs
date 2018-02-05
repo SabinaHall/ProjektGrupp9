@@ -73,16 +73,19 @@ namespace Domain.Controllers
         {
             var user = db.Users.Where(x => x.Email == model.Email).FirstOrDefault();
             
-            if (!ModelState.IsValid || user == null || !user.Active)
+            if (!ModelState.IsValid || user == null)
             {
-                if (!user.Active)
-                {
-                    TempData["inactive"] = "Ditt konto är inaktiverat. Vänligen kontakta systemadministratören";
-                }
+                
                
                 return View(model);
             }
-            
+
+            if (!user.Active)
+            {
+                TempData["inactive"] = "Ditt konto är inaktiverat. Vänligen kontakta systemadministratören";
+                return View(model);
+            }
+
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
