@@ -74,7 +74,19 @@ namespace Domain.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EntryEducation entryEducation = db.EntryEducation.Find(id);
+            EntryEducation old = db.EntryEducation.Find(id);
+
+            EntryEducation entryEducation = new EntryEducation();
+            entryEducation.Id = old.Id;
+            entryEducation.Heading = old.Heading;
+            entryEducation.text = old.text;
+            entryEducation.Date = DateTime.Now;
+            entryEducation.Filename = old.Filename;
+            entryEducation.ContentType = old.ContentType;
+            entryEducation.File = old.File;
+            entryEducation.Author = old.Author;
+
+            
             if (entryEducation == null)
             {
                 return HttpNotFound();
@@ -84,7 +96,7 @@ namespace Domain.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEducation(EntryEducation entryInformative)
+        public ActionResult EditEducation(EntryEducation entryInformative, HttpPostedFileBase picUpload)
         {
 
             EntryEducation entryToUpdate = new EntryEducation();
@@ -95,12 +107,31 @@ namespace Domain.Controllers
                 entryToUpdate.text = entryInformative.text;
                 entryToUpdate.Heading = entryInformative.Heading;
                 entryToUpdate.Date = entryInformative.Date;
-                entryToUpdate.Filename = entryInformative.Filename;
-                entryToUpdate.ContentType = entryInformative.ContentType;
-                entryToUpdate.File = entryInformative.File;
+                
+                
 
-                
-                
+
+
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    entryToUpdate.Filename = picUpload.FileName;
+                    entryToUpdate.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+                else
+                {
+                    entryToUpdate.Filename = null;
+                    entryToUpdate.ContentType = null;
+                    entryToUpdate.File = null;
+                }
+
+
+
                 db.SaveChanges();
                 return RedirectToAction("Education");
             }
@@ -122,18 +153,29 @@ namespace Domain.Controllers
             }
             return View(entryResearch);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditResearch([Bind(Include = "Id,Heading,Text")] EntryInformal entryInformal)
+        public ActionResult EditResearch(EntryResearch entryInformative)
         {
+
+            EntryResearch entryToUpdate = new EntryResearch();
+
             if (ModelState.IsValid)
             {
-                db.Entry(entryInformal).State = EntityState.Modified;
+                entryToUpdate = db.EntryResearch.Find(entryInformative.Id);
+                entryToUpdate.text = entryInformative.text;
+                entryToUpdate.Heading = entryInformative.Heading;
+                entryToUpdate.Date = entryInformative.Date;
+                entryToUpdate.Filename = entryInformative.Filename;
+                entryToUpdate.ContentType = entryInformative.ContentType;
+                entryToUpdate.File = entryInformative.File;
+
+
+
                 db.SaveChanges();
-                return RedirectToAction("Education");
+                return RedirectToAction("Research");
             }
-            return View(entryInformal);
+            return View(entryInformative);
         }
 
 
@@ -238,6 +280,13 @@ namespace Domain.Controllers
             {
                 return File(be.File, be.ContentType);
             }
+            return View();
+        }
+
+        public ActionResult RemoveFileResearch(int id)
+        {
+
+
             return View();
         }
 

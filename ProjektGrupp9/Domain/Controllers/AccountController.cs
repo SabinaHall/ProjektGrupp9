@@ -71,18 +71,21 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            var user = db.Users.Where(x => x.UserName == model.Email).FirstOrDefault();
+            var user = db.Users.Where(x => x.Email == model.Email).FirstOrDefault();
             
-            if (!ModelState.IsValid || user == null || !user.Active)
+            if (!ModelState.IsValid || user == null)
             {
-                if (!user.Active)
-                {
-                    TempData["inactive"] = "Ditt konto är inaktiverat. Vänligen kontakta systemadministratören";
-                }
+                
                
                 return View(model);
             }
-            
+
+            if (!user.Active)
+            {
+                TempData["inactive"] = "Ditt konto är inaktiverat. Vänligen kontakta systemadministratören";
+                return View(model);
+            }
+
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -165,13 +168,13 @@ namespace Domain.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase picUpload)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Room = model.Room, PhoneNmbr = model.PhoneNmbr };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Room = model.Room, PhoneNmbr = model.PhoneNmbr, Active = true };
                 if (picUpload != null && picUpload.ContentLength > 0)
                 {
                    
