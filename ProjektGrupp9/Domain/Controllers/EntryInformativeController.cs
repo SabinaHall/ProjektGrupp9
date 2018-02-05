@@ -123,12 +123,7 @@ namespace Domain.Controllers
                         entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
                     }
                 }
-                else
-                {
-                    entryToUpdate.Filename = null;
-                    entryToUpdate.ContentType = null;
-                    entryToUpdate.File = null;
-                }
+                
 
 
 
@@ -291,8 +286,8 @@ namespace Domain.Controllers
             entry.File = null;
             entry.ContentType = null;
             entry.Filename = null;
-
-            return RedirectToAction("EditEducation", new { id });
+            db.SaveChanges();
+            return RedirectToAction("EditEducation", new { id = id});
         }
 
         public ActionResult EntryFileEducation(int id)
