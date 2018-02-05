@@ -31,7 +31,7 @@ namespace Domain
                     if (item.Date < DateTime.Now)
                     {
                         context.Events.Remove(item);
-                        
+                      
 
                     }
                 }

@@ -230,7 +230,14 @@ namespace Domain.Controllers
             db.MeetingInvites.Remove(m);
 
             db.SaveChanges();
+            var Event = db.Events.Find(eventID);
 
+            var email = new List<string>();
+            email.Add(db.Users.Find(User.Identity.GetUserId()).Email);
+            var subject = "Tillagd i ett möte";
+            var message = $"Du har blivit tillagd i ett möte av: {Event.Host.FirstName} {Event.Host.LastName} <br> Datum: {Event.Date} <br> Tid: {Event.Time} <br> Plats: {Event.Place}";
+
+            DataLogic.DbMethods.Methods.SendEmailInvitation(email, message, subject);
             return RedirectToAction("Index");
 
         }
