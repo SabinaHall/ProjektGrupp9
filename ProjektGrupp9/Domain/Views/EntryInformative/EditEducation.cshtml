@@ -39,25 +39,34 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new {@class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
 
 
+        @if (Model.File != null && Model.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFileEducation", new { Id = Model.Id })" />
+            <br />
+            @Html.ActionLink("Ta bort fil", "RemoveFileEducation", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }
+        else if (Model.File != null && !Model.ContentType.Contains("image"))
+        {
+            <br />
+            <p>Klicka på länken för att se bifogad fil</p>
+            @Html.ActionLink("Bifogad fil: " + Model.Filename.ToString(), "EntryFileEducation", "EntryInformative", routeValues: new { Id = Model.Id }, htmlAttributes: null);
+            <br />
+            @Html.ActionLink("Ta bort fil", "RemoveFileEducation", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }
+
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Filename, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Filename, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Filename, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        
-
-
-        <div class="form-group">
-            <p>Ladda upp en bild med inlägget.</p>
+            <br />
+            <br />
+            <br />
+            <p>Ladda upp en fil med inlägget.</p>
+            <br />
             <div class="col-md-10">
                 @*Tillåter bara en specifik ändelse så att man vet att det är en bild som laddas in*@
                 <input type="file" name="picUpload" />
@@ -73,6 +82,3 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

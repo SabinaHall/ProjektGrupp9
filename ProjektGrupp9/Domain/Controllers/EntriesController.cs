@@ -171,26 +171,76 @@ namespace Domain.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Entries entries = db.Entries.Find(id);
-            if (entries == null)
+
+            Entries old = db.Entries.Find(id);
+
+            Entries entry = new Entries();
+            entry.Id = old.Id;
+            entry.Heading = old.Heading;
+            entry.text = old.text;
+            entry.Date = DateTime.Now;
+            entry.Filename = old.Filename;
+            entry.ContentType = old.ContentType;
+            entry.File = old.File;
+            entry.Author = old.Author;
+
+
+            if (entry == null)
             {
                 return HttpNotFound();
             }
-            return View(entries);
+            return View(entry);
         }
 
-        // POST: Entries/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Heading,text,EntryType,Date")] Entries entries)
+        public ActionResult Edit(Entries entry, HttpPostedFileBase picUpload)
         {
+
+            Entries entryToUpdate = new Entries();
+
             if (ModelState.IsValid)
             {
-                db.Entry(entries).State = EntityState.Modified;
+                entryToUpdate = db.Entries.Find(entry.Id);
+                entryToUpdate.text = entry.text;
+                entryToUpdate.Heading = entry.Heading;
+                entryToUpdate.Date = entry.Date;
+
+
+
+
+
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    entryToUpdate.Filename = picUpload.FileName;
+                    entryToUpdate.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+
+
+
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexFormal");
             }
-            return View(entries);
+            return View(entry);
+        }
+
+        public ActionResult RemoveFile(int id)
+        {
+
+            Entries entry = db.Entries.First(x => x.Id == id);
+
+            entry.File = null;
+            entry.ContentType = null;
+            entry.Filename = null;
+            db.SaveChanges();
+            return RedirectToAction("Edit", new { id = id });
         }
 
         // GET: Entries/Delete/5

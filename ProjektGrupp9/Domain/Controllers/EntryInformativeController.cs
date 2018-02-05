@@ -82,6 +82,7 @@ namespace Domain.Controllers
             entryEducation.text = old.text;
             entryEducation.Date = DateTime.Now;
             entryEducation.Filename = old.Filename;
+            entryEducation.ContentType = old.ContentType;
             entryEducation.File = old.File;
             entryEducation.Author = old.Author;
 
@@ -106,8 +107,9 @@ namespace Domain.Controllers
                 entryToUpdate.text = entryInformative.text;
                 entryToUpdate.Heading = entryInformative.Heading;
                 entryToUpdate.Date = entryInformative.Date;
-                entryToUpdate.Filename = entryInformative.Filename;
-                entryToUpdate.ContentType = entryInformative.ContentType;
+                
+                
+
 
 
 
@@ -121,6 +123,7 @@ namespace Domain.Controllers
                         entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
                     }
                 }
+                
 
 
 
@@ -138,7 +141,19 @@ namespace Domain.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EntryResearch entryResearch = db.EntryResearch.Find(id);
+            EntryResearch old = db.EntryResearch.Find(id);
+
+            EntryResearch entryResearch = new EntryResearch();
+            entryResearch.Id = old.Id;
+            entryResearch.Heading = old.Heading;
+            entryResearch.text = old.text;
+            entryResearch.Date = DateTime.Now;
+            entryResearch.Filename = old.Filename;
+            entryResearch.ContentType = old.ContentType;
+            entryResearch.File = old.File;
+            entryResearch.Author = old.Author;
+
+
             if (entryResearch == null)
             {
                 return HttpNotFound();
@@ -147,7 +162,7 @@ namespace Domain.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditResearch(EntryResearch entryInformative)
+        public ActionResult EditResearch(EntryResearch entryInformative, HttpPostedFileBase picUpload)
         {
 
             EntryResearch entryToUpdate = new EntryResearch();
@@ -163,6 +178,17 @@ namespace Domain.Controllers
                 entryToUpdate.File = entryInformative.File;
 
 
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    entryToUpdate.Filename = picUpload.FileName;
+                    entryToUpdate.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+              
 
                 db.SaveChanges();
                 return RedirectToAction("Research");
@@ -273,6 +299,30 @@ namespace Domain.Controllers
                 return File(be.File, be.ContentType);
             }
             return View();
+        }
+
+        public ActionResult RemoveFileEducation(int id)
+        {
+
+            EntryEducation entry = db.EntryEducation.First(x => x.Id == id);
+
+            entry.File = null;
+            entry.ContentType = null;
+            entry.Filename = null;
+            db.SaveChanges();
+            return RedirectToAction("EditEducation", new { id = id});
+        }
+
+        public ActionResult RemoveFileResearch(int id)
+        {
+
+            EntryResearch entry = db.EntryResearch.First(x => x.Id == id);
+
+            entry.File = null;
+            entry.ContentType = null;
+            entry.Filename = null;
+            db.SaveChanges();
+            return RedirectToAction("EditResearch", new { id = id });
         }
 
         public ActionResult EntryFileEducation(int id)
