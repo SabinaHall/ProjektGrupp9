@@ -1,13 +1,14 @@
-﻿@model DataLogic.Models.EntryResearch
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.EntryResearch
 
 @{
-    ViewBag.Title = "Redigera Forsknig";
+    ViewBag.Title = "Redigera Forskning";
 }
 
-<h2>Redigera Forskning</h2>
+<h2>Redigera Utbildning</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditResearch", "EntryInformative", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -38,8 +39,25 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @if (Model.File != null && Model.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFileResearch", new { Id = Model.Id })" />
+        }
+        else if (Model.File != null && !Model.ContentType.Contains("image"))
+        {
+            <p>Klicka på länken för att se bifogad fil</p>
+            @Html.ActionLink("Bifogad fil: " + Model.Filename.ToString(), "EntryFileResearch", "EntryInformative", routeValues: new { Id = Model.Id }, htmlAttributes: null);
+        }
+        <div class="form-group">
+            <p>Ladda upp en fil med inlägget.</p>
+            <div class="col-md-10">
+                @*Tillåter bara en specifik ändelse så att man vet att det är en bild som laddas in*@
+                <input type="file" name="picUpload" />
             </div>
         </div>
 

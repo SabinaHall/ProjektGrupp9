@@ -84,6 +84,7 @@ namespace Domain.Controllers
                         aEntry.File = reader.ReadBytes(picUpload.ContentLength);
                     }
                 }
+                
 
                 aEntry.Heading = entries.Heading;
                 aEntry.text = entries.text;
@@ -93,6 +94,9 @@ namespace Domain.Controllers
                 user.Entries.Add(aEntry);
                 db.Entries.Add(aEntry);
                 db.SaveChanges();
+
+                
+
                 return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
             return View(entries);
@@ -135,6 +139,12 @@ namespace Domain.Controllers
                     db.EntryTagEntries.Add(selectedTag);
                 }
                 db.SaveChanges();
+
+                var emails = db.Users.Select(x => x.Email).ToList();
+                var subject = user.Email + " har skrivit ett formellt inlägg.";
+                var message = user.Email + " har lagt upp ett inlägg med titeln: " + model.Entries.Heading + ".";
+
+                DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
                 return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
             return View();

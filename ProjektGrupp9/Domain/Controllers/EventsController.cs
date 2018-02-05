@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using DataLogic.Models;
 using Microsoft.AspNet.Identity;
 
+
 namespace Domain.Controllers
 {
 
@@ -55,7 +56,10 @@ namespace Domain.Controllers
                 context.SaveChanges();
 
                 var sender = db.Users.Find(User.Identity.GetUserId());
-                
+
+                var emails = new List<string>();
+
+
                 foreach (var item in model.ListId)
                 {
 
@@ -67,11 +71,16 @@ namespace Domain.Controllers
                         
                     };
 
-                    context.MeetingInvites.Add(invite);
+                    var e = db.Users.Find(item).Email;
+                    emails.Add(e);
 
+                    context.MeetingInvites.Add(invite);
                   
                 }
-                
+                var message = "Du har blivit inbjuden till ett möte, gå in och se under händelser för mer detaljer!";
+                var subject = "Ny inbjudan till möte";
+
+                DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
                   
                 context.SaveChanges();
               return RedirectToAction("Index");
@@ -221,7 +230,14 @@ namespace Domain.Controllers
             db.MeetingInvites.Remove(m);
 
             db.SaveChanges();
+            var Event = db.Events.Find(eventID);
 
+            var email = new List<string>();
+            email.Add(db.Users.Find(User.Identity.GetUserId()).Email);
+            var subject = "Tillagd i ett möte";
+            var message = $"Du har blivit tillagd i ett möte av: {Event.Host.FirstName} {Event.Host.LastName} <br> Datum: {Event.Date} <br> Tid: {Event.Time} <br> Plats: {Event.Place}";
+
+            DataLogic.DbMethods.Methods.SendEmailInvitation(email, message, subject);
             return RedirectToAction("Index");
 
         }

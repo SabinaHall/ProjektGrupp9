@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
-@model DataLogic.Models.ApplicationUser
+@model DataLogic.Models.Profilepageviewmodel
+
 
 @{
     ViewBag.Title = "Profilsida";
@@ -7,24 +8,18 @@
 
 <h2>Profilsida</h2>
 
-<div>
+<div class="mininfo" style="float:left;">
     <hr />
 
-  
-        <hr />
-       
-            <div class="card front-cards" style="width: 20rem;">
-                <img class="card-img-top image-size" src="@Url.Action("ProfilePicture", "Account", new { id = Model.Id} )" alt="Card image cap">
-                <div class="card-block">
-                 
 
-                </div>
-            </div>
-        
- 
+    <hr />
+    <img class="card-img-top" style="width: 150px; height: 150px; border-radius:20px;" src="@Url.Action("ProfilePicture", "Account", new { id = Model.user.Id} )" alt="Card image cap">
 
 
- 
+
+
+
+
 
     <dl class="dl-horizontal">
 
@@ -35,7 +30,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.user.FirstName)
         </dd>
 
         <dt>
@@ -43,7 +38,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.user.LastName)
         </dd>
 
         <dt>
@@ -51,7 +46,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Room)
+            @Html.DisplayFor(model => model.user.Room)
         </dd>
 
         <dt>
@@ -59,7 +54,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.user.Email)
         </dd>
 
         <dt>
@@ -67,63 +62,113 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PhoneNmbr)
+            @Html.DisplayFor(model => model.user.PhoneNmbr)
         </dd>
 
     </dl>
 </div>
 
+<div class="minkalender" style= "float:left;">
 
-<p>
-    @if (Model.Id == User.Identity.GetUserId())
+    <h1>Min kalender:</h1>
+    @foreach (var item in Model.myMeetings)
     {
-        @Html.ActionLink("Redigera", "EditProfile", new { id = Model.Id })
+
+        <table class="table table-condensed table-bordered">
+
+
+            <tr class="events">
+                <th>Datum </th>
+                <th>Tid</th>
+                <th>Beskrivning</th>
+                <th>Plats</th>
+                <th>Mötesdeltagare</th>
+
+            </tr>
+
+
+
+            <tr>
+
+                <td class="col-md-2">@item.Date</td>
+
+
+
+
+                <td class="col-md-2">@item.Time</td>
+
+
+
+                <td class="col-md-2">@item.Description</td>
+
+
+
+
+                <td class="col-md-2">@item.Place</td>
+
+                <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", "Events", new { id = item.Id }, null)</td>
+
+
+            </tr>
+        </table>
+
+
+
+
     }
-    @if (User.IsInRole("SuperAdmin") && Model.Active)
-    {
-        if (!Model.Id.Equals(User.Identity.GetUserId()))
+
+</div>
+
+    <p>
+        @if (Model.user.Id == User.Identity.GetUserId())
         {
-            @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id })
+            @Html.ActionLink("Redigera", "EditProfile", new { id = Model.user.Id })
         }
-
-    }
-
-    @if (User.IsInRole("Admin") && Model.Active)
-    {
-        if (!Model.Id.Equals(User.Identity.GetUserId()))
+        @if (User.IsInRole("SuperAdmin") && Model.user.Active)
         {
-            if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
             {
-                @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.Id })
+                @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
             }
 
         }
 
-    }
-
-    @if (User.IsInRole("SuperAdmin") && !Model.Active)
-    {
-        if (!Model.Id.Equals(User.Identity.GetUserId()))
+        @if (User.IsInRole("Admin") && Model.user.Active)
         {
-            @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.Id })
-        }
-
-    }
-
-    @if (User.IsInRole("Admin") && !Model.Active)
-    {
-        if (!Model.Id.Equals(User.Identity.GetUserId()))
-        {
-            if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
             {
-                @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.Id })
+                if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+                {
+                    @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
+                }
+
             }
 
         }
 
-    }
+        @if (User.IsInRole("SuperAdmin") && !Model.user.Active)
+        {
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
+            {
+                @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
+            }
+
+        }
+
+        @if (User.IsInRole("Admin") && !Model.user.Active)
+        {
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
+            {
+                if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+                {
+                    @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
+                }
+
+            }
+
+        }
 
 
-</p>
+    </p>
 
 

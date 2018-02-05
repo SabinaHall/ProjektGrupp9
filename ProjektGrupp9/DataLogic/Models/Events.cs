@@ -14,7 +14,8 @@ namespace DataLogic.Models
         [Required]
         public int Id { get; set; }
         [Display(Name = "Datum")]
-        public DateTime Date { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime ? Date { get; set; }
         [Display(Name = "Tid")]
         public string Time { get; set; }
         [Display(Name = "Plats")]
