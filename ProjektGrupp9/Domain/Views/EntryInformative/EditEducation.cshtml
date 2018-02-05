@@ -1,4 +1,5 @@
-﻿@model DataLogic.Models.EntryEducation
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.EntryEducation
 
 @{
     ViewBag.Title = "Redigera Utbildning";
@@ -7,7 +8,7 @@
 <h2>Redigera Utbildning</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditEducation", "EntryInformative", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

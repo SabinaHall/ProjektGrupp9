@@ -29,15 +29,7 @@
 
         <br />
 
-        @using (DataLogic.Models.ApplicationDbContext db = new DataLogic.Models.ApplicationDbContext())
-        {
-            foreach (var aCategory in db.Categories)
-            {
-                <h2>VILL HA DETTA SOM DROPDOWNLIST</h2>
-                @*@Html.DropDownList("Kategori", aCategory.Namn)*@
-                <p>@aCategory.Namn</p>
-            }
-        }
+        
 
         <br />
         <h3>HÄR SKA MAN VÄLJA KATEGORI</h3>
