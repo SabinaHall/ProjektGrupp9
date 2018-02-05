@@ -283,11 +283,16 @@ namespace Domain.Controllers
             return View();
         }
 
-        public ActionResult RemoveFileResearch(int id)
+        public ActionResult RemoveFileEducation(int id)
         {
 
+            EntryEducation entry = db.EntryEducation.First(x => x.Id == id);
 
-            return View();
+            entry.File = null;
+            entry.ContentType = null;
+            entry.Filename = null;
+
+            return RedirectToAction("EditEducation", new { id });
         }
 
         public ActionResult EntryFileEducation(int id)
