@@ -169,8 +169,9 @@ namespace Domain.Controllers
             {
                 userId = id;
             }
-            
-            ApplicationUser model = db.Users.Find(userId);
+
+            Profilepageviewmodel model = new Profilepageviewmodel();
+             model.user = db.Users.Find(userId);
 
             var superAdmin = (from r in db.Roles where r.Name.Contains("SuperAdmin") select r).FirstOrDefault();
             var superAdminUsers = db.Users.Where(x => x.Roles.Select(y => y.RoleId).Contains(superAdmin.Id)).ToList();
@@ -195,6 +196,9 @@ namespace Domain.Controllers
                 TempData["role"] = "";
             }
 
+            var e = db.EventParticipants.Where(x => x.UserID == model.user.Id).Select(x => x.EventID).ToList();
+
+            model.myMeetings = db.Events.Where(x => e.Contains(x.Id)).ToList();
 
             return View(model);
 
