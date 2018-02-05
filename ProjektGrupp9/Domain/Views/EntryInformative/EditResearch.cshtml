@@ -47,12 +47,17 @@
         @if (Model.File != null && Model.ContentType.Contains("image"))
         {
             <img height="300" width="300" src="@Url.Action("EntryFileResearch", new { Id = Model.Id })" />
+            <br />
+            @Html.ActionLink("Ta bort fil", "RemoveFileResearch", new { id = Model.Id }, new { @class = "btn btn-default" })
         }
         else if (Model.File != null && !Model.ContentType.Contains("image"))
         {
             <p>Klicka på länken för att se bifogad fil</p>
             @Html.ActionLink("Bifogad fil: " + Model.Filename.ToString(), "EntryFileResearch", "EntryInformative", routeValues: new { Id = Model.Id }, htmlAttributes: null);
+        <br />
+        @Html.ActionLink("Ta bort fil", "RemoveFileResearch", new { id = Model.Id }, new { @class = "btn btn-default" })
         }
+        
         <div class="form-group">
             <p>Ladda upp en fil med inlägget.</p>
             <div class="col-md-10">
@@ -69,6 +74,3 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
