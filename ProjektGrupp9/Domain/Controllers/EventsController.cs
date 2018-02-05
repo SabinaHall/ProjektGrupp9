@@ -55,7 +55,10 @@ namespace Domain.Controllers
                 context.SaveChanges();
 
                 var sender = db.Users.Find(User.Identity.GetUserId());
-                
+
+                var emails = new List<string>();
+
+
                 foreach (var item in model.ListId)
                 {
 
@@ -67,11 +70,16 @@ namespace Domain.Controllers
                         
                     };
 
-                    context.MeetingInvites.Add(invite);
+                    var e = db.Users.Find(item).Email;
+                    emails.Add(e);
 
+                    context.MeetingInvites.Add(invite);
                   
                 }
-                
+                var message = "Du har blivit inbjuden till ett möte, gå in och se under händelser för mer detaljer!";
+                var subject = "Ny inbjudan till möte";
+
+                DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
                   
                 context.SaveChanges();
               return RedirectToAction("Index");
