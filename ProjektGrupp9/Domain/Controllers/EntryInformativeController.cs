@@ -74,7 +74,18 @@ namespace Domain.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EntryEducation entryEducation = db.EntryEducation.Find(id);
+            EntryEducation old = db.EntryEducation.Find(id);
+
+            EntryEducation entryEducation = new EntryEducation();
+            entryEducation.Id = old.Id;
+            entryEducation.Heading = old.Heading;
+            entryEducation.text = old.text;
+            entryEducation.Date = DateTime.Now;
+            entryEducation.Filename = old.Filename;
+            entryEducation.File = old.File;
+            entryEducation.Author = old.Author;
+
+            
             if (entryEducation == null)
             {
                 return HttpNotFound();
