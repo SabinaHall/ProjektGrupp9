@@ -82,6 +82,7 @@ namespace Domain.Controllers
             entryEducation.text = old.text;
             entryEducation.Date = DateTime.Now;
             entryEducation.Filename = old.Filename;
+            entryEducation.ContentType = old.ContentType;
             entryEducation.File = old.File;
             entryEducation.Author = old.Author;
 
@@ -106,7 +107,7 @@ namespace Domain.Controllers
                 entryToUpdate.text = entryInformative.text;
                 entryToUpdate.Heading = entryInformative.Heading;
                 entryToUpdate.Date = entryInformative.Date;
-                entryToUpdate.Filename = entryInformative.Filename;
+                
                 
 
 
@@ -121,6 +122,12 @@ namespace Domain.Controllers
                     {
                         entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
                     }
+                }
+                else
+                {
+                    entryToUpdate.Filename = null;
+                    entryToUpdate.ContentType = null;
+                    entryToUpdate.File = null;
                 }
 
 
@@ -273,6 +280,13 @@ namespace Domain.Controllers
             {
                 return File(be.File, be.ContentType);
             }
+            return View();
+        }
+
+        public ActionResult RemoveFileResearch(int id)
+        {
+
+
             return View();
         }
 
