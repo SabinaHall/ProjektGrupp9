@@ -107,7 +107,8 @@ namespace Domain.Controllers
                 entryToUpdate.Heading = entryInformative.Heading;
                 entryToUpdate.Date = entryInformative.Date;
                 entryToUpdate.Filename = entryInformative.Filename;
-                entryToUpdate.ContentType = entryInformative.ContentType;
+                
+
 
 
 
