@@ -130,14 +130,17 @@ namespace Domain.Controllers
                 user.Entries.Add(aEntry);
                 db.Entries.Add(aEntry);
                 db.SaveChanges();
-
-                foreach (var item in model.SelectedTagIds)
+                if (model.SelectedTagIds != null)
                 {
-                    var selectedTag = new EntryTagEntries();
-                    selectedTag.EntryId = db.Entries.Max(x => x.Id);
-                    selectedTag.TagId = item;
-                    db.EntryTagEntries.Add(selectedTag);
+                    foreach (var item in model.SelectedTagIds)
+                    {
+                        var selectedTag = new EntryTagEntries();
+                        selectedTag.EntryId = db.Entries.Max(x => x.Id);
+                        selectedTag.TagId = item;
+                        db.EntryTagEntries.Add(selectedTag);
+                    }
                 }
+                
                 db.SaveChanges();
 
                 var emails = db.Users.Select(x => x.Email).ToList();
