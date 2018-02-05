@@ -4,40 +4,94 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Kommentarer informella</h2>
 
 <p>
-    @Html.ActionLink("Skriv ny kommentar", "Create", "Comments", new { Id = 1 }, htmlAttributes: null)
+    @Html.ActionLink("Skriv ny kommentar", "Create", "Comments", new { Id = Session["entryId"] }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Text)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
+@{var y = 1; }
+@if (Model.ToList().Count == 0)
+{
+    <h3>Kommentera inlägget</h3>
+
+    using (DataLogic.Models.ApplicationDbContext db = new DataLogic.Models.ApplicationDbContext())
     {
-        <tr>
-            <td>
-                Inlägg: @item.Entry.Heading
-                <br />
-                Kommentar: @Html.DisplayFor(modelItem => item.Text)
-            </td>
-            <td>
-                Datum: @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+        var hej = db.InformalEntries;
 
-</table>
+        foreach (var item in hej)
+
+        {
+            var id = int.Parse(Session["entryId"].ToString());
+            if (item.Id == id)
+            {
+                <div class="well">
+                    <h3>@item.Heading</h3>
+                    @*<p>Skriven av: @Session["emailInformal"].ToString()*@
+                    <p>Datum: @item.Date</p>
+                    <br />
+                    <br />
+                    <p>@item.Text</p>
+                    <br />
+                    @if (item.File != null)
+                    {
+                        <img height="300" width="300" src="@Url.Action("EntryFile", "EntryInformals", new { Id = item.Id })" />
+                    }
+                </div>
+                <br />
+
+                y++;
+
+                if (y == 1)
+                {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
+
+<br />
+<h3>Blogginlägg</h3>
+@{var i = 0; }
+@foreach (var item in Model)
+{
+    <div class="well">
+        <h3>@item.Entry.Heading</h3>
+        <p>Skriven av: @item.Entry.Author.Email</p>
+        <p>Datum: @item.Entry.Date.ToString()</p>
+        <br />
+        <br />
+        <p>@item.Entry.Text</p>
+        <br />
+        @if (item.Entry.File != null)
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFile", "EntryInformals", new { Id = item.Entry.Id })" />
+        }
+    </div>
+    <br />
+
+    i++;
+
+    if (i == 1)
+    {
+        break;
+    }
+}
+
+<h3>Kommentarer</h3>
+@foreach (var item in Model.Reverse())
+{
+    <div class="well">
+        <p>Skriven av: @item.Writer.Email</p>
+        <p>Datum: @item.Date</p>
+        <br />
+        <div class="panel-footer row"></div>
+        <p>@item.Text</p>
+    </div>
+}
+
+<div class="clearfix"></div>

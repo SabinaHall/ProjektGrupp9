@@ -28,6 +28,8 @@ namespace DataLogic.Models
 
         public virtual ApplicationUser Author { get; set; }
 
+        public virtual ICollection<Comment> CommentsFormal { get; set; } 
+
         //public virtual ICollection<EntryTag> EntryTags { get; set; }
     }
 }
