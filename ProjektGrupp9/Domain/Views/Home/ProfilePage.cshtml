@@ -66,6 +66,58 @@
         </dd>
 
     </dl>
+
+    <p>
+        @if (Model.user.Id == User.Identity.GetUserId())
+        {
+            @Html.ActionLink("Redigera", "EditProfile", new { id = Model.user.Id })
+        }
+        @if (User.IsInRole("SuperAdmin") && Model.user.Active)
+        {
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
+            {
+                @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
+            }
+
+        }
+
+        @if (User.IsInRole("Admin") && Model.user.Active)
+        {
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
+            {
+                if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+                {
+                    @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
+                }
+
+            }
+
+        }
+
+        @if (User.IsInRole("SuperAdmin") && !Model.user.Active)
+        {
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
+            {
+                @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
+            }
+
+        }
+
+        @if (User.IsInRole("Admin") && !Model.user.Active)
+        {
+            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
+            {
+                if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
+                {
+                    @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
+                }
+
+            }
+
+        }
+
+
+    </p>
 </div>
 
 <div class="minkalender" style= "float:left;">
@@ -119,56 +171,6 @@
 
 </div>
 
-    <p>
-        @if (Model.user.Id == User.Identity.GetUserId())
-        {
-            @Html.ActionLink("Redigera", "EditProfile", new { id = Model.user.Id })
-        }
-        @if (User.IsInRole("SuperAdmin") && Model.user.Active)
-        {
-            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
-            {
-                @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
-            }
-
-        }
-
-        @if (User.IsInRole("Admin") && Model.user.Active)
-        {
-            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
-            {
-                if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
-                {
-                    @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
-                }
-
-            }
-
-        }
-
-        @if (User.IsInRole("SuperAdmin") && !Model.user.Active)
-        {
-            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
-            {
-                @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
-            }
-
-        }
-
-        @if (User.IsInRole("Admin") && !Model.user.Active)
-        {
-            if (!Model.user.Id.Equals(User.Identity.GetUserId()))
-            {
-                if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
-                {
-                    @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
-                }
-
-            }
-
-        }
-
-
-    </p>
+    
 
 
