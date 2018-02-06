@@ -221,6 +221,13 @@ namespace Domain.Controllers
                         entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
                     }
                 }
+                var user = db.Users.Find(User.Identity.GetUserId());
+
+                var emails = db.Users.Select(x => x.Email).ToList();
+                var subject = user.Email + " har redigerat ett formellt inlägg.";
+                var message = user.Email + " har redigerat inlägget: " + entry.Heading + ".";
+
+                DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
 
 
 
