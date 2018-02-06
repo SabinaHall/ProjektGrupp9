@@ -48,7 +48,11 @@
                         user = context.Users.Find(User.Identity.GetUserId());
                     }
                 }
-                @Html.ActionLink("" +  user.FirstName + " " + user.LastName, "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId()}, htmlAttributes: new { title = "Manage" })
+                @if (user != null)
+                {
+                    @Html.ActionLink("" + user.FirstName + " " + user.LastName, "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
+
+                }
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
         </ul>
