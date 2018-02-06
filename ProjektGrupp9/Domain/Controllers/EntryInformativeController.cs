@@ -310,6 +310,7 @@ namespace Domain.Controllers
             entry.ContentType = null;
             entry.Filename = null;
             db.SaveChanges();
+
             return RedirectToAction("EditEducation", new { id = id});
         }
 

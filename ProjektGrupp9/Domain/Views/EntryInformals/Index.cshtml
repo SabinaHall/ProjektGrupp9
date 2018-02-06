@@ -35,6 +35,7 @@
             @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Redigera inlägg", "Edit", new { id = entry.Id }, new { @class = "btn btn-default" })
             }
             @Html.ActionLink($"Kommentera inlägg ({entry.Comments.Count})", "Index", "Comments", new { id = entry.Id }, new { @class = "btn btn-default" })
         </div>

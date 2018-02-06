@@ -77,6 +77,18 @@ namespace Domain.Controllers
             return View();
         }
 
+        public ActionResult RemoveFile(int id)
+        {
+
+            EntryInformal entry = db.InformalEntries.First(x => x.Id == id);
+
+            entry.File = null;
+            entry.ContentType = null;
+            entry.Filename = null;
+            db.SaveChanges();
+            return RedirectToAction("Edit", new { id = id });
+        }
+
         public ActionResult EntryFile(int id)
         {
             var be = db.InformalEntries.Single(x => x.Id == id);
@@ -87,7 +99,6 @@ namespace Domain.Controllers
             return View();
         }
 
-        // GET: EntryInformals/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,26 +106,63 @@ namespace Domain.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EntryInformal entryInformal = db.InformalEntries.Find(id);
-            if (entryInformal == null)
+            EntryInformal old = db.InformalEntries.Find(id);
+
+            EntryInformal entry = new EntryInformal();
+            entry.Id = old.Id;
+            entry.Heading = old.Heading;
+            entry.Text = old.Text;
+            entry.Date = DateTime.Now;
+            entry.Filename = old.Filename;
+            entry.ContentType = old.ContentType;
+            entry.File = old.File;
+            entry.Author = old.Author;
+
+
+            if (entry == null)
             {
                 return HttpNotFound();
             }
-            return View(entryInformal);
+            return View(entry);
         }
 
-        // POST: EntryInformals/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Heading,Text,Date,Filename,ContentType,File")] EntryInformal entryInformal)
+        public ActionResult Edit(Entries entry, HttpPostedFileBase picUpload)
         {
+
+            EntryInformal entryToUpdate = new EntryInformal();
+
             if (ModelState.IsValid)
             {
-                db.Entry(entryInformal).State = EntityState.Modified;
+                entryToUpdate = db.InformalEntries.Find(entry.Id);
+                entryToUpdate.Text = entry.text;
+                entryToUpdate.Heading = entry.Heading;
+                entryToUpdate.Date = entry.Date;
+
+
+
+
+
+
+                if (picUpload != null && picUpload.ContentLength > 0)
+                {
+                    entryToUpdate.Filename = picUpload.FileName;
+                    entryToUpdate.ContentType = picUpload.ContentType;
+
+                    using (var reader = new BinaryReader(picUpload.InputStream))
+                    {
+                        entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
+                    }
+                }
+
+
+
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(entryInformal);
+            return View(entry);
         }
 
         // GET: EntryInformals/Delete/5

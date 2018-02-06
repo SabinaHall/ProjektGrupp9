@@ -1,17 +1,19 @@
-﻿@model DataLogic.Models.EntryInformal
+﻿@using Microsoft.AspNet.Identity
+@model DataLogic.Models.EntryInformal
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Redigera Utbildning";
 }
 
-<h2>Edit</h2>
+<h2>Redigera Utbildning</h2>
 
-@using (Html.BeginForm())
+
+@using (Html.BeginForm("Edit", "EntryInformals", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>EntryInformal</h4>
+        <h4>Inlägg</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -32,46 +34,45 @@
             </div>
         </div>
 
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
         </div>
 
+
+        @if (Model.File != null && Model.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = Model.Id })" />
+            <br />
+            @Html.ActionLink("Ta bort fil", "RemoveFile", new { id = Model.Id }, new { @class = "btn btn-default" })
+        }
+       
+
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Filename, htmlAttributes: new { @class = "control-label col-md-2" })
+            <br />
+            <br />
+            <br />
+            <p>Ladda upp en bild med inlägget.</p>
+            <br />
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Filename, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Filename, "", new { @class = "text-danger" })
+                @*Tillåter bara en specifik ändelse så att man vet att det är en bild som laddas in*@
+                <input type="file" name="picUpload" />
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ContentType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ContentType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ContentType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.File, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.File, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
