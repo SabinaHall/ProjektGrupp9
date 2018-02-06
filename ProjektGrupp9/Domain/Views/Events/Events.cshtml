@@ -29,6 +29,7 @@
             <p><b>Plats: </b>@item.Value.Place</p>
             <p><b>Tid: </b>@item.Value.Time</p>
             <p><b>Datum: </b>@item.Value.Date</p>
+            <p><b>@Html.ActionLink("Kommentarer", "IndexEvent", "Comments", routeValues: new { Id = item.Value.Id }, htmlAttributes: null)</b></p>
         </td>
         <td>
             @Html.ActionLink("Acceptera", "Accept", new { id = item.Key.id }) |

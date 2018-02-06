@@ -22,6 +22,8 @@ namespace DataLogic.Models
 
         public virtual Entries EntryFormal { get; set; }
 
+        public virtual Events Meeting { get; set; }
+
         public virtual ApplicationUser Writer { get; set; } 
     }
 }
