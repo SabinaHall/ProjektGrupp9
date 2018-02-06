@@ -223,9 +223,10 @@ namespace Domain.Controllers
 
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
-            user.PhoneNumber = model.PhoneNumber;
+            user.PhoneNmbr = model.PhoneNmbr;
             user.Room = model.Room;
             user.Email = model.Email;
+            user.GetMail = model.GetMail;
            
             db.SaveChanges();
 
