@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
+@using DataLogic.Models
 @if (Request.IsAuthenticated)
+
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -39,7 +41,14 @@
 
         <ul class="nav navbar-nav navbar-right"style="color: red;">
             <li>
-                @Html.ActionLink("" + User.Identity.GetUserName(), "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId()}, htmlAttributes: new { title = "Manage" })
+                @{ 
+                    var user = new ApplicationUser();
+                    using (var context = new ApplicationDbContext())
+                    {
+                        user = context.Users.Find(User.Identity.GetUserId());
+                    }
+                }
+                @Html.ActionLink("" +  user.FirstName + " " + user.LastName, "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId()}, htmlAttributes: new { title = "Manage" })
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Logga ut</a></li>
         </ul>
