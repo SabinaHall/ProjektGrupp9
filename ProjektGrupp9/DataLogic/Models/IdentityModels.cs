@@ -23,6 +23,9 @@ namespace DataLogic.Models
         public string PhoneNmbr { get; set; }
         public byte [] ProfilePicture { get; set; }
         public string ContentType { get; set; }
+        [Display(Name = "Notifikation av formella-inlägg:")]
+        public bool GetMail { get; set; } = true;
+
 
 
 

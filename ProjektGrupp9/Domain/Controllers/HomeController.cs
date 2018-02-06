@@ -226,6 +226,7 @@ namespace Domain.Controllers
             user.PhoneNmbr = model.PhoneNmbr;
             user.Room = model.Room;
             user.Email = model.Email;
+            user.GetMail = model.GetMail;
            
             db.SaveChanges();
 

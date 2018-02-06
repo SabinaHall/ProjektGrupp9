@@ -143,7 +143,7 @@ namespace Domain.Controllers
                 
                 db.SaveChanges();
 
-                var emails = db.Users.Select(x => x.Email).ToList();
+                var emails = db.Users.Where(x => x.GetMail).Select(x => x.Email).ToList();
                 var subject = user.Email + " har skrivit ett formellt inlägg.";
                 var message = user.Email + " har lagt upp ett inlägg med titeln: " + model.Entries.Heading + ".";
 
@@ -223,7 +223,7 @@ namespace Domain.Controllers
                 }
                 var user = db.Users.Find(User.Identity.GetUserId());
 
-                var emails = db.Users.Select(x => x.Email).ToList();
+                var emails = db.Users.Where(x => x.GetMail).Select(x => x.Email).ToList();
                 var subject = user.Email + " har redigerat ett formellt inlägg.";
                 var message = user.Email + " har redigerat inlägget: " + entry.Heading + ".";
 
