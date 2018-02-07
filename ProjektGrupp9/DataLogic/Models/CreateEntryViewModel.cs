@@ -10,6 +10,7 @@ namespace DataLogic.Models
 {
     public class CreateEntryViewModel
     {
+        [Display(Name = "Välj taggar")]
         public List<EntryTag> TagList { get; set; } 
 
         public IEnumerable<SelectListItem> TagNameList { get; set; }

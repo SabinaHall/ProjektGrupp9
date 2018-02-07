@@ -4,30 +4,40 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Alla taggar</h2>
+<p>Välj den tagg du vill ta bort eller ändra.</p>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.TagName)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TagName)
+            </td>
+            <td>
+                @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Ändra", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default" })
+                    @Html.ActionLink("Radera", "Delete", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("Ändra", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default" })
+                }
+            </td>
+        </tr>
+    }
 </table>
+
+<br />
+<br />
+
+<p>Klicka på knappen för att komma tillbaka till de formella inläggen</p>
+@Html.ActionLink("Klicka här", "IndexFormal", "Entries", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
