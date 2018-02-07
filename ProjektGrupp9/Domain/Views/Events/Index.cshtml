@@ -24,6 +24,7 @@
             <th>Beskrivning</th>
             <th>Plats</th>
             <th>Mötesdeltagare</th>
+            <th>Kommentarer</th>
             <th>Uppdatera</th>
             <th>Ta bort</th>
 
@@ -51,9 +52,9 @@
 
             <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", new { Id = item.Id })</td>
 
+            <td class="col-md-2"> @Html.ActionLink("Kommentarer", "IndexEvent", "Comments", routeValues: new { Id = item.Id }, htmlAttributes: null)</td>
 
-
-            <td class="col-md-2">@Html.ActionLink("Uppdatera", "Update", new { ID = item.Id })</td>
+<td class="col-md-2">@Html.ActionLink("Uppdatera", "Update", new { ID = item.Id })</td>
             <td class="col-md-2">@Html.ActionLink("Ta bort", "Delete", new { ID = item.Id })</td>
 
         </tr>

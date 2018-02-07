@@ -147,6 +147,8 @@ namespace Domain.Controllers
 
         }
 
+        
+
         public ActionResult EventDetails(int id)
         {
             var model = new EventViewModel();
