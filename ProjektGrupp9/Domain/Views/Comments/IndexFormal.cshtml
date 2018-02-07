@@ -9,6 +9,11 @@
 <p>
     @Html.ActionLink("Skriv ny kommentar", "CreateFormal", "Comments", new { Id = Session["entryIdFormal"].ToString() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
+<br />
+<p> Klicka på knappen för att komma tillbaka till de formella inläggen</p>
+<p>
+    @Html.ActionLink("Klicka här", "IndexFormal", "Entries", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+</p>
 
 <br />
 @{var y = 1; }
@@ -28,6 +33,7 @@
             {
                 <div class="well">
                     <h3>@item.Heading</h3>
+                    <p>Skriven av: @item.Author.FirstName @item.Author.LastName</p>
                     @*<p>Skriven av: @Session["emailFormal"].ToString()</p>*@
                     <p>Datum: @item.Date</p>
                     <br />

@@ -1,12 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @model IEnumerable<DataLogic.Models.EntryInformal>
 
-
-
-
 <h2>Allmänna bloggen</h2>
-
-@Html.ActionLink("EmailTest", "Create", "Emails", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null)
 
 <p>
     @Html.ActionLink("Skriv nytt inlägg", "Create", "EntryInformals", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
@@ -16,8 +11,8 @@
 {
     <div class="well">
         <h3>@Html.ActionLink(@entry.Heading, "Index", "Comments", routeValues: new { Id = entry.Id }, htmlAttributes: null)</h3>
-        <p>Skriven av: @entry.Author.Email</p>
-        <p>Datum: @entry.Date.ToString().Substring(0,10)</p>
+        <p>Skriven av: @Html.ActionLink($"{entry.Author.FirstName} {entry.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null), @entry.Author.Email</p>
+        <p>Datum: @entry.Date.ToString().Substring(0, 10)</p>
         <br />
 
         <br />

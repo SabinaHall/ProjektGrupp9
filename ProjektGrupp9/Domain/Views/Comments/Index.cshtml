@@ -9,6 +9,11 @@
 <p>
     @Html.ActionLink("Skriv ny kommentar", "Create", "Comments", new { Id = Session["entryId"].ToString() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
+<br />
+<p>Klicka på knappen för att komma tillbaka till de formella inläggen</p>
+<p>
+    @Html.ActionLink("Klicka här", "Index", "EntryInformals", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+</p>
 
 
 @{var y = 1; }
