@@ -19,15 +19,24 @@
         </th>
         <th></th>
     </tr>
+   
+@foreach (var item in Model)
+{
 
-@foreach (var item in Model) {
+     List<string> timeList = new List<string>();
+        timeList.Add(item.Value.Time);
+        timeList.Add(item.Value.secondaryTime);
+        timeList.Add(item.Value.tertiaryTime);
+
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Key.Sender)
         </td>
         <td>
             <p><b>Plats: </b>@item.Value.Place</p>
-            <p><b>Tid: </b>@item.Value.Time</p>
+            <p><b>Tid: </b>@Html.DropDownList("TimeList",
+                    new SelectList(timeList),
+                    new { @class = "form-control" })</p>
             <p><b>Datum: </b>@item.Value.Date</p>
             
         </td>
