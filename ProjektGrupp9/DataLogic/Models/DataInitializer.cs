@@ -144,20 +144,20 @@ namespace DataLogic.Models
 
 
             EntryTag et1 = new EntryTag();
-            et1.Id = 0;
+            et1.Id = 100;
             et1.TagName = "Möte";
 
             EntryTag et2 = new EntryTag();
-            et2.Id = 0;
+            et2.Id = 101;
             et2.TagName = "Information";
 
             EntryTag et3 = new EntryTag();
-            et3.Id = 0;
+            et3.Id = 102;
             et3.TagName = "Övrigt";
 
-            context.Tags.Add(et1);
-            context.Tags.Add(et2);
-            context.Tags.Add(et3);
+            context.EntryTags.Add(et1);
+            context.EntryTags.Add(et2);
+            context.EntryTags.Add(et3);
 
             base.Seed(context);
         }

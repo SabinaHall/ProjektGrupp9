@@ -304,11 +304,9 @@
     <Content Include="Views\EntryInformative\DeleteResearch.cshtml" />
     <Content Include="Views\EntryInformative\EditEducation.cshtml" />
     <Content Include="Views\Events\EventDetails.cshtml" />
-    <Content Include="Views\EntryTags\Create.cshtml" />
     <Content Include="Views\EntryTags\Delete.cshtml" />
     <Content Include="Views\EntryTags\Details.cshtml" />
     <Content Include="Views\EntryTags\Edit.cshtml" />
-    <Content Include="Views\EntryTags\Index.cshtml" />
     <Content Include="Views\Entries\CreateTest.cshtml" />
     <Content Include="Views\Home\ProfilePage.cshtml" />
     <Content Include="Views\Home\Deactivate.cshtml" />
@@ -324,6 +322,8 @@
     <Content Include="Views\Comments\IndexFormal.cshtml" />
     <Content Include="Views\Comments\CreateFormal.cshtml" />
     <Content Include="Views\EntryInformative\EditResearch.cshtml" />
+    <Content Include="Views\EntryTags\Create.cshtml" />
+    <Content Include="Views\EntryTags\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
