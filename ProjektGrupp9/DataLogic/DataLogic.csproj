@@ -110,6 +110,7 @@
     <Compile Include="DbMethods\JobScheduler.cs" />
     <Compile Include="DbMethods\Methods.cs" />
     <Compile Include="IdentityConfig.cs" />
+    <Compile Include="Models\AcceptViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Comment.cs" />

@@ -7,7 +7,12 @@
 <h2>Kommentarer formella</h2>
 
 <p>
-    @Html.ActionLink("Skriv ny kommentar", "CreateFormal", "Comments", new { Id = Session["entryIdFormal"] }, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Skriv ny kommentar", "CreateFormal", "Comments", new { Id = Session["entryIdFormal"].ToString() }, htmlAttributes: new { @class = "btn btn-default" })
+</p>
+<br />
+<p> Klicka på knappen för att komma tillbaka till de formella inläggen</p>
+<p>
+    @Html.ActionLink("Klicka här", "IndexFormal", "Entries", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 
 <br />
@@ -28,6 +33,7 @@
             {
                 <div class="well">
                     <h3>@item.Heading</h3>
+                    <p>Skriven av: @item.Author.FirstName @item.Author.LastName</p>
                     @*<p>Skriven av: @Session["emailFormal"].ToString()</p>*@
                     <p>Datum: @item.Date</p>
                     <br />
@@ -37,12 +43,13 @@
 
                     @if (item.File != null && item.ContentType.Contains("image"))
                     {
-                        <img height="300" width="300" src="@Url.Action("EntryFile", "Entries", new { Id = item.Id })" />
+                        <img height="300" width="300" src="@Url.Action("EntryFile", "Entries", new { Id = id })" />
+
                     }
                     else if (item.File != null && !item.ContentType.Contains("image"))
                     {
                         <p>Klicka på länken för att se bifogad fil</p>
-                        @Html.ActionLink("Bifogad fil: " + item.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = item.Id }, htmlAttributes: null);
+                        @Html.ActionLink("Bifogad fil: " + item.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = id }, htmlAttributes: null);
                     }
                 </div>
                 <br />
@@ -77,10 +84,10 @@
         else if (item.EntryFormal.File != null && !item.EntryFormal.ContentType.Contains("image"))
         {
             <p>Klicka på länken för att se bifogad fil</p>
-                @Html.ActionLink("Bifogad fil: " + item.EntryFormal.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = item.EntryFormal.Id }, htmlAttributes: null);
+            @Html.ActionLink("Bifogad fil: " + item.EntryFormal.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = item.EntryFormal.Id }, htmlAttributes: null);
         }
     </div>
-        <br />
+    <br />
 
     i++;
 
