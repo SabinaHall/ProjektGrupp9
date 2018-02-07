@@ -148,6 +148,7 @@ namespace Domain.Controllers
                 var message = user.Email + " har lagt upp ett inlägg med titeln: " + model.Entries.Heading + ".";
 
                 DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
+                DataLogic.DbMethods.EmailJob.count += 1;
                 return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
             return View();
