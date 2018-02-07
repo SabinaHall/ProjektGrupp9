@@ -114,7 +114,7 @@ namespace Domain.Controllers
                 aEntry.Author = user;
                 aEntry.text = model.Entries.text;
                 aEntry.Heading = model.Entries.Heading;
-                aEntry.Date = DateTime.Now;
+                aEntry.Date = DateTime.Today;
 
                 if (picUpload != null && picUpload.ContentLength > 0)
                 {
