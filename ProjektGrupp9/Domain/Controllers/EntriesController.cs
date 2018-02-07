@@ -88,7 +88,7 @@ namespace Domain.Controllers
 
                 aEntry.Heading = entries.Heading;
                 aEntry.text = entries.text;
-                aEntry.Date = DateTime.Now;
+                aEntry.Date = DateTime.Today;
                 aEntry.Author = user;
 
                 user.Entries.Add(aEntry);
@@ -178,7 +178,7 @@ namespace Domain.Controllers
             entry.Id = old.Id;
             entry.Heading = old.Heading;
             entry.text = old.text;
-            entry.Date = DateTime.Now;
+            entry.Date = DateTime.Today;
             entry.Filename = old.Filename;
             entry.ContentType = old.ContentType;
             entry.File = old.File;

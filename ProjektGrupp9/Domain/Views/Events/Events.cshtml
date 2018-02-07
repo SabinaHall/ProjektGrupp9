@@ -31,7 +31,7 @@
                     <td>
                         <p><b>Plats: </b>@item.Value.Place</p>
                         <p><b>Tid: </b>@item.Value.Time</p>
-                        <p><b>Datum: </b>@item.Value.Date</p>
+                        <p><b>Datum: </b>@item.Value.Date.ToString().Substring(0,10)</p>
                     </td>
                     <td>
                         @Html.ActionLink("Acceptera", "Accept", new { id = item.Key.id }) |
