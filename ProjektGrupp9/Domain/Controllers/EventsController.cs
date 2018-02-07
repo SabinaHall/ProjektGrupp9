@@ -49,6 +49,8 @@ namespace Domain.Controllers
               
                 newEvent.Date = model.events.Date;
                 newEvent.Time = model.events.Time;
+                newEvent.secondaryTime = model.events.secondaryTime;
+                newEvent.tertiaryTime = model.events.tertiaryTime;
                 newEvent.Place = model.events.Place;
                 newEvent.Description = model.events.Description;
                 newEvent.Host = context.Users.Find(User.Identity.GetUserId());
@@ -147,6 +149,8 @@ namespace Domain.Controllers
 
         }
 
+        
+
         public ActionResult EventDetails(int id)
         {
             var model = new EventViewModel();
@@ -200,17 +204,23 @@ namespace Domain.Controllers
 
         public ActionResult Events(string id)
         {
-            Dictionary<MeetingInvites, Events> model = new Dictionary<MeetingInvites,Events>();
-            var allInvites = db.MeetingInvites.Where(x => x.Receiver == id).ToList();
+            var model = new SummaryViewModel();
+            
+                var allInvites = db.MeetingInvites.Where(x => x.Receiver == id).ToList();
 
-            if (allInvites.Count > 0)
+            if (allInvites.Count > 0 && db.Events.Count() > 0)
             {
+
+                Dictionary<MeetingInvites, Events> ev = new Dictionary<MeetingInvites, Events>();
                 foreach (var invite in allInvites)
                 {
                     var e = db.Events.Where(x => x.Id == invite.EventID).SingleOrDefault();
-                    model.Add(invite, e);
+                    ev.Add(invite, e);
                 }
+                model.YourEvents = ev;
             }
+            model.Events = db.Events.Where(x => x.Date == DateTime.Today).ToList();
+            model.FormalEntries = db.Entries.Where(x => x.Date == DateTime.Today).ToList();
             return View(model);
 
         }
@@ -234,6 +244,7 @@ namespace Domain.Controllers
 
             var email = new List<string>();
             email.Add(db.Users.Find(User.Identity.GetUserId()).Email);
+            
             var subject = "Tillagd i ett möte";
             var message = $"Du har blivit tillagd i ett möte av: {Event.Host.FirstName} {Event.Host.LastName} <br> Datum: {Event.Date} <br> Tid: {Event.Time} <br> Plats: {Event.Place}";
 

@@ -66,58 +66,6 @@
         </dd>
 
     </dl>
-</div>
-
-<div class="minkalender" style= "float:left;">
-
-    <h1>Min kalender:</h1>
-    @foreach (var item in Model.myMeetings)
-    {
-
-        <table class="table table-condensed table-bordered">
-
-
-            <tr class="events">
-                <th>Datum </th>
-                <th>Tid</th>
-                <th>Beskrivning</th>
-                <th>Plats</th>
-                <th>Mötesdeltagare</th>
-
-            </tr>
-
-
-
-            <tr>
-
-                <td class="col-md-2">@item.Date</td>
-
-
-
-
-                <td class="col-md-2">@item.Time</td>
-
-
-
-                <td class="col-md-2">@item.Description</td>
-
-
-
-
-                <td class="col-md-2">@item.Place</td>
-
-                <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", "Events", new { id = item.Id }, null)</td>
-
-
-            </tr>
-        </table>
-
-
-
-
-    }
-
-</div>
 
     <p>
         @if (Model.user.Id == User.Identity.GetUserId())
@@ -170,5 +118,61 @@
 
 
     </p>
+</div>
+
+<div class="minkalender" style= "float:left;">
+
+    <h1>Min kalender:</h1>
+    @foreach (var item in Model.myMeetings)
+    {
+
+        <table class="table table-condensed table-bordered">
+
+
+            <tr class="events">
+                <th>Datum </th>
+                <th>Tid</th>
+                <th>Tidsförsl. 1</th>
+                <th>Tidsförsl. 2</th>
+                <th>Beskrivning</th>
+                <th>Plats</th>
+                <th>Mötesdeltagare</th>
+
+            </tr>
+
+
+
+            <tr>
+
+                <td class="col-md-2">@item.Date.ToString().Substring(0,10)</td>
+
+
+
+
+                <td class="col-md-2">@item.Time</td>
+                <td class="col-md-2">@item.secondaryTime</td>
+                <td class="col-md-2">@item.tertiaryTime</td>
+
+                <td class="col-md-2">@item.Description</td>
+
+
+
+
+                <td class="col-md-2">@item.Place</td>
+
+                <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", "Events", new { id = item.Id }, null)</td>
+
+
+            </tr>
+        </table>
+
+
+
+
+    }
+
+</div>
+
+    
 
 

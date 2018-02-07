@@ -3,6 +3,7 @@ using DataLogic.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -217,16 +218,27 @@ namespace Domain.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProfile(ApplicationUser model)
+        public ActionResult EditProfile(ApplicationUser model, HttpPostedFileBase picUpload)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
 
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
-            user.PhoneNumber = model.PhoneNumber;
+            user.PhoneNmbr = model.PhoneNmbr;
             user.Room = model.Room;
             user.Email = model.Email;
-           
+            user.GetMail = model.GetMail;
+            if (picUpload != null && picUpload.ContentLength > 0)
+            {
+
+                user.ContentType = picUpload.ContentType;
+
+                using (var reader = new BinaryReader(picUpload.InputStream))
+                {
+                    user.ProfilePicture = reader.ReadBytes(picUpload.ContentLength);
+                }
+            }
+
             db.SaveChanges();
 
             return RedirectToAction("ProfilePage");

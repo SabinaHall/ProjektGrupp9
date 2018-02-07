@@ -50,6 +50,10 @@ namespace Domain.Controllers
             return View(list.ToList());
         }
 
+        
+
+
+
         // GET: Comments/Details/5
         public ActionResult Details(int? id)
         {
@@ -84,7 +88,7 @@ namespace Domain.Controllers
                 aComment.TypeOfEntry = 0;
                 aComment.Entry = aEntry;
                 aComment.Text = comment.Text;
-                aComment.Date = DateTime.Now;
+                aComment.Date = DateTime.Today;
                 aComment.Writer = user;
 
                 db.Comments.Add(aComment);
@@ -115,7 +119,7 @@ namespace Domain.Controllers
                 aComment.TypeOfEntry = 1;
                 aComment.EntryFormal = aEntry;
                 aComment.Text = comment.Text;
-                aComment.Date = DateTime.Now;
+                aComment.Date = DateTime.Today;
                 aComment.Writer = user;
 
                 db.Comments.Add(aComment);
@@ -126,6 +130,7 @@ namespace Domain.Controllers
 
             return View(comment);
         }
+        
 
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)

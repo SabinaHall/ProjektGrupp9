@@ -42,6 +42,20 @@
             @Html.ValidationMessageFor(model => model.events.Time, "", new { @class = "text-danger" })
         </div>
     </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.events.secondaryTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.events.secondaryTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.events.secondaryTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.events.tertiaryTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.events.tertiaryTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.events.tertiaryTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.events.Place, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -58,12 +72,41 @@
             @Html.ValidationMessageFor(model => model.events.Description, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+        
     <div class="form-group">
-        @Html.LabelFor(m => m.Meetingparticipants, new { @class = "col-md-2 control-label" })
+        <label class="col-md-2 control-label">Bjud in:</label>
         <div class="col-md-10">
-            @Html.ListBoxFor(m => m.ListId, Model.Participants, new { @class = "form-control" })
+            @Html.ListBoxFor(m => m.ListId, Model.Participants, new { @class = "form-control", id =  "ettId"})
         </div>
     </div>
+        
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" id="add" value="Lägg till" class="btn-pink" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button"id="remove" value="Ta bort" class="btn-pink" />
+                </div>
+            </div>
+        
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Inbjudna:</label>
+            <div class="col-md-10">
+                <select class="form-control" id="Inbjudna" multiple="multiple" name="ListId">
+                
+                </select>
+            </div>
+        </div>
+            
+
+
+        
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -74,3 +117,6 @@
 }
 
 <div class="clearfix"></div>
+@section scripts {
+<script src="~/Scripts/MeetingParticipants.js"></script>"
+    }

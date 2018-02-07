@@ -88,7 +88,7 @@ namespace Domain.Controllers
 
                 aEntry.Heading = entries.Heading;
                 aEntry.text = entries.text;
-                aEntry.Date = DateTime.Now;
+                aEntry.Date = DateTime.Today;
                 aEntry.Author = user;
 
                 user.Entries.Add(aEntry);
@@ -114,7 +114,7 @@ namespace Domain.Controllers
                 aEntry.Author = user;
                 aEntry.text = model.Entries.text;
                 aEntry.Heading = model.Entries.Heading;
-                aEntry.Date = DateTime.Now;
+                aEntry.Date = DateTime.Today;
 
                 if (picUpload != null && picUpload.ContentLength > 0)
                 {
@@ -143,7 +143,7 @@ namespace Domain.Controllers
                 
                 db.SaveChanges();
 
-                var emails = db.Users.Select(x => x.Email).ToList();
+                var emails = db.Users.Where(x => x.GetMail).Select(x => x.Email).ToList();
                 var subject = user.Email + " har skrivit ett formellt inlägg.";
                 var message = user.Email + " har lagt upp ett inlägg med titeln: " + model.Entries.Heading + ".";
 
@@ -178,7 +178,7 @@ namespace Domain.Controllers
             entry.Id = old.Id;
             entry.Heading = old.Heading;
             entry.text = old.text;
-            entry.Date = DateTime.Now;
+            entry.Date = DateTime.Today;
             entry.Filename = old.Filename;
             entry.ContentType = old.ContentType;
             entry.File = old.File;
@@ -221,6 +221,13 @@ namespace Domain.Controllers
                         entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
                     }
                 }
+                var user = db.Users.Find(User.Identity.GetUserId());
+
+                var emails = db.Users.Where(x => x.GetMail).Select(x => x.Email).ToList();
+                var subject = user.Email + " har redigerat ett formellt inlägg.";
+                var message = user.Email + " har redigerat inlägget: " + entry.Heading + ".";
+
+                DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
 
 
 
