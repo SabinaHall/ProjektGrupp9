@@ -66,7 +66,7 @@ namespace Domain.Controllers
 
                 aEntry.Heading = entryInformal.Heading;
                 aEntry.Text = entryInformal.Text;
-                aEntry.Date = DateTime.Now;
+                aEntry.Date = DateTime.Today;
                 aEntry.Author = user;
 
                 user.InformalEntrys.Add(aEntry);
@@ -112,7 +112,7 @@ namespace Domain.Controllers
             entry.Id = old.Id;
             entry.Heading = old.Heading;
             entry.Text = old.Text;
-            entry.Date = DateTime.Now;
+            entry.Date = DateTime.Today;
             entry.Filename = old.Filename;
             entry.ContentType = old.ContentType;
             entry.File = old.File;

@@ -21,10 +21,12 @@
         <tr class="events">
             <th>Datum </th>
             <th>Tid</th>
+            <th>Tidsförslag 1</th>
+            <th>Tidsförslag 2</th>
             <th>Beskrivning</th>
             <th>Plats</th>
             <th>Mötesdeltagare</th>
-            <th>Kommentarer</th>
+           
             <th>Uppdatera</th>
             <th>Ta bort</th>
 
@@ -34,12 +36,14 @@
 
         <tr>
 
-            <td class="col-md-2">@item.Date</td>
+            <td class="col-md-2">@item.Date.ToString().Substring(0, 10)</td>
 
 
 
 
             <td class="col-md-2">@item.Time</td>
+            <td class="col-md-2">@item.secondaryTime</td>
+            <td class="col-md-2">@item.tertiaryTime</td>
 
 
 
@@ -52,7 +56,7 @@
 
             <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", new { Id = item.Id })</td>
 
-            <td class="col-md-2"> @Html.ActionLink("Kommentarer", "IndexEvent", "Comments", routeValues: new { Id = item.Id }, htmlAttributes: null)</td>
+            
 
 <td class="col-md-2">@Html.ActionLink("Uppdatera", "Update", new { ID = item.Id })</td>
             <td class="col-md-2">@Html.ActionLink("Ta bort", "Delete", new { ID = item.Id })</td>

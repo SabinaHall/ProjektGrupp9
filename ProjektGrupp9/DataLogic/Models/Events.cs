@@ -21,6 +21,12 @@ namespace DataLogic.Models
         [Display(Name = "Tid")]
         public string Time { get; set; }
 
+        [Display(Name = "Tidsförslag 1")]
+        public string secondaryTime { get; set; }
+
+        [Display(Name = "Tidsförslag 2")]
+        public string tertiaryTime { get; set; }
+
         [Display(Name = "Plats")]
         public string Place { get; set; }
 

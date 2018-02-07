@@ -132,6 +132,8 @@
             <tr class="events">
                 <th>Datum </th>
                 <th>Tid</th>
+                <th>Tidsförsl. 1</th>
+                <th>Tidsförsl. 2</th>
                 <th>Beskrivning</th>
                 <th>Plats</th>
                 <th>Mötesdeltagare</th>
@@ -142,14 +144,14 @@
 
             <tr>
 
-                <td class="col-md-2">@item.Date</td>
+                <td class="col-md-2">@item.Date.ToString().Substring(0,10)</td>
 
 
 
 
                 <td class="col-md-2">@item.Time</td>
-
-
+                <td class="col-md-2">@item.secondaryTime</td>
+                <td class="col-md-2">@item.tertiaryTime</td>
 
                 <td class="col-md-2">@item.Description</td>
 
