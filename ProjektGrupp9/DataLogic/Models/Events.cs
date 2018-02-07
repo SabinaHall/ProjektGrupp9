@@ -34,6 +34,8 @@ namespace DataLogic.Models
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
 
+        
+
         public virtual ApplicationUser Host { get; set; }
       
     }
