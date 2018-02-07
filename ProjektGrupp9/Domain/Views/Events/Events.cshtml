@@ -56,3 +56,46 @@
         <div> Mötesledare: @item.Host.FirstName @item.Host.LastName Plats: @item.Place Klockan: @item.Time</div>
     }
 </div>
+
+<table class="table">
+    <tr>
+        <th>
+            <label>Mötesledare</label>
+        </th>
+        <th>
+            <label>Mötesdetaljer</label>
+        </th>
+        <th>
+            <label>Svar:</label>
+        </th>
+        <th></th>
+    </tr>
+   
+@foreach (var item in Model)
+{
+
+     List<string> timeList = new List<string>();
+        timeList.Add(item.Value.Time);
+        timeList.Add(item.Value.secondaryTime);
+        timeList.Add(item.Value.tertiaryTime);
+
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Key.Sender)
+        </td>
+        <td>
+            <p><b>Plats: </b>@item.Value.Place</p>
+            <p><b>Tid: </b>@Html.DropDownList("TimeList",
+                    new SelectList(timeList),
+                    new { @class = "form-control" })</p>
+            <p><b>Datum: </b>@item.Value.Date</p>
+            
+        </td>
+        <td>
+            @Html.ActionLink("Acceptera", "Accept", new { id = item.Key.id }) |
+            @Html.ActionLink("Avböj", "Decline", new { id = item.Key.id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -49,6 +49,8 @@ namespace Domain.Controllers
               
                 newEvent.Date = model.events.Date;
                 newEvent.Time = model.events.Time;
+                newEvent.secondaryTime = model.events.secondaryTime;
+                newEvent.tertiaryTime = model.events.tertiaryTime;
                 newEvent.Place = model.events.Place;
                 newEvent.Description = model.events.Description;
                 newEvent.Host = context.Users.Find(User.Identity.GetUserId());
@@ -242,6 +244,7 @@ namespace Domain.Controllers
 
             var email = new List<string>();
             email.Add(db.Users.Find(User.Identity.GetUserId()).Email);
+            
             var subject = "Tillagd i ett möte";
             var message = $"Du har blivit tillagd i ett möte av: {Event.Host.FirstName} {Event.Host.LastName} <br> Datum: {Event.Date} <br> Tid: {Event.Time} <br> Plats: {Event.Place}";
 
