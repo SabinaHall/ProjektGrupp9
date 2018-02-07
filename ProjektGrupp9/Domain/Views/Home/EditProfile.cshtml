@@ -6,7 +6,7 @@
 
 <h2>Ändra Profil</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditProfile", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     

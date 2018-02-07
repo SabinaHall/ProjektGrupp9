@@ -28,10 +28,9 @@ namespace Domain
                 lista = context.Events.ToList();
                 foreach (var item in lista)
                 {
-                    if (item.Date < DateTime.Now)
+                    if (item.Date < DateTime.Today)
                     {
                         context.Events.Remove(item);
-                      
 
                     }
                 }
