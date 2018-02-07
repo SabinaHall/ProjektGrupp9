@@ -50,22 +50,7 @@ namespace Domain.Controllers
             return View(list.ToList());
         }
 
-
-        public ActionResult IndexEvent(int id)
-        {
-
-            var user = db.Users.Find(User.Identity.GetUserId());
-            Session["emailEvent"] = user.Email;
-            Session["eventId"] = id;
-
-            var list = (from u in db.Comments
-                        where u.TypeOfEntry == 2 && u.Meeting.Id == id
-                        select u);
-
-
-
-            return View(list.ToList());
-        }
+        
 
 
 
@@ -145,36 +130,7 @@ namespace Domain.Controllers
 
             return View(comment);
         }
-
-        public ActionResult CreateEvent()
-        {
-            return View();
-        }
-
-        // POST: Comments/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateEvent([Bind(Include = "Id,Text,Date")] Comment comment, int id)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = db.Users.Find(User.Identity.GetUserId());
-                var meeting = db.Events.Find(id);
-                Comment aComment = new Comment();
-                aComment.TypeOfEntry = 2;
-                aComment.Meeting = meeting;
-                aComment.Text = comment.Text;
-                aComment.Date = DateTime.Now;
-                aComment.Writer = user;
-
-                db.Comments.Add(aComment);
-                //user.CommentList.Add(aComment);
-                db.SaveChanges();
-                return RedirectToAction("IndexEvent", new { Id = id });
-            }
-
-            return View(comment);
-        }
+        
 
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
