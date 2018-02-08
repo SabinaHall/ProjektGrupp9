@@ -24,6 +24,7 @@ namespace DataLogic.Models
 
         public IEnumerable<SelectListItem> Participants { get; set; }
         public List<string> ListId { get; set; }
+        public List<string> Inbjudna { get; set; }
 
     }
 }
