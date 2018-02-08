@@ -43,6 +43,11 @@ namespace Domain.Controllers
         [HttpPost]
         public ActionResult Create(EventViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                model.Participants = db.Users.Select(x => new SelectListItem { Value = x.Id, Text = x.UserName }).ToList();
+                return View(model);
+            }
             using (var context = new ApplicationDbContext())
             {
                 var newEvent = new Events();

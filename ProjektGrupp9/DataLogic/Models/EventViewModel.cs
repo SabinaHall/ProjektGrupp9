@@ -18,11 +18,12 @@ namespace DataLogic.Models
         public List<ApplicationUser> users { get; set; }
         public List<Events> allEvents { get; set; }
 
+        
+        public List<ApplicationUser> Meetingparticipants { get; set; }
+        
+        public IEnumerable<SelectListItem> Participants { get; set; }
         [Required]
         [Display(Name = "Mötesdeltagare")]
-        public List<ApplicationUser> Meetingparticipants { get; set; }
-
-        public IEnumerable<SelectListItem> Participants { get; set; }
         public List<string> ListId { get; set; }
         public List<string> Inbjudna { get; set; }
 
