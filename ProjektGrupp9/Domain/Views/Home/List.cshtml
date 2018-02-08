@@ -4,11 +4,8 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>Välj den användaren du vill redigera</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -23,8 +20,8 @@
         </td>
         
         <td>
-            @Html.ActionLink("Redigera", "EditProfile", new { id=item.Id }) |
-            @Html.ActionLink("Detaljer", "ProfilePage", new { id=item.Id }) |
+            @Html.ActionLink("Redigera", "EditProfile", routeValues: new { id=item.Id }, htmlAttributes: new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Inaktivera konto", "ProfilePage", routeValues: new { id=item.Id }, htmlAttributes: new { @class = "btn btn-default" }) 
         </td>
     </tr>
 }

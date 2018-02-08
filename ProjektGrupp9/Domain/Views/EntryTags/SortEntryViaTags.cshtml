@@ -6,6 +6,12 @@
 }
 
 <h2>Inlägg som hör till vald tagg</h2>
+<br />
+<p> Klicka på knappen för att komma tillbaka till de formella inläggen</p>
+<p>
+    @Html.ActionLink("Klicka här", "IndexFormal", "Entries", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+</p>
+<br />
 
 @foreach (var entry in Model.Reverse())
 {

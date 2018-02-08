@@ -281,7 +281,7 @@ namespace Domain.Controllers
                     {
                         var selectedTag = new EntryTagEntries();
                         selectedTag.EntryId = db.EntryResearch.Max(x => x.Id);
-                        selectedTag.TagId = item;
+                        selectedTag.TagId = db.EntryTags.Where(x => x.TagName == item).SingleOrDefault().Id.ToString();
                         db.EntryTagEntries.Add(selectedTag);
                     }
                 }
