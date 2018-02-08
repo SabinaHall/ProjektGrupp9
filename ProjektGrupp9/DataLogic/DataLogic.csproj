@@ -114,6 +114,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CreateEducationViewModel.cs" />
     <Compile Include="Models\CreateEntryViewModel.cs" />
     <Compile Include="Models\DataInitializer.cs" />
     <Compile Include="Models\Email.cs" />

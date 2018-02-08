@@ -13,7 +13,7 @@ namespace DataLogic.DbMethods
         public static int count = 0;
         public void Execute(IJobExecutionContext context)
         {
-            var message = $"Idag har det gjort {count} ändringar på formella inlägg,in och kolla för se mer information.";
+            var message = $"Idag har det gjorts {count} ändringar på formella inlägg,in och kolla för att se mer information.";
             var subject = "Summering av formella inlägg";
             var emailList = new List<string>();
             using(var db = new ApplicationDbContext())
@@ -28,6 +28,7 @@ namespace DataLogic.DbMethods
             }
 
             Methods.SendEmailInvitation(emailList, message, subject);
+            count = 0;
         }
     }
 }
