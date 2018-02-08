@@ -41,7 +41,7 @@ namespace Domain.Controllers
 
 
 
-            return View(db.EntryEducation.ToList());
+            
         }
 
 
