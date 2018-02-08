@@ -49,20 +49,29 @@
 
                         </td>
                         <td>
-                            @Html.Hidden("InviteID", item.Key.id);
-                            <p><input type="submit" id="btnSubmit" value="Acceptera" /></p>
-                            @Html.ActionLink("Acceptera", "Accept", new { id = item.Key.id }) |
-                            @Html.ActionLink("Avböj", "Decline", new { id = item.Key.id })
+                            @Html.Hidden("InviteID", item.Key.id)
+
+                            <p><input type="submit" id="btnSubmit" value="Acceptera" /></p> 
+
+
+                            
+
+                            @using (Html.BeginForm("Decline", "Events"))
+                            {
+                                @Html.Hidden("InviteID", item.Key.id)
+                                <button type="submit">Avböj</button>
+                            }
+                            
                         </td>
 
-                        }
+
                     </tr>
                 }
             }
         }
 
 
-    </table>
+</table>
 </div>
 <div>
     <h3>Dagens formella inlägg</h3>
