@@ -116,6 +116,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CreateEducationViewModel.cs" />
     <Compile Include="Models\CreateEntryViewModel.cs" />
+    <Compile Include="Models\CreateResearchViewModel.cs" />
     <Compile Include="Models\DataInitializer.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\Entries.cs" />

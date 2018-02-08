@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model IEnumerable<DataLogic.Models.EntryResearch>
+@model Dictionary<DataLogic.Models.EntryResearch, List<string>>
 
 @{
     ViewBag.Title = "Forskning";
@@ -22,32 +22,40 @@
 {
     //här behövs en if-sats för att filtrera ut alla icke-informativa
     <div class="well">
-        <h3>@entry.Heading</h3>
-        <p>Skriven av: @entry.Author.Email</p>
-        <p>Datum: @entry.Date.ToString()</p>
+        <h3>@entry.Key.Heading</h3>
+        <p>Skriven av: @entry.Key.Author.Email</p>
+        <p>Datum: @entry.Key.Date.ToString()</p>
         <br />
         <br />
-        <p>@entry.text</p>
+        <p>@entry.Key.text</p>
         <br />
 
-        @if (entry.File != null && entry.ContentType.Contains("image"))
+        @if (entry.Key.File != null && entry.Key.ContentType.Contains("image"))
         {
-            <img height="300" width="300" src="@Url.Action("EntryFileResearch", new { Id = entry.Id })" />
+            <img height="300" width="300" src="@Url.Action("EntryFileResearch", new { Id = entry.Key.Id })" />
         }
-        else if (entry.File != null && !entry.ContentType.Contains("image"))
+        else if (entry.Key.File != null && !entry.Key.ContentType.Contains("image"))
         {
             <p>Klicka på länken för att se bifogad fil</p>
-                @Html.ActionLink("Bifogad fil: " + entry.Filename.ToString(), "EntryFileResearch", "EntryInformative", routeValues: new { Id = entry.Id }, htmlAttributes: null);
+                @Html.ActionLink("Bifogad fil: " + entry.Key.Filename.ToString(), "EntryFileResearch", "EntryInformative", routeValues: new { Id = entry.Key.Id }, htmlAttributes: null);
+        }
+        <br />
+        <br />
+        @foreach (var tag in entry.Value)
+        {
+            <br />
+            @Html.ActionLink(tag,"", "",routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-xs"})
+            <br />
         }
 
         <br />
         <br />
         <br />
-        @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+        @if (entry.Key.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
         {
-            @Html.ActionLink("Radera inlägg", "DeleteResearch", new { id = entry.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Radera inlägg", "DeleteResearch", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
 
-            @Html.ActionLink("Redigera inlägg", "EditResearch", new { id = entry.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Redigera inlägg", "EditResearch", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
         }
     </div>
 
