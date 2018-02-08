@@ -118,6 +118,8 @@
     <Compile Include="Models\CreateEntryViewModel.cs" />
     <Compile Include="Models\CreateResearchViewModel.cs" />
     <Compile Include="Models\DataInitializer.cs" />
+    <Compile Include="Models\EducationTag.cs" />
+    <Compile Include="Models\EducationTagEntries.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\Entries.cs" />
     <Compile Include="Models\EntryEducation.cs" />
@@ -133,6 +135,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeetingInvites.cs" />
     <Compile Include="Models\Profilepageviewmodel.cs" />
+    <Compile Include="Models\ResearchTag.cs" />
+    <Compile Include="Models\ResearchTagEntries.cs" />
     <Compile Include="Models\SummaryViewModel.cs" />
     <Compile Include="Models\TagEntryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

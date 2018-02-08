@@ -65,10 +65,10 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateEducation([Bind(Include = "TagName")] EntryTag entryTag)
         {
-            EntryTag aTag = new EntryTag();
+            EducationTag aTag = new EducationTag();
             aTag.TagName = entryTag.TagName;
 
-            db.EntryTags.Add(aTag);
+            db.EducationTag.Add(aTag);
             db.SaveChanges();
             return RedirectToAction("CreateEducation", "EntryInformative");
 
@@ -85,10 +85,10 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateResearch([Bind(Include = "TagName")] EntryTag entryTag)
         {
-            EntryTag aTag = new EntryTag();
+            ResearchTag aTag = new ResearchTag();
             aTag.TagName = entryTag.TagName;
 
-            db.EntryTags.Add(aTag);
+            db.ResearchTag.Add(aTag);
             db.SaveChanges();
             return RedirectToAction("CreateResearch", "EntryInformative");
 

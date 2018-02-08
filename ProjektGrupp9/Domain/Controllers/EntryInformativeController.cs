@@ -113,22 +113,33 @@ namespace Domain.Controllers
             {
                 return HttpNotFound();
             }
-            return View(entryEducation);
+            
+
+
+
+            var model = new CreateEducationViewModel();
+            var tags = new List<SelectListItem>();
+
+            tags = db.EducationTag.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            model.TagNameList = tags;
+            model.Entries = entryEducation;
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEducation(EntryEducation entryInformative, HttpPostedFileBase picUpload)
+        public ActionResult EditEducation(CreateEducationViewModel model, HttpPostedFileBase picUpload)
         {
 
             EntryEducation entryToUpdate = new EntryEducation();
 
             if (ModelState.IsValid)
             {
-                entryToUpdate = db.EntryEducation.Find(entryInformative.Id);
-                entryToUpdate.text = entryInformative.text;
-                entryToUpdate.Heading = entryInformative.Heading;
-                entryToUpdate.Date = entryInformative.Date;
+                entryToUpdate = db.EntryEducation.Find(model.Entries.Id);
+                entryToUpdate.text = model.Entries.text;
+                entryToUpdate.Heading = model.Entries.Heading;
+                entryToUpdate.Date = model.Entries.Date;
                 
                 
 
@@ -150,9 +161,33 @@ namespace Domain.Controllers
 
 
                 db.SaveChanges();
+                var entryTags = db.EntryTagEntries.Where(x => x.EntryId == model.Entries.Id).ToList();
+
+                if (entryTags != null) //Ändringar sparas ej?
+                {
+                    db.EntryTagEntries.RemoveRange(entryTags);
+                    db.SaveChanges();
+                }
+
+
+                if (model.SelectedTagIds != null)
+                {
+                    foreach (var item in model.SelectedTagIds)
+                    {
+
+
+
+                        var selectedTag = new EntryTagEntries();
+                        selectedTag.EntryId = db.EntryResearch.Max(x => x.Id);
+                        selectedTag.TagId = item;
+                        db.EntryTagEntries.Add(selectedTag);
+                    }
+                }
+
+                db.SaveChanges();
                 return RedirectToAction("Education");
             }
-            return View(entryInformative);
+            return View(model);
         }
 
 
@@ -222,28 +257,13 @@ namespace Domain.Controllers
             var model = new CreateResearchViewModel();
             var tags = new List<SelectListItem>();
 
-            tags = db.EntryTags.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            tags = db.ResearchTag.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
             model.TagNameList = tags;
 
             return View(model);
         }
 
-        //// GET: Entries/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Entries entries = db.Entries.Find(id);
-        //    if (entries == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(entries);
-        //}
-
-       
+           
 
         // POST: Entries/Create
         [HttpPost]
@@ -298,7 +318,7 @@ namespace Domain.Controllers
             var model = new CreateEducationViewModel();
             var tags = new List<SelectListItem>();
 
-            tags = db.EntryTags.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            tags = db.EducationTag.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
             model.TagNameList = tags;
 
             return View(model);
@@ -338,10 +358,10 @@ namespace Domain.Controllers
                 {
                     foreach (var item in model.SelectedTagIds)
                     {
-                        var selectedTag = new EntryTagEntries();
+                        var selectedTag = new EducationTagEntries();
                         selectedTag.EntryId = db.EntryEducation.Max(x => x.Id);
-                        selectedTag.TagId = db.EntryTags.Where(x => x.TagName == item).SingleOrDefault().Id.ToString();
-                        db.EntryTagEntries.Add(selectedTag);
+                        selectedTag.TagId = db.EducationTag.Where(x => x.TagName == item).SingleOrDefault().Id.ToString();
+                        db.EducationTagEntries.Add(selectedTag);
                     }
                 }
 

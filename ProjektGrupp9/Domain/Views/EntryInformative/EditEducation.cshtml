@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model DataLogic.Models.EntryEducation
+@model DataLogic.Models.CreateEducationViewModel
 
 @{
     ViewBag.Title = "Redigera Utbildning";
@@ -16,52 +16,79 @@
         <h4>Inlägg</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Entries.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Heading, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Entries.Heading, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Heading, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Heading, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Entries.Heading, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Entries.Heading, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.text, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Entries.text, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.text, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.text, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Entries.text, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Entries.text, "", new { @class = "text-danger" })
             </div>
         </div>
 
         
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Entries.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new {@class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Entries.Date, new { htmlAttributes = new {@class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Entries.Date, "", new { @class = "text-danger" })
             </div>
         </div>
 
 
-        @if (Model.File != null && Model.ContentType.Contains("image"))
+        @if (Model.Entries.File != null && Model.Entries.ContentType.Contains("image"))
         {
-            <img height="300" width="300" src="@Url.Action("EntryFileEducation", new { Id = Model.Id })" />
+            <img height="300" width="300" src="@Url.Action("EntryFileEducation", new { Id = Model.Entries.Id })" />
             <br />
-            @Html.ActionLink("Ta bort fil", "RemoveFileEducation", new { id = Model.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Ta bort fil", "RemoveFileEducation", new { id = Model.Entries.Id }, new { @class = "btn btn-default" })
         }
-        else if (Model.File != null && !Model.ContentType.Contains("image"))
+        else if (Model.Entries.File != null && !Model.Entries.ContentType.Contains("image"))
         {
             <br />
             <p>Klicka på länken för att se bifogad fil</p>
-            @Html.ActionLink("Bifogad fil: " + Model.Filename.ToString(), "EntryFileEducation", "EntryInformative", routeValues: new { Id = Model.Id }, htmlAttributes: null);
+            @Html.ActionLink("Bifogad fil: " + Model.Entries.Filename.ToString(), "EntryFileEducation", "EntryInformative", routeValues: new { Id = Model.Entries.Id }, htmlAttributes: null);
             <br />
-            @Html.ActionLink("Ta bort fil", "RemoveFileEducation", new { id = Model.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Ta bort fil", "RemoveFileEducation", new { id = Model.Entries.Id }, new { @class = "btn btn-default" })
         }
 
+        <div class="form-group">
+            @Html.LabelFor(m => m.TagList, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(m => m.SelectedTagIds, Model.TagNameList, new { @class = "form-control", id = "SelectedTagIds" })
+            </div>
+        </div>
 
         <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="addTag" value="Lägg till" class="btn-pink" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="removeTag" value="Ta bort" class="btn-pink" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Tillagda taggar:</label>
+            <div class="col-md-10">
+
+                <select class="form-control" id="SelectedTags" multiple="multiple" name="SelectedTagIds"></select>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <br />
             <br />
             <br />
             <br />
@@ -80,5 +107,21 @@
             </div>
         </div>
     </div>
+}
+
+@section Scripts{
+
+
+    <script src="~/Scripts/AddTaggar.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#Submit").click(function () {
+            $("#SelectedTags option").prop("selected", "selected");
+
+        });
+
+    });
+    </script>
 }
 

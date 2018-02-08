@@ -20,6 +20,8 @@ namespace DataLogic.Models
             return new ApplicationDbContext();
         }
 
+        public DbSet<ResearchTag> ResearchTag { get; set; }
+        public DbSet<EducationTag> EducationTag { get; set; }
         public DbSet<Entries> Entries { get; set; }
         public DbSet <EntryInformal> InformalEntries { get; set; } 
         public DbSet<EntryTag> EntryTags { get; set; }
@@ -28,6 +30,8 @@ namespace DataLogic.Models
         public DbSet<MeetingInvites> MeetingInvites { get; set; }
         public DbSet<EventParticipants> EventParticipants { get; set; }
         public DbSet<EntryTagEntries> EntryTagEntries { get; set; }
+        public DbSet<ResearchTagEntries> ResearchTagEntries { get; set; }
+        public DbSet<EducationTagEntries> EducationTagEntries { get; set; }
         public DbSet<Comment> Comments { get; set; } 
         public DbSet<Likes> Likes { get; set; }
 
