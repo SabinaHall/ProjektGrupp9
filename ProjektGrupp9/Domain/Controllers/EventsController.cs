@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataLogic.Models;
 using Microsoft.AspNet.Identity;
-
+using System.Web.UI.WebControls;
 
 namespace Domain.Controllers
 {
@@ -69,12 +69,13 @@ namespace Domain.Controllers
                     {
                         EventID = db.Events.Max(x => x.Id),
                         Sender = sender.UserName,
-                        Receiver = item
+                        Receiver = db.Users.Where(x => x.UserName == item).SingleOrDefault().Id
+                        
                         
                     };
-
-                    var e = db.Users.Find(item).Email;
-                    emails.Add(e);
+                    //var e = db.Users.Where(x => x.UserName == item).SingleOrDefault().Email;
+                    //var e = db.Users.Find(item).Email;
+                    emails.Add(item);
 
                     context.MeetingInvites.Add(invite);
                   
@@ -264,6 +265,9 @@ namespace Domain.Controllers
 
         }
 
-
+       
     }
+    
+
+
 }
