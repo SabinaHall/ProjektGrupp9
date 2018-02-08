@@ -346,6 +346,8 @@
     <Content Include="Views\EntryInformative\EditResearch.cshtml" />
     <Content Include="Views\EntryTags\Create.cshtml" />
     <Content Include="Views\EntryTags\Index.cshtml" />
+    <Content Include="Views\EntryTags\CreateEducation.cshtml" />
+    <Content Include="Views\EntryTags\CreateResearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
