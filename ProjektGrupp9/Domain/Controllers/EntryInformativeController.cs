@@ -27,6 +27,20 @@ namespace Domain.Controllers
 
         public ActionResult Education()
         {
+
+            Dictionary<EntryEducation, List<string>> model = new Dictionary<EntryEducation, List<string>>();
+            var allEntries = db.EntryEducation.ToList();
+            foreach (var entrie in allEntries)
+            {
+                var entrieTags = db.EntryTagEntries.Where(x => x.EntryId == entrie.Id).Select(x => x.TagId).ToList();
+                var tagNames = db.EntryTags.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
+                model.Add(entrie, tagNames);
+            }
+
+            return View(model);
+
+
+
             return View(db.EntryEducation.ToList());
         }
 
@@ -255,12 +269,19 @@ namespace Domain.Controllers
 
         public ActionResult CreateEducation()
         {
-            return View();
+
+            var model = new CreateEducationViewModel();
+            var tags = new List<SelectListItem>();
+
+            tags = db.EntryTags.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            model.TagNameList = tags;
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateEducation([Bind(Include = "Heading,text,EntryType")] EntryEducation entries, HttpPostedFileBase picUpload)
+        public ActionResult CreateEducation(CreateEducationViewModel model, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated && ModelState.IsValid)
             {
@@ -278,17 +299,34 @@ namespace Domain.Controllers
                     }
                 }
 
-                aEntry.Heading = entries.Heading;
-                aEntry.text = entries.text;
+                aEntry.Heading = model.Entries.Heading;
+                aEntry.text = model.Entries.text;
                 aEntry.Date = DateTime.Now;
                 aEntry.Author = user;
 
                 user.EducationEntries.Add(aEntry);
                 db.EntryEducation.Add(aEntry);
                 db.SaveChanges();
+
+
+                if (model.SelectedTagIds != null)
+                {
+                    foreach (var item in model.SelectedTagIds)
+                    {
+                        var selectedTag = new EntryTagEntries();
+                        selectedTag.EntryId = db.EntryEducation.Max(x => x.Id);
+                        selectedTag.TagId = item;
+                        db.EntryTagEntries.Add(selectedTag);
+                    }
+                }
+
+                db.SaveChanges();
+
+
+
                 return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
             }
-            return View(entries);
+            return View(model);
         }
 
         public ActionResult EntryFileResearch(int id)
