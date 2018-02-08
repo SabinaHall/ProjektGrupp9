@@ -8,7 +8,7 @@
 <h2>Redigera Utbildning</h2>
 
 
-@using (Html.BeginForm("EditEducation", "EntryInformative", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditEducation", "EntryInformative", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -109,11 +109,12 @@
     </div>
 }
 
+<div class="clearfix"></div>
 @section Scripts{
-
-
-    <script src="~/Scripts/AddTaggar.js"></script>
-    <script type="text/javascript">
+    
+    
+<script src="~/Scripts/AddTaggar.js"></script>
+<script type="text/javascript">
     $(document).ready(function () {
 
         $("#Submit").click(function () {
@@ -122,6 +123,5 @@
         });
 
     });
-    </script>
+</script>
 }
-

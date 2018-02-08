@@ -2,9 +2,9 @@
 
 var btnRemoveTag = document.getElementById('removeTag');
 
-var AddTagList = document.getElementById('SelectedTagIds');
+var AddTagList = document.getElementById('SelectedTags');
 
-var ToAddTagList = document.getElementById('SelectedTags');
+var ToAddTagList = document.getElementById('SelectedTagIds');
 
 
 btnAddTag.addEventListener("click", function () {

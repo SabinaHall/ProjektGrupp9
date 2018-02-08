@@ -26,8 +26,8 @@ namespace Domain.Controllers
             var allEntries = db.EntryResearch.ToList();
             foreach(var entries in allEntries)
             {
-                var entrieTags = db.EntryTagEntries.Where(x => x.EntryId == entries.Id).Select(x => x.TagId).ToList();
-                var tagNames = db.EntryTags.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
+                var entrieTags = db.ResearchTagEntries.Where(x => x.EntryId == entries.Id).Select(x => x.TagId).ToList();
+                var tagNames = db.ResearchTag.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
                 model.Add(entries, tagNames);
             }
             return View(model);
@@ -40,8 +40,8 @@ namespace Domain.Controllers
             var allEntries = db.EntryEducation.ToList();
             foreach (var entrie in allEntries)
             {
-                var entrieTags = db.EntryTagEntries.Where(x => x.EntryId == entrie.Id).Select(x => x.TagId).ToList();
-                var tagNames = db.EntryTags.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
+                var entrieTags = db.EducationTagEntries.Where(x => x.EntryId == entrie.Id).Select(x => x.TagId).ToList();
+                var tagNames = db.EducationTag.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
                 model.Add(entrie, tagNames);
             }
 
@@ -129,7 +129,7 @@ namespace Domain.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEducation(CreateEducationViewModel model, HttpPostedFileBase picUpload)
+        public ActionResult EditEducation(CreateEducationViewModel model, HttpPostedFileBase picUpload) //Av någon anledning följer inte tagg-listan med...
         {
 
             EntryEducation entryToUpdate = new EntryEducation();
@@ -161,11 +161,11 @@ namespace Domain.Controllers
 
 
                 db.SaveChanges();
-                var entryTags = db.EntryTagEntries.Where(x => x.EntryId == model.Entries.Id).ToList();
+                var entryTags = db.EducationTagEntries.Where(x => x.EntryId == model.Entries.Id).ToList();
 
-                if (entryTags != null) //Ändringar sparas ej?
+                if (entryTags != null) 
                 {
-                    db.EntryTagEntries.RemoveRange(entryTags);
+                    db.EducationTagEntries.RemoveRange(entryTags);
                     db.SaveChanges();
                 }
 
@@ -177,10 +177,10 @@ namespace Domain.Controllers
 
 
 
-                        var selectedTag = new EntryTagEntries();
-                        selectedTag.EntryId = db.EntryResearch.Max(x => x.Id);
+                        var selectedTag = new EducationTagEntries();
+                        selectedTag.EntryId = db.EntryEducation.Max(x => x.Id);
                         selectedTag.TagId = item;
-                        db.EntryTagEntries.Add(selectedTag);
+                        db.EducationTagEntries.Add(selectedTag);
                     }
                 }
 
