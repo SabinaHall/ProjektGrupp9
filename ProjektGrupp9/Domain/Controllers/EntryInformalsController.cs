@@ -68,6 +68,7 @@ namespace Domain.Controllers
                 aEntry.Text = entryInformal.Text;
                 aEntry.Date = DateTime.Today;
                 aEntry.Author = user;
+                aEntry.Likes = entryInformal.Likes;
 
                 user.InformalEntrys.Add(aEntry);
                 db.InformalEntries.Add(aEntry);
@@ -179,6 +180,19 @@ namespace Domain.Controllers
             }
             return View(entryInformal);
         }
+
+
+
+        public ActionResult Like(int id)
+        {
+
+            var entry = db.InformalEntries.Find(id);
+            entry.Likes += 1;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
 
         // POST: EntryInformals/Delete/5
         [HttpPost, ActionName("Delete")]

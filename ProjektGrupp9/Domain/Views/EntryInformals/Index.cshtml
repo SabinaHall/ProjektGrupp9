@@ -23,6 +23,7 @@
             <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
         }
 
+        
         <br />
         <br />
         <br />
@@ -33,6 +34,7 @@
                 @Html.ActionLink("Redigera inlägg", "Edit", new { id = entry.Id }, new { @class = "btn btn-default" })
             }
             @Html.ActionLink($"Kommentera inlägg ({entry.Comments.Count})", "Index", "Comments", new { id = entry.Id }, new { @class = "btn btn-default" })
+            @Html.ActionLink($"Gilla({entry.Likes})", "Like", "EntryInformals", new { id = entry.Id }, new { @class = "btn btn-default" })
         </div>
     </div>
 }

@@ -13,7 +13,7 @@
     <div class="form-horizontal">
 
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger", id = "myForm" })
         <div class="form-group">
             @Html.LabelFor(model => model.events.Date, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -78,7 +78,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">Bjud in:</label>
         <div class="col-md-10">
-            @Html.ListBoxFor(m => m.ListId, Model.Participants, new { @class = "form-control", id =  "ettId"})
+            @Html.ListBoxFor(m => m.Inbjudna, Model.Participants, new { @class = "form-control", id = "ListId"})
         </div>
     </div>
         
@@ -93,10 +93,11 @@
                 </div>
             </div>
         
-
+       
         <div class="form-group">
             <label class="col-md-2 control-label">Inbjudna:</label>
             <div class="col-md-10">
+
                 <select class="form-control" id="Inbjudna" multiple="multiple" name="ListId">
                 
                 </select>
@@ -110,7 +111,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Skapa" class="btn-pink" />
+            <input type="submit" value="Skapa" class="btn-pink" id="sub" />
         </div>
     </div>
 </div>
@@ -119,4 +120,15 @@
 <div class="clearfix"></div>
 @section scripts {
 <script src="~/Scripts/MeetingParticipants.js"></script>"
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#sub").click(function () {
+                $("#Inbjudna option").prop("selected", "selected");
+
+            });
+
+        });
+</script>
     }
+    
