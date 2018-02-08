@@ -17,7 +17,7 @@ namespace DataLogic.Models
 
         [Required]
         public List<string> SelectedTagIds { get; set; }
-
+        public List<string> SelectedTags { get; set; }
         public EntryResearch Entries { get; set; }
 
         public virtual ApplicationUser Author { get; set; }

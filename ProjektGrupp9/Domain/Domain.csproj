@@ -348,6 +348,7 @@
     <Content Include="Views\EntryTags\Index.cshtml" />
     <Content Include="Views\EntryTags\CreateEducation.cshtml" />
     <Content Include="Views\EntryTags\CreateResearch.cshtml" />
+    <Content Include="Views\EntryTags\SortEntryViaTags.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

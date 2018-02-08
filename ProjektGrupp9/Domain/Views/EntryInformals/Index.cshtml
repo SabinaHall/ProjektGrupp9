@@ -20,7 +20,7 @@
         <br />
         @if (entry.File != null)
         {
-            <img height="300" width="300" src="@Url.Action("EntryFile", new { Id = entry.Id })" />
+            <img height="300" width="300" src="@Url.Action("EntryFile", "EntryInformals", routeValues: new { Id = entry.Id })" />
         }
 
         

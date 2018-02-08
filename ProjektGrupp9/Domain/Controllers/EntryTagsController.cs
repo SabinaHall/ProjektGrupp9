@@ -10,6 +10,7 @@ using DataLogic.Models;
 
 namespace Domain.Controllers
 {
+    [Authorize]
     public class EntryTagsController : BaseController
     {
 
@@ -17,6 +18,25 @@ namespace Domain.Controllers
         public ActionResult Index()
         {
             return View(db.EntryTags.ToList());
+        }
+
+        public ActionResult SortEntryViaTags(int? id)
+        {
+            //List<Entries> list = new List<Entries>();
+            List<Entries> entryList = new List<Entries>();
+
+            foreach (var aEntry in db.Entries.ToList())
+            {
+                foreach (var aTag in db.EntryTagEntries.ToList())
+                {
+                    if(aTag.TagId == id.ToString() && aEntry.Id == aTag.EntryId)
+                    {
+                        var entry = db.Entries.Find(aTag.EntryId);
+                        entryList.Add(entry);
+                    }
+                }
+            }
+            return View(entryList.ToList());
         }
 
         // GET: EntryTags/Details/5

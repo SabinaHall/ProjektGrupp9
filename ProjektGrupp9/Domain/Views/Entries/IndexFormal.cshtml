@@ -8,18 +8,15 @@
     @Html.ActionLink("Skriv nytt inlägg", "CreateTest", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
     <br />
     <br />
-@Html.ActionLink("Redigera taggar", "Index", "EntryTags",  new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Redigera taggar", "Index", "EntryTags", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
-
-
-
 
 
 @foreach (var entry in Model.Reverse())
 {
     <div class="well">
         <h3>@Html.ActionLink(@entry.Key.Heading, "IndexFormal", "Comments", routeValues: new { Id = entry.Key.Id }, htmlAttributes: null)</h3>
-        <p>Skriven av: @Html.ActionLink($"{entry.Key.Author.FirstName} {entry.Key.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null), @entry.Key.Author.Email</p>
+        <p>Skriven av: @Html.ActionLink($"{entry.Key.Author.FirstName} {entry.Key.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = entry.Key.Author.Id }, htmlAttributes: null), @entry.Key.Author.Email</p>
         <p>Datum: @entry.Key.Date.ToString().Substring(0, 10)</p>
         <br />
         <br />
@@ -35,18 +32,28 @@
             <p>Klicka på länken för att se bifogad fil</p>
             @Html.ActionLink("Bifogad fil: " + entry.Key.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = entry.Key.Id }, htmlAttributes: null);
         }
-
         <br />
         <br />
 
-        @foreach (var tag in entry.Value)
+        @using (DataLogic.Models.ApplicationDbContext db = new DataLogic.Models.ApplicationDbContext())
         {
-            @*<button type="button" class="btn btn-primary btn-xs">@tag</button>*@
-
-            <br />
-            @Html.ActionLink(tag, "", "", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-xs" })
-            <br />
+            foreach (var item in db.EntryTagEntries.ToList())
+            {
+                if (item.EntryId == entry.Key.Id)
+                {
+                    foreach (var tag in db.EntryTags.ToList())
+                    {
+                        if (item.TagId.ToString() == tag.Id.ToString())
+                        {
+                            <br />
+                            @Html.ActionLink(tag.TagName, "SortEntryViaTags", "EntryTags", routeValues: new { Id = item.TagId }, htmlAttributes: new { @class = "btn btn-primary btn-xs" })
+                            <br />
+                        }
+                    }
+                }
+            }
         }
+
         <br />
         <br />
         <br />
@@ -60,6 +67,5 @@
         </div>
     </div>
 }
-
 
 <div class="clearfix"></div>

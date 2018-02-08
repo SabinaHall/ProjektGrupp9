@@ -10,20 +10,10 @@
 
 <div class="mininfo" style="float:left;">
     <hr />
-
-
     <hr />
     <img class="card-img-top" style="width: 150px; height: 150px; border-radius:20px;" src="@Url.Action("ProfilePicture", "Account", new { id = Model.user.Id} )" alt="Card image cap">
 
-
-
-
-
-
-
     <dl class="dl-horizontal">
-
-
 
         <dt>
             @Html.DisplayName("Förnamn")
@@ -64,21 +54,19 @@
         <dd>
             @Html.DisplayFor(model => model.user.PhoneNmbr)
         </dd>
-
     </dl>
 
     <p>
         @if (Model.user.Id == User.Identity.GetUserId())
         {
-            @Html.ActionLink("Redigera", "EditProfile", new { id = Model.user.Id })
+            @Html.ActionLink("Redigera", "EditProfile", routeValues: new { id = Model.user.Id }, htmlAttributes: new { @class = "btn btn-default" })
         }
         @if (User.IsInRole("SuperAdmin") && Model.user.Active)
         {
             if (!Model.user.Id.Equals(User.Identity.GetUserId()))
             {
-                @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
+                @Html.ActionLink("Inaktivera konto", "Deactivate", routeValues: new { id = Model.user.Id }, htmlAttributes: new { @class = "btn btn-default" })
             }
-
         }
 
         @if (User.IsInRole("Admin") && Model.user.Active)
@@ -87,20 +75,17 @@
             {
                 if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
                 {
-                    @Html.ActionLink("Inaktivera konto", "Deactivate", new { id = Model.user.Id })
+                    @Html.ActionLink("Inaktivera konto", "Deactivate", routeValues: new { id = Model.user.Id }, htmlAttributes: new { @class = "btn btn-default" })
                 }
-
             }
-
         }
 
         @if (User.IsInRole("SuperAdmin") && !Model.user.Active)
         {
             if (!Model.user.Id.Equals(User.Identity.GetUserId()))
             {
-                @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
+                @Html.ActionLink("Aktivera konto", "Activate", routeValues: new { id = Model.user.Id }, htmlAttributes: new { @class = "btn btn-default" })
             }
-
         }
 
         @if (User.IsInRole("Admin") && !Model.user.Active)
@@ -109,26 +94,19 @@
             {
                 if (!TempData["role"].Equals("SuperAdmin") && !TempData["role"].Equals("Admin"))
                 {
-                    @Html.ActionLink("Aktivera konto", "Activate", new { id = Model.user.Id })
+                    @Html.ActionLink("Aktivera konto", "Activate", routeValues: new { id = Model.user.Id }, htmlAttributes: new { @class = "btn btn-default" })
                 }
-
             }
-
         }
-
-
     </p>
 </div>
 
-<div class="minkalender" style= "float:left;">
+<div class="minkalender" style="float:left;">
 
     <h1>Min kalender:</h1>
     @foreach (var item in Model.myMeetings)
     {
-
         <table class="table table-condensed table-bordered">
-
-
             <tr class="events">
                 <th>Datum </th>
                 <th>Tid</th>
@@ -137,42 +115,20 @@
                 <th>Beskrivning</th>
                 <th>Plats</th>
                 <th>Mötesdeltagare</th>
-
             </tr>
-
-
-
             <tr>
-
-                <td class="col-md-2">@item.Date.ToString().Substring(0,10)</td>
-
-
-
-
+                <td class="col-md-2">@item.Date.ToString().Substring(0, 10)</td>
                 <td class="col-md-2">@item.Time</td>
                 <td class="col-md-2">@item.secondaryTime</td>
                 <td class="col-md-2">@item.tertiaryTime</td>
-
                 <td class="col-md-2">@item.Description</td>
-
-
-
-
                 <td class="col-md-2">@item.Place</td>
-
-                <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", "Events", new { id = item.Id }, null)</td>
-
-
+                <td class="col-md-2">@Html.ActionLink("Deltagare", "EventDetails", "Events", routeValues: new { id = item.Id }, htmlAttributes: new { @class = "btn btn-default" })</td>
             </tr>
         </table>
-
-
-
-
     }
-
 </div>
 
-    
+
 
 
