@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataLogic.Models;
 using Microsoft.AspNet.Identity;
-
+using System.Web.UI.WebControls;
 
 namespace Domain.Controllers
 {
@@ -69,12 +69,13 @@ namespace Domain.Controllers
                     {
                         EventID = db.Events.Max(x => x.Id),
                         Sender = sender.UserName,
-                        Receiver = item
+                        Receiver = db.Users.Where(x => x.UserName == item).SingleOrDefault().Id
+                        
                         
                     };
-
-                    var e = db.Users.Find(item).Email;
-                    emails.Add(e);
+                    //var e = db.Users.Where(x => x.UserName == item).SingleOrDefault().Email;
+                    //var e = db.Users.Find(item).Email;
+                    emails.Add(item);
 
                     context.MeetingInvites.Add(invite);
                   
@@ -204,6 +205,8 @@ namespace Domain.Controllers
 
         public ActionResult Events(string id)
         {
+
+            
             var model = new SummaryViewModel();
             
                 var allInvites = db.MeetingInvites.Where(x => x.Receiver == id).ToList();
@@ -225,9 +228,14 @@ namespace Domain.Controllers
 
         }
 
-        public ActionResult Accept(int id)
+        [HttpPost]
+        public ActionResult Accept(AcceptViewModel model)
         {
-            var eventID = db.MeetingInvites.Where(x => x.id == id).Select(x => x.EventID).SingleOrDefault();
+
+
+
+            
+            var eventID = db.MeetingInvites.Where(x => x.id == model.InviteID).Select(x => x.EventID).SingleOrDefault();
 
             var eventParticipants = new EventParticipants()
             {
@@ -236,19 +244,29 @@ namespace Domain.Controllers
             };
             db.EventParticipants.Add(eventParticipants);
 
-            var m = db.MeetingInvites.Find(id);
+            var m = db.MeetingInvites.Find(model.InviteID);
             db.MeetingInvites.Remove(m);
 
             db.SaveChanges();
             var Event = db.Events.Find(eventID);
-
+            var user = db.Users.Find(User.Identity.GetUserId());
             var email = new List<string>();
-            email.Add(db.Users.Find(User.Identity.GetUserId()).Email);
+            email.Add(user.Email);
             
             var subject = "Tillagd i ett möte";
             var message = $"Du har blivit tillagd i ett möte av: {Event.Host.FirstName} {Event.Host.LastName} <br> Datum: {Event.Date} <br> Tid: {Event.Time} <br> Plats: {Event.Place}";
 
             DataLogic.DbMethods.Methods.SendEmailInvitation(email, message, subject);
+
+            var emailHost = new List<string>();
+            emailHost.Add(Event.Host.Email);
+
+            var subjectHost = "Accepterad inbjudan";
+            var messageHost = user.FirstName + " " + user.LastName + $" har accepterat din mötesinbjudan och valde tidsförslaget: " +
+                $"{model.SelectedTime}  <br> Datum: {Event.Date} <br> Tid: {Event.Time} <br> Plats: {Event.Place}";
+
+            DataLogic.DbMethods.Methods.SendEmailInvitation(emailHost, messageHost , subjectHost);
+
             return RedirectToAction("Index");
 
         }
@@ -264,6 +282,9 @@ namespace Domain.Controllers
 
         }
 
-
+       
     }
+    
+
+
 }

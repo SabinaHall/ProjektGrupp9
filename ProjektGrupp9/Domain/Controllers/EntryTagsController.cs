@@ -75,6 +75,46 @@ namespace Domain.Controllers
             //return View(entryTag);
         }
 
+        public ActionResult CreateEducation()
+        {
+            return View();
+        }
+
+        // POST: EntryTags/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEducation([Bind(Include = "TagName")] EntryTag entryTag)
+        {
+            EntryTag aTag = new EntryTag();
+            aTag.TagName = entryTag.TagName;
+
+            db.EntryTags.Add(aTag);
+            db.SaveChanges();
+            return RedirectToAction("CreateEducation", "EntryInformative");
+
+            //return View(entryTag);
+        }
+
+        public ActionResult CreateResearch()
+        {
+            return View();
+        }
+
+        // POST: EntryTags/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateResearch([Bind(Include = "TagName")] EntryTag entryTag)
+        {
+            EntryTag aTag = new EntryTag();
+            aTag.TagName = entryTag.TagName;
+
+            db.EntryTags.Add(aTag);
+            db.SaveChanges();
+            return RedirectToAction("CreateResearch", "EntryInformative");
+
+            //return View(entryTag);
+        }
+
         // GET: EntryTags/Edit/5
         public ActionResult Edit(int? id)
         {

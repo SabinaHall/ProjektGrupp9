@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -67,6 +73,9 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -97,12 +106,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbMethods\EmailJob.cs" />
+    <Compile Include="DbMethods\JobScheduler.cs" />
     <Compile Include="DbMethods\Methods.cs" />
     <Compile Include="IdentityConfig.cs" />
+    <Compile Include="Models\AcceptViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CreateEducationViewModel.cs" />
     <Compile Include="Models\CreateEntryViewModel.cs" />
+    <Compile Include="Models\CreateResearchViewModel.cs" />
     <Compile Include="Models\DataInitializer.cs" />
     <Compile Include="Models\Email.cs" />
     <Compile Include="Models\Entries.cs" />
@@ -115,6 +129,7 @@
     <Compile Include="Models\Events.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Likes.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeetingInvites.cs" />
     <Compile Include="Models\Profilepageviewmodel.cs" />
@@ -124,6 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

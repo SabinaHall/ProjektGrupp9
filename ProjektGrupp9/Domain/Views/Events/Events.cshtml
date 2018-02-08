@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Events";
+
 }
 
 <h2>Inbjudningar</h2>
@@ -30,30 +31,47 @@
                 timeList.Add(item.Value.secondaryTime);
                 timeList.Add(item.Value.tertiaryTime);
 
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Key.Sender)
-                    </td>
-                    <td>
-                        <p><b>Plats: </b>@item.Value.Place</p>
-                        <p>
-                            <b>Tid: </b>@Html.DropDownList("TimeList",
-                    new SelectList(timeList),
-                    new { @class = "form-control" })
-                        </p>
-                        <p><b>Datum: </b>@item.Value.Date</p>
 
-                    </td>
-                    <td>
-                        @Html.ActionLink("Acceptera", "Accept", new { id = item.Key.id }) |
-                        @Html.ActionLink("Avböj", "Decline", new { id = item.Key.id })
-                    </td>
-                </tr>
+
+                using (Html.BeginForm("Accept", "Events", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <tr>
+                        <td>
+                            @item.Key.Sender
+                        </td>
+
+                        <td>
+                            <p><b>Plats: </b>@item.Value.Place</p>
+                            <p>
+                                <b>Tid: </b>@Html.DropDownList("SelectedTime", new SelectList(timeList), new { @class = "form-control" })
+                            </p>
+                            <p><b>Datum: </b>@item.Value.Date</p>
+
+                        </td>
+                        <td>
+                            @Html.Hidden("InviteID", item.Key.id)
+
+                            <p><input type="submit" id="btnSubmit" value="Acceptera" /></p> 
+
+
+                            
+
+                            @using (Html.BeginForm("Decline", "Events"))
+                            {
+                                @Html.Hidden("InviteID", item.Key.id)
+                                <button type="submit">Avböj</button>
+                            }
+                            
+                        </td>
+
+
+                    </tr>
+                }
             }
         }
 
 
-    </table>
+</table>
 </div>
 <div>
     <h3>Dagens formella inlägg</h3>

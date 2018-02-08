@@ -136,7 +136,7 @@ namespace Domain.Controllers
                     {
                         var selectedTag = new EntryTagEntries();
                         selectedTag.EntryId = db.Entries.Max(x => x.Id);
-                        selectedTag.TagId = item;
+                        selectedTag.TagId = db.EntryTags.Where(x => x.TagName == item).SingleOrDefault().Id.ToString();
                         db.EntryTagEntries.Add(selectedTag);
                     }
                 }
@@ -148,6 +148,7 @@ namespace Domain.Controllers
                 var message = user.Email + " har lagt upp ett inlägg med titeln: " + model.Entries.Heading + ".";
 
                 DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
+                DataLogic.DbMethods.EmailJob.count += 1;
                 return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
             return View();

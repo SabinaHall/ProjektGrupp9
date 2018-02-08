@@ -68,6 +68,7 @@ namespace Domain.Controllers
                 aEntry.Text = entryInformal.Text;
                 aEntry.Date = DateTime.Today;
                 aEntry.Author = user;
+                aEntry.Likes = entryInformal.Likes;
 
                 user.InformalEntrys.Add(aEntry);
                 db.InformalEntries.Add(aEntry);
@@ -180,16 +181,60 @@ namespace Domain.Controllers
             return View(entryInformal);
         }
 
+
+
+        public ActionResult Like(int id)
+        {   
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var entry = db.InformalEntries.Find(id);
+            var likes = db.Likes.ToList();
+
+            foreach (var item in likes)
+            {
+                if (item.user.Id == user.Id && item.InformalEntry.Id == entry.Id)
+                {
+                    db.Likes.Remove(item);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            var like = new Likes();
+            like.user = user;
+            like.InformalEntry = entry;
+            db.Likes.Add(like);
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
         // POST: EntryInformals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
+            var deletedlikes = db.Likes.Where(x => x.InformalEntry.Id == id).ToList();
+            foreach (var item in deletedlikes)
+            {
+                db.Likes.Remove(item);
+            }
+
             EntryInformal entryInformal = db.InformalEntries.Find(id);
             db.InformalEntries.Remove(entryInformal);
+
+            
+
             db.SaveChanges();
+
+
             return RedirectToAction("Index");
+
+            
         }
+
+        
 
         protected override void Dispose(bool disposing)
         {
