@@ -32,7 +32,7 @@ namespace DataLogic.Models
         public virtual ApplicationUser Author { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Likes> Likes { get; set; }
 
-        public int Likes { get; set; }
     }
 }

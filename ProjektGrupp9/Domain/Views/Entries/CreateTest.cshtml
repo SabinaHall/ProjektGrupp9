@@ -8,7 +8,7 @@
 <h2>Skriv ett nytt inlägg</h2>
 
 
-@using (Html.BeginForm("CreateTest", "Entries", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateTest", "Entries", new { id = User.Identity.GetUserId()}, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.TagList, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.ListBoxFor(m => m.SelectedTagIds, Model.TagNameList, new { @class = "form-control", id ="Taggar" })
+                @Html.ListBoxFor(m => m.SelectedTags, Model.TagNameList, new { @class = "form-control", id = "SelectedTagIds" })
             </div>
         </div>
 
@@ -62,7 +62,7 @@
             <label class="col-md-2 control-label">Tillagda taggar:</label>
             <div class="col-md-10">
 
-                <select class="form-control" id="sTag" multiple="multiple" name="ListId"></select>
+                <select class="form-control" id="SelectedTags" multiple="multiple" name="SelectedTagIds"></select>
             </div>
         </div>
 
@@ -95,14 +95,13 @@
 
 
 @section Scripts {
-   @Scripts.Render("~/bundles/jqueryval")
+   @*@Scripts.Render("~/bundles/jqueryval")*@
 <script src="~/Scripts/AddTaggar.js"></script>
 <script type="text/javascript">
         $(document).ready(function () {
             
             $("#Submit").click(function () {
-                alert("GRYYYYYYMT!!!");
-                $("#sTag option").prop("selected", "selected");
+                $("#SelectedTags option").prop("selected", "selected");
 
             });
 
