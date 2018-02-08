@@ -25,7 +25,7 @@ namespace Domain.Controllers
             foreach (var entrie in allEntries)
             {
                 var entrieTags = db.EntryTagEntries.Where(x => x.EntryId == entrie.Id).Select(x => x.TagId).ToList();
-                var tagNames = db.Tags.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
+                var tagNames = db.EntryTags.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
                 model.Add(entrie, tagNames);
             }
 
@@ -58,7 +58,7 @@ namespace Domain.Controllers
             var model = new CreateEntryViewModel();
             var tags = new List<SelectListItem>();
 
-            tags = db.Tags.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            tags = db.EntryTags.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
             model.TagNameList = tags;
 
             return View(model);
@@ -148,6 +148,7 @@ namespace Domain.Controllers
                 var message = user.Email + " har lagt upp ett inlägg med titeln: " + model.Entries.Heading + ".";
 
                 DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
+                DataLogic.DbMethods.EmailJob.count += 1;
                 return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
             return View();

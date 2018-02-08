@@ -6,13 +6,20 @@
 
 <p>
     @Html.ActionLink("Skriv nytt inlägg", "CreateTest", new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
+    <br />
+    <br />
+@Html.ActionLink("Redigera taggar", "Index", "EntryTags",  new { Id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
+
+
+
+
 
 @foreach (var entry in Model.Reverse())
 {
     <div class="well">
         <h3>@Html.ActionLink(@entry.Key.Heading, "IndexFormal", "Comments", routeValues: new { Id = entry.Key.Id }, htmlAttributes: null)</h3>
-        <p>Skriven av: @entry.Key.Author.Email</p>
+        <p>Skriven av: @Html.ActionLink($"{entry.Key.Author.FirstName} {entry.Key.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null), @entry.Key.Author.Email</p>
         <p>Datum: @entry.Key.Date.ToString().Substring(0, 10)</p>
         <br />
         <br />

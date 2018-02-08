@@ -11,5 +11,6 @@ namespace DataLogic.Models
         public List<Entries> FormalEntries { get; set; }
         public List<Events> Events { get; set; }
         public Dictionary<MeetingInvites, Events> YourEvents  { get; set; }
+        
     }
 }

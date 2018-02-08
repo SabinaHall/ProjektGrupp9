@@ -22,7 +22,7 @@ namespace DataLogic.Models
 
         public DbSet<Entries> Entries { get; set; }
         public DbSet <EntryInformal> InformalEntries { get; set; } 
-        public DbSet<EntryTag> Tags { get; set; }
+        public DbSet<EntryTag> EntryTags { get; set; }
         public DbSet<EntryResearch> EntryResearch { get; set; }
         public DbSet<EntryEducation> EntryEducation { get; set; }
         public DbSet<MeetingInvites> MeetingInvites { get; set; }

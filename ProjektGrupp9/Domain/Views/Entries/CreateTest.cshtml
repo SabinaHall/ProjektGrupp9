@@ -39,15 +39,31 @@
         </div>
 
         <div class="form-group">
-            <p>Ladda upp en bild eller fil med inlägget.</p>
+            @Html.Label("", "Lägg till ny tagg", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ActionLink("Klicka här", "Create", "EntryTags", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("", "Ladda upp fil/bild", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="picUpload" />
             </div>
         </div>
 
+        @*<div class="form-group">
+                <p>Ladda upp en bild eller fil med inlägget.</p>
+                <div class="col-md-10">
+                    <input type="file" name="picUpload" />
+                </div>
+            </div>*@
+
+
+        <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Skapa" class="btn btn-default" />
             </div>
         </div>
     </div>

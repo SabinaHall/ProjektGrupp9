@@ -16,7 +16,7 @@ namespace Domain.Controllers
         // GET: EntryTags
         public ActionResult Index()
         {
-            return View(db.Tags.ToList());
+            return View(db.EntryTags.ToList());
         }
 
         // GET: EntryTags/Details/5
@@ -26,7 +26,7 @@ namespace Domain.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EntryTag entryTag = db.Tags.Find(id);
+            EntryTag entryTag = db.EntryTags.Find(id);
             if (entryTag == null)
             {
                 return HttpNotFound();
@@ -41,20 +41,18 @@ namespace Domain.Controllers
         }
 
         // POST: EntryTags/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] EntryTag entryTag)
+        public ActionResult Create([Bind(Include = "TagName")] EntryTag entryTag)
         {
-            if (ModelState.IsValid)
-            {
-                db.Tags.Add(entryTag);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            EntryTag aTag = new EntryTag();
+            aTag.TagName = entryTag.TagName;
 
-            return View(entryTag);
+            db.EntryTags.Add(aTag);
+            db.SaveChanges();
+            return RedirectToAction("CreateTest", "Entries");
+
+            //return View(entryTag);
         }
 
         // GET: EntryTags/Edit/5
@@ -64,7 +62,7 @@ namespace Domain.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EntryTag entryTag = db.Tags.Find(id);
+            EntryTag entryTag = db.EntryTags.Find(id);
             if (entryTag == null)
             {
                 return HttpNotFound();
@@ -73,11 +71,9 @@ namespace Domain.Controllers
         }
 
         // POST: EntryTags/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] EntryTag entryTag)
+        public ActionResult Edit([Bind(Include = "Id,TagName")] EntryTag entryTag)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +91,7 @@ namespace Domain.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EntryTag entryTag = db.Tags.Find(id);
+            EntryTag entryTag = db.EntryTags.Find(id);
             if (entryTag == null)
             {
                 return HttpNotFound();
@@ -108,8 +104,8 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EntryTag entryTag = db.Tags.Find(id);
-            db.Tags.Remove(entryTag);
+            EntryTag entryTag = db.EntryTags.Find(id);
+            db.EntryTags.Remove(entryTag);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

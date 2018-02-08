@@ -12,7 +12,7 @@ namespace DataLogic.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Välj taggar")]
+        [Display(Name = "Taggnamn")]
         public string TagName { get; set; } 
 
         //public List<EntryTag> DefaultTagList { get; set; } 
