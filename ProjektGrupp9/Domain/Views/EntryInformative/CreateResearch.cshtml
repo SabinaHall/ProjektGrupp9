@@ -30,20 +30,40 @@
 
         <br />
 
-       
-
         <br />
-        <div class="form-group">
-            @Html.LabelFor(m => m.TagList, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.ListBoxFor(m => m.SelectedTagIds, Model.TagNameList, new { @class = "form-control" })
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.Label("", "Lägg till ny tagg", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.ActionLink("Klicka här", "CreateResearch", "EntryTags", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.TagList, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(m => m.SelectedTagIds, Model.TagNameList, new { @class = "form-control", id = "SelectedTagIds" })
+            </div>
+        </div>
+
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="addTag" value="Lägg till" class="btn-pink" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" id="removeTag" value="Ta bort" class="btn-pink" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Tillagda taggar:</label>
+            <div class="col-md-10">
+
+                <select class="form-control" id="SelectedTags" multiple="multiple" name="SelectedTagIds"></select>
+
             </div>
         </div>
 
@@ -62,10 +82,25 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Skapa" class="btn btn-default" />
+                <input type="submit" value="Skapa" class="btn btn-default" , id="Submit" />
             </div>
         </div>
     </div>
 }
 
 <div class="clearfix"></div>
+@section Scripts{
+
+
+    <script src="~/Scripts/AddTaggar.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#Submit").click(function () {
+            $("#SelectedTags option").prop("selected", "selected");
+
+        });
+
+    });
+    </script>
+}
