@@ -1,0 +1,105 @@
+﻿@model IEnumerable<DataLogic.Models.Entries>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "SortEntryViaTags";
+}
+
+<h2>Inlägg som hör till vald tagg</h2>
+
+@foreach (var entry in Model.Reverse())
+{
+    <div class="well">
+        <h3>@Html.ActionLink(@entry.Heading, "IndexFormal", "Comments", routeValues: new { Id = entry.Id }, htmlAttributes: null)</h3>
+        <p>Skriven av: @Html.ActionLink($"{entry.Author.FirstName} {entry.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null), @entry.Author.Email</p>
+        <p>Datum: @entry.Date.ToString().Substring(0, 10)</p>
+        <br />
+        <br />
+        <p>@entry.text</p>
+        <br />
+
+        @if (entry.File != null && entry.ContentType.Contains("image"))
+        {
+            <img height="300" width="300" src="@Url.Action("EntryFile", "Entries", routeValues: new { Id = entry.Id })" />
+        }
+        else if (entry.File != null && !entry.ContentType.Contains("image"))
+        {
+            <p>Klicka på länken för att se bifogad fil</p>
+            @Html.ActionLink("Bifogad fil: " + entry.Filename.ToString(), "EntryFile", "Entries", routeValues: new { Id = entry.Id }, htmlAttributes: null);
+        }
+        <br />
+        <br />
+
+        @using (DataLogic.Models.ApplicationDbContext db = new DataLogic.Models.ApplicationDbContext())
+        {
+            foreach (var item in db.EntryTagEntries.ToList())
+            {
+                if (item.EntryId == entry.Id)
+                {
+                    foreach (var tag in db.EntryTags.ToList())
+                    {
+                        if (item.TagId.ToString() == tag.Id.ToString())
+                        {
+                            <br />
+                            @Html.ActionLink(tag.TagName, "SortEntryViaTags", "EntryTags", routeValues: new { Id = item.TagId }, htmlAttributes: new { @class = "btn btn-primary btn-xs" })
+                            <br />
+                        }
+                    }
+                }
+            }
+        }
+
+        <br />
+        <br />
+        <br />
+        <div class="panel-footer row">
+            @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Redigera inlägg", "Edit", new { id = entry.Id }, new { @class = "btn btn-default" })
+            }
+            @Html.ActionLink($"Kommentera inlägg ({entry.CommentsFormal.Count})", "IndexFormal", "Comments", new { id = entry.Id }, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}
+
+<div class="clearfix"></div>
+
+
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Heading)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.text)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Heading)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

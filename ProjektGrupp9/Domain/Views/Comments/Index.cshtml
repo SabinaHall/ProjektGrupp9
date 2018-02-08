@@ -4,13 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Kommentarer informella</h2>
+<h2>Kommentera inlägget</h2>
 
 <p>
     @Html.ActionLink("Skriv ny kommentar", "Create", "Comments", new { Id = Session["entryId"].ToString() }, htmlAttributes: new { @class = "btn btn-default" })
 </p>
 <br />
-<p>Klicka på knappen för att komma tillbaka till de formella inläggen</p>
+<p>Klicka på knappen för att komma tillbaka till den allmänna bloggen</p>
 <p>
     @Html.ActionLink("Klicka här", "Index", "EntryInformals", routeValues: null, htmlAttributes: new { @class = "btn btn-default" })
 </p>
@@ -19,8 +19,6 @@
 @{var y = 1; }
 @if (Model.ToList().Count == 0)
 {
-    <h3>Kommentera inlägget</h3>
-
     using (DataLogic.Models.ApplicationDbContext db = new DataLogic.Models.ApplicationDbContext())
     {
         var hej = db.InformalEntries;
@@ -57,10 +55,7 @@
     }
 }
 
-
-
 <br />
-<h3>Blogginlägg</h3>
 @{var i = 0; }
 @foreach (var item in Model)
 {
