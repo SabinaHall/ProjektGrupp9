@@ -81,8 +81,8 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Tillagda taggar:</label>
             <div class="col-md-10">
-
-                <select class="form-control" id="SelectedTags" multiple="multiple" name="SelectedTagIds"></select>
+                @Html.ListBoxFor(m => m.SelectedTagIds, Model.ExistingTagNameList, new { @class = "form-control", id = "SelectedTags" })
+                @*<select class="form-control" id="SelectedTags" multiple="multiple" name="SelectedTagIds"></select>*@
 
             </div>
         </div>
@@ -103,7 +103,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Spara" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default" id="Submit" />
             </div>
         </div>
     </div>

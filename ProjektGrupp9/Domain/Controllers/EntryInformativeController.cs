@@ -24,7 +24,7 @@ namespace Domain.Controllers
         {
             Dictionary<EntryResearch, List<string>> model = new Dictionary<EntryResearch, List<string>>();
             var allEntries = db.EntryResearch.ToList();
-            foreach(var entries in allEntries)
+            foreach (var entries in allEntries)
             {
                 var entrieTags = db.ResearchTagEntries.Where(x => x.EntryId == entries.Id).Select(x => x.TagId).ToList();
                 var tagNames = db.ResearchTag.Where(x => entrieTags.Contains(x.Id.ToString())).Select(x => x.TagName).ToList();
@@ -49,7 +49,7 @@ namespace Domain.Controllers
 
 
 
-            
+
         }
 
 
@@ -108,20 +108,35 @@ namespace Domain.Controllers
             entryEducation.File = old.File;
             entryEducation.Author = old.Author;
 
-            
+
             if (entryEducation == null)
             {
                 return HttpNotFound();
             }
-            
+
 
 
 
             var model = new CreateEducationViewModel();
             var tags = new List<SelectListItem>();
+            var existingTags = new List<SelectListItem>();
+
 
             tags = db.EducationTag.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            
+            var tagEntries = db.EducationTagEntries.Where(x => x.EntryId == entryEducation.Id).ToList();
+
+            List<string> tagIDs = new List<string>();
+
+            foreach (var tag in tagEntries)
+            {
+                existingTags.Add(tags.First(x => x.Value == tag.TagId));
+                tags.Remove(tags.First(x => x.Value == tag.TagId));
+            }
+
+
             model.TagNameList = tags;
+            model.ExistingTagNameList = existingTags;
             model.Entries = entryEducation;
 
             return View(model);
@@ -140,8 +155,8 @@ namespace Domain.Controllers
                 entryToUpdate.text = model.Entries.text;
                 entryToUpdate.Heading = model.Entries.Heading;
                 entryToUpdate.Date = model.Entries.Date;
-                
-                
+
+
 
 
 
@@ -156,14 +171,14 @@ namespace Domain.Controllers
                         entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
                     }
                 }
-                
+
 
 
 
                 db.SaveChanges();
                 var entryTags = db.EducationTagEntries.Where(x => x.EntryId == model.Entries.Id).ToList();
 
-                if (entryTags != null) 
+                if (entryTags != null)
                 {
                     db.EducationTagEntries.RemoveRange(entryTags);
                     db.SaveChanges();
@@ -179,7 +194,17 @@ namespace Domain.Controllers
 
                         var selectedTag = new EducationTagEntries();
                         selectedTag.EntryId = db.EntryEducation.Max(x => x.Id);
-                        selectedTag.TagId = item;
+
+                        try
+                        {
+                            selectedTag.TagId = db.EducationTag.SingleOrDefault(x => x.TagName == item).Id.ToString();
+                        }
+                        catch
+                        {
+                            selectedTag.TagId = item;
+                        }
+
+
                         db.EducationTagEntries.Add(selectedTag);
                     }
                 }
@@ -245,7 +270,7 @@ namespace Domain.Controllers
                         entryToUpdate.File = reader.ReadBytes(picUpload.ContentLength);
                     }
                 }
-              
+
 
                 db.SaveChanges();
                 return RedirectToAction("Research");
@@ -263,12 +288,12 @@ namespace Domain.Controllers
             return View(model);
         }
 
-           
+
 
         // POST: Entries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateResearch( CreateResearchViewModel model, HttpPostedFileBase picUpload)
+        public ActionResult CreateResearch(CreateResearchViewModel model, HttpPostedFileBase picUpload)
         {
             if (Request.IsAuthenticated && ModelState.IsValid)
             {
@@ -299,10 +324,10 @@ namespace Domain.Controllers
                 {
                     foreach (var item in model.SelectedTagIds)
                     {
-                        var selectedTag = new EntryTagEntries();
+                        var selectedTag = new ResearchTagEntries();
                         selectedTag.EntryId = db.EntryResearch.Max(x => x.Id);
-                        selectedTag.TagId = db.EntryTags.Where(x => x.TagName == item).SingleOrDefault().Id.ToString();
-                        db.EntryTagEntries.Add(selectedTag);
+                        selectedTag.TagId = db.ResearchTag.Where(x => x.TagName == item).SingleOrDefault().Id.ToString();
+                        db.ResearchTagEntries.Add(selectedTag);
                     }
                 }
 
@@ -394,7 +419,7 @@ namespace Domain.Controllers
             entry.Filename = null;
             db.SaveChanges();
 
-            return RedirectToAction("EditEducation", new { id = id});
+            return RedirectToAction("EditEducation", new { id = id });
         }
 
         public ActionResult RemoveFileResearch(int id)
