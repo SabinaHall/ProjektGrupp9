@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataLogic.Models;
+using DataLogic.DbMethods;
 using Microsoft.AspNet.Identity;
 using System.Web.UI.WebControls;
 
@@ -91,6 +92,7 @@ namespace Domain.Controllers
                 DataLogic.DbMethods.Methods.SendEmailInvitation(emails, message, subject);
                   
                 context.SaveChanges();
+                
               return RedirectToAction("Index");
 
             }
@@ -262,6 +264,7 @@ namespace Domain.Controllers
             var message = $"Du har blivit tillagd i ett möte av: {Event.Host.FirstName} {Event.Host.LastName} <br> Datum: {Event.Date} <br> Tid: {Event.Time} <br> Plats: {Event.Place}";
 
             DataLogic.DbMethods.Methods.SendEmailInvitation(email, message, subject);
+            ICalMessage.SendMessage(Event, user.Email);
 
             var emailHost = new List<string>();
             emailHost.Add(Event.Host.Email);
