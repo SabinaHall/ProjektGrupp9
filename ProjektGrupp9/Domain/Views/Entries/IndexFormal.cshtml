@@ -58,12 +58,13 @@
         <br />
         <br />
         <div class="panel-footer row">
+            @Html.ActionLink($"{entry.Key.CommentsFormal.Count}", "IndexFormal", "Comments", new { id = entry.Key.Id }, new { @class = "btn btn-primary glyphicon glyphicon-comment" })
             @if (entry.Key.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
                 @Html.ActionLink("Redigera inlägg", "Edit", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
             }
-            @Html.ActionLink($"Kommentera inlägg ({entry.Key.CommentsFormal.Count})", "IndexFormal", "Comments", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
+
         </div>
     </div>
 }
