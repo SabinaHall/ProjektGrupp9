@@ -11,10 +11,6 @@
 {
     <div class="well">
         <h3>@Html.ActionLink(@entry.Heading, "Index", "Comments", routeValues: new { Id = entry.Id }, htmlAttributes: null)</h3>
-        <p>Skriven av: @Html.ActionLink($"{entry.Author.FirstName} {entry.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null), @entry.Author.Email</p>
-        <p>Datum: @entry.Date.ToString().Substring(0, 10)</p>
-        <br />
-
         <br />
         <p>@entry.Text</p>
         <br />
@@ -23,18 +19,22 @@
             <img height="300" width="300" src="@Url.Action("EntryFile", "EntryInformals", routeValues: new { Id = entry.Id })" />
         }
 
-        
         <br />
         <br />
         <br />
         <div class="panel-footer row">
+            <p>Skriven av: @Html.ActionLink($"{entry.Author.FirstName} {entry.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = User.Identity.GetUserId() }, htmlAttributes: null), @entry.Author.Email</p>
+            <p>Datum: @entry.Date.ToString().Substring(0, 10)</p>
+            <br />
+            @Html.ActionLink($" {entry.Likes.Count}", "Like", "EntryInformals", new { id = entry.Id }, new { @class = "btn btn-danger glyphicon glyphicon-heart" })
+            @Html.ActionLink($" {entry.Comments.Count}", "Index", "Comments", new { id = entry.Id }, new { @class = "btn btn-primary glyphicon glyphicon-comment" })
             @if (entry.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
                 @Html.ActionLink("Redigera inlägg", "Edit", new { id = entry.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Id }, new { @class = "btn btn-default" })
             }
-            @Html.ActionLink($"Kommentera inlägg ({entry.Comments.Count})", "Index", "Comments", new { id = entry.Id }, new { @class = "btn btn-default" })
-            @Html.ActionLink($"Gilla({entry.Likes.Count})", "Like", "EntryInformals", new { id = entry.Id }, new { @class = "btn btn-default" })
+
+
         </div>
     </div>
 }

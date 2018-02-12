@@ -13,6 +13,7 @@ namespace DataLogic.Models
 
         [Required]
         [Display(Name = "Taggnamn")]
+        [RegularExpression(@"^[a-zåäöA-ZÅÄÖ]+$", ErrorMessage = "Endast bokstäver är godkända")]
         public string TagName { get; set; } 
 
         //public List<EntryTag> DefaultTagList { get; set; } 

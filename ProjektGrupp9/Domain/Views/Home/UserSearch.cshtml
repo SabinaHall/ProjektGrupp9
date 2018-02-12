@@ -5,15 +5,15 @@
     ViewBag.Title = "Användarsök";
 }
 
-<h2>Användare (sökresultat)</h2>
+<h2>Sök användare</h2>
 
-
+<p>Skriv in den användare du vill söka efter</p>
 <p>
     @using (Html.BeginForm("UserSearch", "Home"))
     {
         @Html.TextBox("UserSearch", null, new { @class = "form-control" })
-
-        <input type="submit" name="userSearch" value="Sök användare" />
+    <br />
+        <input type="submit" name="userSearch" value="Sök" />
     }
 </p>
 

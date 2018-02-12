@@ -23,7 +23,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             @Html.LabelFor(model => model.Entries.text, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -46,7 +45,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="button" id="addTag" value="Lägg till" class="btn-pink" />
@@ -61,13 +59,9 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Tillagda taggar:</label>
             <div class="col-md-10">
-
                 <select class="form-control" id="SelectedTags" multiple="multiple" name="SelectedTagIds"></select>
             </div>
         </div>
-
-
-     
 
         <div class="form-group">
             @Html.Label("", "Ladda upp fil/bild", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,14 +69,6 @@
                 <input type="file" name="picUpload" />
             </div>
         </div>
-
-        @*<div class="form-group">
-                <p>Ladda upp en bild eller fil med inlägget.</p>
-                <div class="col-md-10">
-                    <input type="file" name="picUpload" />
-                </div>
-            </div>*@
-
 
         <br />
         <div class="form-group">
@@ -98,13 +84,10 @@
    @*@Scripts.Render("~/bundles/jqueryval")*@
 <script src="~/Scripts/AddTaggar.js"></script>
 <script type="text/javascript">
-        $(document).ready(function () {
-            
+        $(document).ready(function () {   
             $("#Submit").click(function () {
                 $("#SelectedTags option").prop("selected", "selected");
-
             });
-
     });
     </script>
 }

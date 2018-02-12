@@ -16,9 +16,6 @@
 {
     <div class="well">
         <h3>@Html.ActionLink(@entry.Key.Heading, "IndexFormal", "Comments", routeValues: new { Id = entry.Key.Id }, htmlAttributes: null)</h3>
-        <p>Skriven av: @Html.ActionLink($"{entry.Key.Author.FirstName} {entry.Key.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = entry.Key.Author.Id }, htmlAttributes: null), @entry.Key.Author.Email</p>
-        <p>Datum: @entry.Key.Date.ToString().Substring(0, 10)</p>
-        <br />
         <br />
         <p>@entry.Key.text</p>
         <br />
@@ -45,9 +42,9 @@
                     {
                         if (item.TagId.ToString() == tag.Id.ToString())
                         {
-                            <br />
-                            @Html.ActionLink(tag.TagName, "SortEntryViaTags", "EntryTags", routeValues: new { Id = item.TagId }, htmlAttributes: new { @class = "btn btn-primary btn-xs" })
-                            <br />
+                            
+                            @Html.ActionLink(tag.TagName, "SortEntryViaTags", "EntryTags", routeValues: new { Id = item.TagId }, htmlAttributes: new { @class = "btn btn-info btn-xs" })
+                           
                         }
                     }
                 }
@@ -58,12 +55,16 @@
         <br />
         <br />
         <div class="panel-footer row">
+            <p>Skriven av: @Html.ActionLink($"{entry.Key.Author.FirstName} {entry.Key.Author.LastName}", "ProfilePage", "Home", routeValues: new { Id = entry.Key.Author.Id }, htmlAttributes: null), @entry.Key.Author.Email</p>
+            <p>Datum: @entry.Key.Date.ToString().Substring(0, 10)</p>
+            <br />
+            @Html.ActionLink($" {entry.Key.CommentsFormal.Count}", "IndexFormal", "Comments", new { id = entry.Key.Id }, new { @class = "btn btn-primary glyphicon glyphicon-comment" })
             @if (entry.Key.Author.Id == User.Identity.GetUserId() || User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
                 @Html.ActionLink("Redigera inlägg", "Edit", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
+                @Html.ActionLink("Radera inlägg", "Delete", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
             }
-            @Html.ActionLink($"Kommentera inlägg ({entry.Key.CommentsFormal.Count})", "IndexFormal", "Comments", new { id = entry.Key.Id }, new { @class = "btn btn-default" })
+
         </div>
     </div>
 }
