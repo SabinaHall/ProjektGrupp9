@@ -17,14 +17,22 @@ namespace DataLogic.Models
         public virtual ICollection<EntryResearch> ResearchEntries { get; set; }
         public virtual ICollection<Comment> UserComments { get; set; }  
         public virtual ICollection<Likes> UserLikes { get; set; }
+
+        [Display(Name = "Förnamn")]
         public string FirstName { get; set; }
+        [Display(Name = "Efternamn")]
         public string LastName { get; set; }
+        [Display(Name = "Rum")]
         public string Room { get; set; }
+        
         public bool Active { get; set; } = true;
+        [Display(Name = "Telefonnummer")]
         public string PhoneNmbr { get; set; }
+        [Display(Name = "Profilbild")]
         public byte [] ProfilePicture { get; set; }
+      
         public string ContentType { get; set; }
-        [Display(Name = "Notifikation av formella-inlägg:")]
+       
         public bool GetMail { get; set; } = true;
 
 

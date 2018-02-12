@@ -2,10 +2,10 @@
 @model DataLogic.Models.EntryInformal
 
 @{
-    ViewBag.Title = "Redigera Utbildning";
+    ViewBag.Title = "Redigera Allmänt Inlägg";
 }
 
-<h2>Redigera Utbildning</h2>
+<h2>Redigera Allmänt Inlägg</h2>
 
 
 @using (Html.BeginForm("Edit", "EntryInformals", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))

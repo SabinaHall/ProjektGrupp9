@@ -15,7 +15,7 @@ namespace DataLogic.Models
 
         public IEnumerable<SelectListItem> TagNameList { get; set; }
 
-        [Required]
+        
         public List<string> SelectedTagIds { get; set; }
         public List<string> SelectedTags { get; set; }
         public EntryResearch Entries { get; set; }

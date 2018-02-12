@@ -212,6 +212,12 @@ namespace Domain.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Education");
             }
+            var tags = new List<SelectListItem>();
+
+            tags = db.EducationTag.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            
+            model.TagNameList = tags;
+            model.ExistingTagNameList = new List<SelectListItem>();
             return View(model);
         }
 
@@ -334,6 +340,10 @@ namespace Domain.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Research", "EntryInformative", new { id = user.Id });
             }
+            var tags = new List<SelectListItem>();
+
+            tags = db.ResearchTag.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            model.TagNameList = tags;
             return View(model);
         }
 
@@ -396,6 +406,10 @@ namespace Domain.Controllers
 
                 return RedirectToAction("Education", "EntryInformative", new { id = user.Id });
             }
+            var tags = new List<SelectListItem>();
+
+            tags = db.EducationTag.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            model.TagNameList = tags;
             return View(model);
         }
 

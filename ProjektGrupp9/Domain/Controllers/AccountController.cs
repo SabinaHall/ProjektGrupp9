@@ -71,7 +71,7 @@ namespace Domain.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            var user = db.Users.Where(x => x.Email == model.Email).FirstOrDefault();
+            var user = db.Users.Where(x => x.UserName == model.Email).FirstOrDefault();
             
             if (!ModelState.IsValid || user == null)
             {

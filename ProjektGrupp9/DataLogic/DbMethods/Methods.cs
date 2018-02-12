@@ -26,34 +26,42 @@ namespace DataLogic.DbMethods
 
         public static void SendEmailInvitation(List<string> emails,string m, string subject)
         {
-            var body = "<p>" + m + "</p>";
-            var message = new MailMessage();
-            foreach (var item in emails)
+            try
             {
-                message.To.Add(new MailAddress(item));
-            }
 
-            //message.From = new MailAddress("filipparingqvist@gmail.com");
-            message.Subject = subject;
-            message.Body = body;
-            message.IsBodyHtml = true;
-
-            using (var smtp = new SmtpClient())
-            {
-                var credential = new NetworkCredential
+                var body = "<p>" + m + "</p>";
+                var message = new MailMessage();
+                foreach (var item in emails)
                 {
-                    //Ange egna email och lösenordet. 
-                    UserName = "dontreplygrupp9@gmail.com",
-                    Password = "Grupp12345"
-                };
-                smtp.Credentials = credential;
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                smtp.Send(message);
+                    message.To.Add(new MailAddress(item));
+                }
+
+                //message.From = new MailAddress("filipparingqvist@gmail.com");
+                message.Subject = subject;
+                message.Body = body;
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        //Ange egna email och lösenordet. 
+                        UserName = "dontreplygrupp9@gmail.com",
+                        Password = "Grupp12345"
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    smtp.Send(message);
+                }
+
+
             }
-
-
+            catch
+            {
+                //KRASCHAR NÄR MAN INTE HAR EN KORREKT EMAIL PÅ SIN PROFIL.            }
+            }
         }
     }
 }

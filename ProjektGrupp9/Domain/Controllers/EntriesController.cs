@@ -99,6 +99,7 @@ namespace Domain.Controllers
 
                 return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
+
             return View(entries);
         }
 
@@ -151,7 +152,11 @@ namespace Domain.Controllers
                 DataLogic.DbMethods.EmailJob.count += 1;
                 return RedirectToAction("IndexFormal", new { Id = user.Id });
             }
-            return View();
+            var tags = new List<SelectListItem>();
+
+            tags = db.EntryTags.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.TagName }).ToList();
+            model.TagNameList = tags;
+            return View(model);
         }
 
 

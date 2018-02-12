@@ -129,7 +129,7 @@ namespace Domain.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Entries entry, HttpPostedFileBase picUpload)
+        public ActionResult Edit(EntryInformal entry, HttpPostedFileBase picUpload)
         {
 
             EntryInformal entryToUpdate = new EntryInformal();
@@ -137,7 +137,7 @@ namespace Domain.Controllers
             if (ModelState.IsValid)
             {
                 entryToUpdate = db.InformalEntries.Find(entry.Id);
-                entryToUpdate.Text = entry.text;
+                entryToUpdate.Text = entry.Text;
                 entryToUpdate.Heading = entry.Heading;
                 entryToUpdate.Date = entry.Date;
 

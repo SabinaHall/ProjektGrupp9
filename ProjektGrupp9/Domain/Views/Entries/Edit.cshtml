@@ -2,10 +2,10 @@
 @model DataLogic.Models.Entries
 
 @{
-    ViewBag.Title = "Redigera Utbildning";
+    ViewBag.Title = "Redigera Formellt Inlägg";
 }
 
-<h2>Redigera Utbildning</h2>
+<h2>Redigera Formellt Inlägg</h2>
 
 
 @using (Html.BeginForm("Edit", "Entries", new { Id = User.Identity.GetUserId() }, FormMethod.Post, new { enctype = "multipart/form-data" }))

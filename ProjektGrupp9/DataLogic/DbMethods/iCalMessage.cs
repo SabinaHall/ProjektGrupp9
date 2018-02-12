@@ -16,19 +16,23 @@ namespace DataLogic.DbMethods
     {
         public static void SendMessage(Events e, string mail)
         {
-            MailMessage message = new MailMessage();
-            message.To.Add(mail);
-            message.Subject = "Ett möte";
-            message.Body = "emailbody";
-            message.IsBodyHtml = true;
+            try
+            {
 
-            StringBuilder sb = new StringBuilder();
-            string DateFormat = "yyyyMMddTHHmmssZ";
-            string now = DateTime.Now.ToUniversalTime().ToString(DateFormat);
-            sb.AppendLine("BEGIN:VCALENDAR");
-            sb.AppendLine("PRODID:-//Compnay Inc//Product Application//EN");
-            sb.AppendLine("VERSION:2.0");
-            sb.AppendLine("METHOD:PUBLISH");
+
+                MailMessage message = new MailMessage();
+                message.To.Add(mail);
+                message.Subject = "Ett möte";
+                message.Body = "emailbody";
+                message.IsBodyHtml = true;
+
+                StringBuilder sb = new StringBuilder();
+                string DateFormat = "yyyyMMddTHHmmssZ";
+                string now = DateTime.Now.ToUniversalTime().ToString(DateFormat);
+                sb.AppendLine("BEGIN:VCALENDAR");
+                sb.AppendLine("PRODID:-//Compnay Inc//Product Application//EN");
+                sb.AppendLine("VERSION:2.0");
+                sb.AppendLine("METHOD:PUBLISH");
 
                 DateTime dtStart = Convert.ToDateTime(DateTime.Now);
                 DateTime dtEnd = Convert.ToDateTime(DateTime.Now);
@@ -47,26 +51,32 @@ namespace DataLogic.DbMethods
                 sb.AppendLine("SUMMARY:" + " ett möte");
                 sb.AppendLine("TRANSP:OPAQUE");
                 sb.AppendLine("END:VEVENT");
-            
-            sb.AppendLine("END:VCALENDAR");
-            var calendarBytes = Encoding.UTF8.GetBytes(sb.ToString());
-            MemoryStream ms = new MemoryStream(calendarBytes);
-            System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(ms, "event.ics", "text/calendar");
-            message.Attachments.Add(attachment);
 
-            using (var smtp = new SmtpClient())
-            {
-                var credential = new NetworkCredential
+                sb.AppendLine("END:VCALENDAR");
+                var calendarBytes = Encoding.UTF8.GetBytes(sb.ToString());
+                MemoryStream ms = new MemoryStream(calendarBytes);
+                System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(ms, "event.ics", "text/calendar");
+                message.Attachments.Add(attachment);
+
+                using (var smtp = new SmtpClient())
                 {
-                    //Ange egna email och lösenordet. 
-                    UserName = "dontreplygrupp9@gmail.com",
-                    Password = "Grupp12345"
-                };
-                smtp.Credentials = credential;
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                smtp.Send(message);
+                    var credential = new NetworkCredential
+                    {
+                        //Ange egna email och lösenordet. 
+                        UserName = "dontreplygrupp9@gmail.com",
+                        Password = "Grupp12345"
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    smtp.Send(message);
+                }
+
+            }
+            catch
+            {
+                //KRASCH NÄR FELAKTIG MAIL FINNS I PROFILEN!!!!!!!!
             }
         }
     }

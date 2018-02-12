@@ -119,19 +119,24 @@ namespace Domain.Controllers
         [HttpPost]
         public ActionResult Update(Events model)
         {
-            var oldModel = new Events();
-            using (var context = new ApplicationDbContext())
+            if (ModelState.IsValid)
             {
-                oldModel = context.Events.Find(model.Id);
-                oldModel.Date = model.Date;
-                oldModel.Time = model.Time;
-                oldModel.Place = model.Place;
-                oldModel.Description = model.Description;
+                var oldModel = new Events();
+                using (var context = new ApplicationDbContext())
+                {
+                    oldModel = context.Events.Find(model.Id);
+                    oldModel.Date = model.Date;
+                    oldModel.Time = model.Time;
+                    oldModel.Place = model.Place;
+                    oldModel.Description = model.Description;
 
-                context.SaveChanges();
-                    
+                    context.SaveChanges();
+
+                }
+                return RedirectToAction("index");
             }
-            return RedirectToAction("index");
+            return View(model);
+           
         }
 
         public ActionResult Delete(int id)
