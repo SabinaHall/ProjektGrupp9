@@ -41,7 +41,7 @@
                 }
                 @if (user != null)
                 {
-                    @Html.ActionLink("" + user.FirstName + " " + user.LastName, "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
+                    @Html.ActionLink(" ", "ProfilePage", "Home", routeValues: new { id = User.Identity.GetUserId() }, htmlAttributes: new { @class = "glyphicon glyphicon-user" })
 
                 }
             </li>
